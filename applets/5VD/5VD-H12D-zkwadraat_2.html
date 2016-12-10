@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+	
+<script>document.createElement('footer')</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+
+<title>Kwadrateren</title>
+
+<body> 
+<h2>De functie \(f(z)=z^2\)</h2>
+
+<p>In het linkervenster is een cirkel getekend. Met de zwarte punten kun je het middelpunt en de straal wijzigen. In het rechtervenster is het beeld van deze cirkel onder de functie \(f(z)=z^2\) getekend.</p>
+<p>Het blauwe punt op de beeldgrafiek in het rechtervenster is het beeld van het blauwe punt op de cirkel in het linkervenster. Je kunt dat punt op de volgende manier over de grafieken laten lopen: klap de expressielijst in het linkervenster open door op de pijltjes te klikken. Klik op het pijltje voor slider a om te animatie aan te zetten. Laat a niet heen en weer lopen, maar telkens weer op 0 beginnen door te klikken op het symbool met een pijl naar links en een pijl naar rechts: dat moeten twee pijlen naar rechts worden. Als je wilt kun je ook de snelheid nog aanpassen.</p>
+
+<div id="calculator" style="float: left; width: 450px; height: 450px;"></div>
+<div id="calculator2" style="float: left; width: 450px; height: 450px; padding-left: 20px"></div>
+  
+  
+<script >
+    var elt = document.getElementById('calculator');
+    var elt2 = document.getElementById('calculator2');
+    var valueElt = document.getElementById('value');
+
+	var calculator = Desmos.GraphingCalculator(elt, {
+		expressionsCollapsed: true,
+		lockViewport: true,
+		zoomButtons: false,
+		settingsMenu: false,
+		});
+    calculator.setMathBounds({
+      	left: -10,
+      	right: 10,
+      	bottom: -10,
+      	top: 10
+    	});
+    
+    var calculator2 = Desmos.GraphingCalculator(elt2, {
+    	expressionsCollapsed: true,
+    	zoomButtons: true,
+    	settingsMenu: false,
+    	});
+    calculator2.setMathBounds({
+      	left: -10,
+      	right: 10,
+      	bottom: -10,
+      	top: 10
+    	});
+    	    
+    //a, p, q, r
+    calculator.setExpressions([
+    	{id:'slidera', latex:'a=2', sliderBounds: {min: 0, max: 6.28}},
+    	{id:'test', type: 'folder', title:'Wim', memberIds: {"sliderp1": true, "sliderq1": true}},
+    	{id:'sliderp1', latex:'p=0', sliderBounds: {min: -10, max: 10}},
+    	{id:'sliderq1', latex:'q=0', sliderBounds: {min: -10, max: 10}},
+    	{id:'sliders1', latex:'s=3', sliderBounds: {min: 0, max: 10}}
+    	]);
+    var helpera1 = calculator.HelperExpression({latex: 'a'});
+	var helperp1 = calculator.HelperExpression({latex: 'p'});
+	var helperq1 = calculator.HelperExpression({latex: 'q'});
+	var helpers1 = calculator.HelperExpression({latex: 's'});
+    
+	calculator.setExpressions([
+		{id:'puntopcirkel', latex: '(s\\cdot cos(a)+p, s\\cdot sin(a)+q)', color: '#006ae0', dragMode: Desmos.DragModes.NONE},
+		{id:'middelpunt', latex: '(p, q)', color: Desmos.Colors.BLACK},
+		{id:'cirkel', latex: '(s\\cdot cos(t)+p, s\\cdot sin(t)+q)', domain: {min: 0, max: 6.28}, color: '#006ae0'},
+		{id:'straalpunt', latex: '(p+s, q)', color: Desmos.Colors.BLACK, dragMode: Desmos.DragModes.X},
+		]);
+		
+    helpera1.observe('numericValue', function() {
+    	calculator2.setExpression({id: 'a2', latex: 'a='+helpera1.numericValue}
+    	);
+    	});
+    
+    helperp1.observe('numericValue', function() {
+    	calculator2.setExpression({id: 'p2', latex: 'p='+helperp1.numericValue}
+    	);
+    	});
+
+	helperq1.observe('numericValue', function() {
+		calculator2.setExpression({id: 'q2', latex: 'q='+helperq1.numericValue}
+		);
+		});
+		
+	helpers1.observe('numericValue', function() {
+		calculator2.setExpression({id: 's2', latex: 's='+helpers1.numericValue}
+		);
+		});
+    		
+    calculator2.setExpressions([
+    	{id: 'beeldcirkel', latex: '((s\\cdot cos(t)+p)^2-(s\\cdot sin(t)+q)^2, 2(s\\cdot cos(t)+p)(s\\cdot sin(t)+q))', domain: {min: 0, max: 6.28}, color: '#006ae0'},
+    	{id: 'beeldpunt', latex: '((s\\cdot cos(a)+p)^2-(s\\cdot sin(a)+q)^2, 2(s\\cdot cos(a)+p)(s\\cdot sin(a)+q))', color: '#006ae0', dragMode: Desmos.DragModes.NONE}
+  		]);
+  			
+  </script>
+
+
+
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

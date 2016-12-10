@@ -5,94 +5,252 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
-<script>document.createElement('footer')</script>
+<style>
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
 
-<script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
 
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<script>
+var Complex = (function() {
+var tmp = function(a, b) {
+    this.assign(a, b);
+}
+    var makeComplex = function(b, re, im) {
+        if (b instanceof Complex) {
+            b.re = re;
+            b.im = im;
+        }
+        else {
+            b = new Complex(re, im);
+        }
+
+        return b;
+    }
+
+    var p = tmp.prototype;
+
+    p.assign = function(a, b) {
+        if (a instanceof Complex ) {
+            this.re = a.re;
+            this.im = a.im;
+        }
+        else {
+            this.re = a;
+            this.im = b;
+        }
+
+        return this;
+    }
+
+    p.add = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re + a.re;
+            i = this.im + a.im;
+        }
+        else {
+            r = this.re + a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.sub = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re - a.re;
+            i = this.im - a.im;
+        }
+        else {
+            r = this.re - a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rsub = function(a, b) {
+        if (a instanceof Complex) {
+            return a.sub(this, b);
+        }
+
+        return makeComplex(b, this.re - a, this.im);
+    }
+
+    p.mul = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re*a.re - this.im*a.im;
+            i = this.re*a.im + this.im*a.re;
+        }
+        else {
+            r = this.re*a;
+            i = this.im*a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.div = function(a, b) {
+        var r, i, d;
+
+        if (a instanceof Complex) {
+            d = a.re*a.re + a.im*a.im;
+            r = (this.re*a.re + this.im*a.im)/d;
+            i = (this.im*a.re - this.re*a.im)/d;
+        }
+        else {
+            r = this.re/a;
+            i = this.im/a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rdiv = function(a, b) {
+        if (a instanceof Complex) {
+            return a.div(this, b);
+        }
+
+        return makeComplex(b, this.re/a, this.im/a);
+    }
+
+    p.conj = function(a) {
+        return makeComplex(a, this.re, -this.im);
+    }
+
+	return tmp;
+})();
+</script>
+
+<title>Complexe functies</title>
+
+<body>
+
+<h2>De functie y = 1/z</h2>
+<p>
+
+\(f(x) = \frac{1}{z}\). <br />
+Met de slider kun je de hoek tussen de positieve re&euml;le as en de halve lijn veranderen. Het blauwe punt op de halve lijn kun je verslepen, het beeldpunt (in eerste instantie buiten beeld) schuift dan automatisch mee.
 
 
+<div id="jxgbox1" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 5px;"></div>
+<div style="float: left; margin-right: 5px; margin-top: 200px;">\(\rightarrow\)</div>
+<div id="jxgbox2" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 0px;"></div>
 
-<title>Kwadrateren</title>
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    elements: { highlight: false }    
+});
 
-<body> 
-<h2>De functie \(f(z)=\frac1z\)</h2>
+board = JXG.JSXGraph.initBoard('jxgbox1', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+        
+var hoek = board.create('slider', [ [-9,9],[-4,9],[0,.7,2*Math.PI] ], {
+	strokeColor: '#006ae0', 
+	baseline: {strokeColor: '#006ae0'}, 
+	highline: {strokeColor: '#006ae0'},
+	}
+	);
+var halvelijn = board.create('line', [ [0,0], [
+	function() { return Math.cos(hoek.Value()); },
+	function() { return Math.sin(hoek.Value()); }
+	] ], { strokeColor: '#006ae0', straightFirst: false, strokeWidth: 3 } 
+	);
+var z1 = board.create('glider', [halvelijn], {color: '#006ae0', name: ''});
 
-<p>In het linkervenster is een halve lijn getekend. Met het zwarte punt kun je de hoek die de halve lijn maakt met de positieve \(x\)-as wijzigen: de \(x\)-coördinaat van dit punt is de hoek in radialen. In het rechtervenster is het beeld van de halve lijn onder de functie \(f(z)=\frac1z\) getekend.</p>
-<p>Het blauwe punt op de beeldgrafiek in het rechtervenster is het beeld van het blauwe punt op de cirkel in het linkervenster. Je kunt het punt verslepen, het beeldpunt wijzigt dan ook.</p>
+var z = new Complex(0,1);
+var w = new Complex(0,0);
+var een = new Complex(1,0);
+var beeld = function(x,y) {
+		z.assign(x,y);
+	return een.div(z,w);
+}
 
-<div id="calculator" style="float: left; width: 450px; height: 450px;"></div>
-<div id="calculator2" style="float: left; width: 450px; height: 450px; padding-left: 20px"></div>
-  
-  
-<script >
-    var elt = document.getElementById('calculator');
-    var elt2 = document.getElementById('calculator2');
-    var valueElt = document.getElementById('value');
-
-	var calculator = Desmos.GraphingCalculator(elt, {
-		expressionsCollapsed: true,
-		lockViewport: true,
-		zoomButtons: false,
-		settingsMenu: false,
-		});
-    calculator.setMathBounds({
-      	left: -10,
-      	right: 10,
-      	bottom: -10,
-      	top: 10
-    	});
+</script>
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
     
-    var calculator2 = Desmos.GraphingCalculator(elt2, {
-    	expressionsCollapsed: true,
-    	zoomButtons: true,
-    	settingsMenu: false,
-    	});
-    calculator2.setMathBounds({
-      	left: -10,
-      	right: 10,
-      	bottom: -10,
-      	top: 10
-    	});
-    	    
-    //a, s
-    calculator.setExpressions([
-    	{id:'slidera', latex:'a=2', sliderBounds: {min: 0, max: 6.28}},
-    	{id:'sliders1', latex:'s=3', sliderBounds: {min: 0, max: 15}},
-    	{id:'hoek', latex: '(a,0)', color: 'black'}
-    	]);
-    var helpera1 = calculator.HelperExpression({latex: 'a'});
-	var helpers1 = calculator.HelperExpression({latex: 's'});
-    
-	calculator.setExpressions([
-		{id:'puntoplijn', latex: '(s\\cdot cos(a), s\\cdot sin(a))', color: '#006ae0', dragMode: Desmos.DragModes.X},
-		{id:'lijn', latex: '(t\\cdot cos(a), t\\cdot sin(a))', domain: {min: 0, max: 30}, color: '#006ae0'},
-		]);
-		
-    helpera1.observe('numericValue', function() {
-    	calculator2.setExpression({id: 'a2', latex: 'a='+helpera1.numericValue}
-    	);
-    	});
-    
-	helpers1.observe('numericValue', function() {
-		calculator2.setExpression({id: 's2', latex: 's='+helpers1.numericValue}
-		);
-		});
-    		
-    calculator2.setExpressions([
-    	{id: 'beeldlijn', latex: '(t\\cdot cos(-a), t\\cdot sin(-a))', domain: {min: 0, max: 30}, color: '#006ae0'},
-    	{id: 'beeldpunt', latex: '(cos(a)/s, -sin(a)/s)', color: '#006ae0', dragMode: Desmos.DragModes.NONE}
-  		]);
-  			
-  </script>
+});
+board2 = JXG.JSXGraph.initBoard('jxgbox2', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+var W1 = board2.create('point',[function() { return beeld(z1.X(),z1.Y()).re; }, function() { return beeld(z1.X(),z1.Y()).im; }], {color: '#006ae0', name: ''});
 
-
-
-
+var beeldfiguur = board2.create('line', [ [0,0], [
+	function() { return Math.cos(-1*hoek.Value()); },
+	function() { return Math.sin(-1*hoek.Value()); }
+	] ], { strokeColor: '#006ae0', straightFirst: false, strokeWidth: 3 } 
+	);
+board.addChild(board2);
+</script>
 
 <footer style="clear: both; padding-top: 30px;">
-<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
 </body>
 </html>
