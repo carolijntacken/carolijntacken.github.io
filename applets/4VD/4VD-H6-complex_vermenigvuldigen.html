@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Complex vermenigvuldigen</title>
+
+<body>
+
+<h2>Vermenigvuldigen van complexe getallen</h2>
+<p>
+In de applet hieronder zijn de punten (complexe getallen) \(z_1\), \(z_2\) en hun product \(z\) getekend.<br/>
+Versleep de punten \(z_1\) en \(z_2\) en kijk wat er gebeurt.</p>
+
+Beantwoord de volgende vragen.
+<ol>
+<li>Zorg nu dat \(z_1\) <i>niet</i> op de re&euml;le as ligt en blijf er dan van af. Versleep \(z_2\) zodat \(z\) op de re&euml;le as komt te liggen. Er zijn meerdere mogelijkheden, waar liggen deze?</li>
+<li>Herhaal vraag 1 voor andere plaatsen van \(z_1\). Kun je voorspellen waar \(z_2\) moet komen te liggen als \(z\) op de re&euml;le as moet komen?</li>
+<li>Nu willen we dat \(z\) op de imaginaire as komt te liggen. Kies weer een plek voor \(z_1\) (niet op de imaginaire as) en probeer te voorspellen waar \(z_2\) dan nog kan liggen.</li>
+<li>Terug naar het algemene geval, \(z\) mag nu overal terecht komen. Probeer een verband te ontdekken tussen de argumenten van \(z_1\), \(z_2\) en \(z\).</li>
+<li>Is er een verband tussen de moduli van \(z_1\), \(z_2\) en \(z\)?</li>
+</ol>
+
+
+<div id="jxgbox1" class="jxgbox" style="width:650px; height:650px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
+<script type='text/javascript'>
+JXG.Options = JXG.merge(JXG.Options, {
+	axis: {
+		ticks: { scaleSymbol: 'i', majorHeight : 10 }
+	},
+});
+board = JXG.JSXGraph.initBoard('jxgbox1', {
+	showNavigation: false,
+	showCopyright: false,
+	axis: false, 
+	boundingbox:[-7.5,7.5,7.5,-7.5],
+	keepaspectratio:true
+	});
+var xaxis = board.create('axis', [[0,0], [1,0]], {ticks: { needsRegularUpdate: false, scaleSymbol: '', majorHeight : 10, ticksDistance:.4 }});
+var yaxis = board.create('axis', [[0,0], [0,1]], {ticks: { needsRegularUpdate: false, scaleSymbol: 'i', majorHeight : 10, ticksDistance:.4 }});
+var c = [];
+for (var n=1; n<=10; ++n) {	
+	c[n] = board.create('circle',[[0,0],n],{strokeColor:'#bfbfbf', strokeWidth:1, highlight: false});	
+	}
+
+line2 = board.create('segment',[
+            [-10*Math.cos(Math.PI/6),-10*Math.sin(Math.PI/6)],
+            [10*Math.cos(Math.PI/6),10*Math.sin(Math.PI/6)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed: true});
+line3 = board.create('segment',[
+            [-10*Math.cos(Math.PI/3),-10*Math.sin(Math.PI/3)],
+            [10*Math.cos(Math.PI/3),10*Math.sin(Math.PI/3)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed: true});
+line4 = board.create('segment',[
+            [-10*Math.cos(-Math.PI/6),-10*Math.sin(-Math.PI/6)],
+            [10*Math.cos(-Math.PI/6),10*Math.sin(-Math.PI/6)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed: true});                        
+line5 = board.create('segment',[
+            [-10*Math.cos(-Math.PI/3),-10*Math.sin(-Math.PI/3)],
+            [10*Math.cos(-Math.PI/3),10*Math.sin(-Math.PI/3)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed: true});
+line6 = board.create('segment',[
+            [-10*Math.cos(Math.PI/4),-10*Math.sin(Math.PI/4)],
+            [10*Math.cos(Math.PI/4),10*Math.sin(Math.PI/4)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed: true});
+line7 = board.create('segment',[
+            [-10*Math.cos(-Math.PI/4),-10*Math.sin(-Math.PI/4)],
+            [10*Math.cos(-Math.PI/4),10*Math.sin(-Math.PI/4)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed: true});                        
+
+var p1 = board.create('point', [0,0], {visible:false});
+var p2 = board.create('point', [10,0], {visible:false});
+var z1 = board.create('point', [2.5,-.8], {strokeColor: '#009a0a', fillColor: '#009a0a', labelColor: '#009a0a', name: 'z<sub>1</sub>'});
+	z1.label.setProperty({color:'#009a0a'});
+board.create('segment', [[0,0],z1], {strokeColor: '#009a0a'}); 
+z1.on('drag', function () {
+	var signY1 = ' + ';
+	if ( this.Y() < 0)
+		signY1 =' &ndash; ';
+	document.getElementById('coordsz1').innerHTML = 'z<sub>1</sub> = ' + this.X().toFixed(2) + signY1 + Math.abs(this.Y().toFixed(2)) + 'i'; 
+	document.getElementById('modulusz1').innerHTML = '|z<sub>1</sub>| = ' + z1.Dist(p1).toFixed(2);
+	document.getElementById('argumentz1').innerHTML = 'arg(z<sub>1</sub>) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z1).toFixed(1) + '&deg;';
+	var signY = ' + ';
+	if ( z.Y() < 0)
+		signY=' &ndash; ';
+	document.getElementById('coordsz').innerHTML = 'z = ' + z.X().toFixed(2) + signY + Math.abs(z.Y().toFixed(2)) + 'i'; 
+	document.getElementById('modulusz').innerHTML = '|z| = ' + z.Dist(p1).toFixed(2);
+	document.getElementById('argumentz').innerHTML = 'arg(z) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z).toFixed(1) + '&deg;';
+	});
+	
+var z2 = board.create('point', [3*Math.cos(Math.PI/3),3*Math.sin(Math.PI/3)], {strokeColor: '#006ae0', fillColor: '#006ae0', name: 'z<sub>2</sub>'});
+	z2.label.setProperty({color:'#006ae0'});
+board.create('segment', [[0,0],z2], {strokeColor: '#006ae0'});
+z2.on('drag', function () {
+	var signY2 = ' + ';
+	if ( this.Y() < 0)
+		signY2=' &ndash; ';
+	document.getElementById('coordsz2').innerHTML = 'z<sub>2</sub> = ' + this.X().toFixed(2) + signY2 + Math.abs(this.Y().toFixed(2)) + 'i'; 
+	document.getElementById('modulusz2').innerHTML = '|z<sub>2</sub>| = ' + z2.Dist(p1).toFixed(2);
+	document.getElementById('argumentz2').innerHTML = 'arg(z<sub>2</sub>) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z2).toFixed(1) + '&deg;';
+	var signY = ' + ';
+	if ( z.Y() < 0)
+		signY=' &ndash; ';
+	document.getElementById('coordsz').innerHTML = 'z = ' + z.X().toFixed(2) + signY + Math.abs(z.Y().toFixed(2)) + 'i'; 
+	document.getElementById('modulusz').innerHTML = '|z| = ' + z.Dist(p1).toFixed(2);
+	document.getElementById('argumentz').innerHTML = 'arg(z) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z).toFixed(1) + '&deg;';
+	});
+
+var z = board.create('point', [
+	function() { return z1.X()*z2.X()-z1.Y()*z2.Y(); },
+	function() { return z1.Y()*z2.X()+z1.X()*z2.Y(); }
+	], {strokeColor: 'red', name: 'z'});
+	z.label.setProperty({color:'red'});
+board.create('segment', [[0,0],z], {strokeColor: 'red'});
+
+tekst = board.create('text',[-7,6.8,'z = z_1 &middot; z_2']);
+tekst.setProperty({fontSize:24, color: 'red'});
+</script>
+
+<p>
+<span id="coordsz1", style="color: #009a0a">z<sub>1</sub> = 2.5 &ndash; 0.8i</span><br />
+<span id="modulusz1", style="color: #009a0a">|z<sub>1</sub>| = 2.62</span><br />
+<span id="argumentz1", style="color: #009a0a">arg(z<sub>1</sub>) = 342.26&deg;</span>
+</p>
+<p>
+<span id="coordsz2", style="color: #006ae0">z<sub>2</sub> = 1.5 + 2.6i</span><br />
+<span id="modulusz2", style="color: #006ae0">|z<sub>2</sub>| = 3</span><br />
+<span id="argumentz2", style="color: #006ae0">arg(z<sub>2</sub>) = 60&deg;</span>
+</p>
+<p>
+<span id="coordsz", style="color: red">z = 5.83 + 5.30i</span><br />
+<span id="modulusz", style="color: red">|z| = 7.87</span><br />
+<span id="argumentz", style="color: red">arg(z) = 42.26&deg;</span>
+</p>
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

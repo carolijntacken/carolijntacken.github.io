@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+<script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>
+
+<title>Kritieke gebied en power</title>
+
+<body>
+
+<h2>Kritieke gebied en power</h2>
+<p>Stel we toetsen H<sub>0</sub> : &mu; = 0 tegen H<sub>1</sub> : &mu; &gt; 0.<br />
+Je ziet hieronder bij beide hypotheses een plaatje van de normale verdeling die erbij hoort. Wat &mu; is bij H<sub>1</sub> weten we niet, met de slider is de waarde aan te passen.</p>
+<p>Met de tweede slider is de grens te wijzigen die bepaalt of H<sub>0</sub> al dan niet verworpen wordt.</p>
+<p>We nemen een steekproef en berekenen het steekproefgemiddelde. Aan de hand daarvan wordt een beslissing genomen. Er zijn 4 mogelijkheden:
+<ol>
+	<li>H<sub>0</sub> is waar en het steekproefgemiddelde is kleiner dan de grens: we accepteren H<sub>0</sub></li>
+	<li>H<sub>0</sub> is waar maar we vinden een steekproefgemiddelde groter dan de grens: we verwerpen H<sub>0</sub>. Dat is dus een foute beslissing (fout van de eerste soort), de kans daarop is gelijk aan het significantieniveau (rode gebied, dit wordt het kritieke gebied genoemd).</li>
+	<li>H<sub>0</sub> is niet waar maar we vinden een steekproefgemiddelde dat kleiner is dan de grens: we accepteren H<sub>0</sub>. Ook dit is een foute beslissing (fout van de tweede soort), de kans is in het plaatje met oranje aangegeven.</li>
+	<li>H<sub>0</sub> is niet waar en we vinden een steekproefgemiddelde dat groter is dan de grens: we verwerpen H<sub>0</sub>. Dat is een juiste beslissing, de kans is met groen aangegeven (deze kans wordt power genoemd).</li>
+</ol>
+<div id="box" class="jxgbox" style="float: left; width:700px; height:500px; margin-bottom:1em; margin-top: 1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', {
+		axis: false, 
+		boundingbox: [-3, 1, 8, -0.2], 
+		showNavigation: false,
+		showCopyright: false
+		});
+	var mean = 0;
+	var sigma = 1;
+	// Declare function for normal curve bij H0
+	var f = function(x) { return Math.exp(-(x-mean)*(x-mean)/(2*sigma*sigma))/(sigma*Math.sqrt(2*Math.PI));};
+	
+	var realmean = board.create('slider',[[-2,.8],[0,.8],[0,2,5]],{name:'werkelijke &mu;', withTicks:false, size:3});
+	// Declare function for normal curve bij H1
+	var g = function(x) { return Math.exp(-(x-realmean.Value())*(x-realmean.Value())/(2*sigma*sigma))/(sigma*Math.sqrt(2*Math.PI));};
+	var grens = board.create('slider',[[-2,.9],[0,.9],[0,1.645,5]],{name:'grens', withTicks:false, size:3});
+
+
+				
+				// Create axis
+				var xaxis = board.create("axis", [[0,0], [1,0]], {strokeColor: "black", ticks: {majorHeight: 10}});
+				
+				
+				// Plot normal distribution
+				var plotf = board.create("functiongraph", [f, -3, 8], {strokeColor: "black", strokeWidth: 2, highlight: false});
+				// Plot normal distribution
+				var plotg = board.create("functiongraph", [g, -3, 8], {strokeColor: "black", strokeWidth: 2, highlight: false});
+				
+var power = board.create('integral',[[
+		function() {return grens.Value();},
+		7.8],
+		plotg
+		],{
+	color:'#009a0a',
+	fillOpacity:0.7,
+	label: { visible:false },
+	curveLeft:{visible:false},
+	curveRight:{visible:false},
+	baseLeft:{visible:false},
+	baseRight:{visible:false},
+	highlight:false
+	});
+var typetweefout = board.create('integral',[[
+		-2,
+		function() {return grens.Value();}],
+		plotg
+		],{
+	color:'#ff8f00',
+	fillOpacity:0.7,
+	label: { visible:false },
+	curveLeft:{visible:false},
+	curveRight:{visible:false},
+	baseLeft:{visible:false},
+	baseRight:{visible:false},
+	highlight:false
+	});
+var kritiekegebied = board.create('integral',[[
+		function() {return grens.Value();},
+		8],
+		plotf
+		],{
+	color:'red',
+	fillOpacity:0.7,
+	label: { visible:false },
+	curveLeft:{visible:false},
+	curveRight:{visible:false},
+	baseLeft:{visible:false},
+	baseRight:{visible:false},
+	highlight:false
+	});
+var significantieniveau = board.create('text',[-2,.7,function(){ return 'opp kritieke gebied = <span style="width: 70px">'+ kritiekegebied.Value().toFixed(3) + '</span> (significantieniveau)';}]);
+board.create('text',[function() { return -0.2+grens.Value();}, -0.05, function() { return '' + grens.Value().toFixed(2);}]);
+board.create('text',[0, 0.42, 'H<sub>0</sub>']);
+board.create('text',[function() { return realmean.Value();}, 0.42, 'H<sub>1</sub>']);
+		</script>
+		
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>

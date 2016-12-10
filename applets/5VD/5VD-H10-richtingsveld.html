@@ -1,0 +1,200 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Richtingsveld</title>
+</head>
+<body>
+
+<table border="0" cellspacing="0" cellpadding="20">
+<tr>
+
+<td valign="top">
+
+<h2>Richtingsveld</h2>
+
+<ul>
+<li>Vul de differentiaalvergelijking in.</li>
+<li>Let op: gebruik * voor vermenigvuldigen, Math.pow(x,2) voor een macht en Math.sin(x) voor sin(x).</li>
+<li>Vul de beginwaarden in of versleep het rode punt.</li>
+<li>De oplossingsfunctie wordt in rood getekend.</li>
+</ul>
+
+<form>
+<sup>dy</sup>/<sub>dx</sub> = <input id="odeinput" value="x+y*Math.sin(x)" type="text" size="40" onchange="doIt()" />
+<input type=button value="Plot" onclick="doIt()" />
+<br />
+<br />
+(x<sub>0</sub>,y<sub>0</sub>) = 
+( <input id="Xinit" value="-3" type="text" size="5" onchange="doIt()" />, 
+  <input id="Yinit" value="0" type="text" size="5" onchange="doIt()" /> )
+<br />
+<br />
+<input id="Xmin" value="-4" type="text" size="10" onchange="doIt()" /> &le; x &le; 
+<input id="Xmax" value="4" type="text" size="10" onchange="doIt()" /><br />
+<input id="Ymin" value="-4" type="text" size="10" onchange="doIt()" /> &le; y &le; 
+<input id="Ymax" value="4" type="text" size="10" onchange="doIt()" />
+<br />
+<br />
+&Delta;x = <input id="Xsep" value="0.5" type="text" size="10" onchange="doIt()" />
+<br />
+&Delta;y = <input id="Ysep" value="0.5" type="text" size="10" onchange="doIt()" />
+<br />
+Lengte lijnelementen = <input id="SegmentLength" value="0.2" type="text" size="9" onchange="doIt()" />
+<br />
+<br />
+
+
+</form>
+
+
+
+</td>
+
+<td valign="top">
+
+<div id='jxgbox' class='jxgbox' style='width:450px; height:450px;'></div>
+<script type='text/javascript'>
+var brd = JXG.JSXGraph.initBoard('jxgbox', {
+	showCopyright: false,
+	showNavigation: false,
+	axis:true, 
+	boundingbox:[-4,4,4,-4]
+	});
+var N = 10;
+var P;
+
+function doIt() {
+  JXG.JSXGraph.freeBoard(brd);
+
+  // get values from the form  
+  xinit = parseFloat(document.getElementById('Xinit').value);
+  yinit = parseFloat(document.getElementById('Yinit').value);
+  xmin = parseFloat(document.getElementById('Xmin').value);
+  xmax = parseFloat(document.getElementById('Xmax').value);
+  xsep = parseFloat(document.getElementById('Xsep').value);
+  ymin = parseFloat(document.getElementById('Ymin').value);
+  ymax = parseFloat(document.getElementById('Ymax').value);
+  ysep = parseFloat(document.getElementById('Ysep').value);
+  seglength = parseFloat(document.getElementById('SegmentLength').value);
+
+  brd = JXG.JSXGraph.initBoard('jxgbox', {
+  	showCopyright: false,
+  	showNavigation: false,
+  	axis:true, 
+  	boundingbox:[xmin,ymax,xmax,ymin]
+  	});
+  var txt = JXG.GeonextParser.geonext2JS(document.getElementById("odeinput").value);
+  brd.suspendUpdate();
+  f = new Function("x", "yy", "var y = yy[0]; var z = " + txt + "; return [z];"); // f is a global variable
+// P = brd.create('point',[-3,0], {name:'(x_0,y_0)'});
+  P = brd.create('point',[xinit,yinit], {name:'(x<sub>0</sub>,y<sub>0</sub>)', label: {offset:[-20,25],fontSize:20, strokeColor:"red"}, highlight:false, fixed:false}); //fixed:true van maken bij de 'target practice'
+  plotFunction();
+  slopefield(f,xmin,xmax,xsep,ymin,ymax,ysep,seglength);
+  brd.unsuspendUpdate();
+}
+
+function solutiondata() {
+   return JXG.Math.Numerics.rungeKutta('heun', [P.Y()], [P.X(), P.X()+N], 200, f);
+}
+
+// we built this into slopefield(…)
+//function slope(f,x,y) { 
+// return f(x,[y])[0];
+//}
+
+function slopefield(f,xmin,xmax,xsep,ymin,ymax,ysep,seglength) {
+   var xval, yval;
+
+   var xnum = Math.ceil((xmax-xmin)/xsep);
+   var ynum = Math.ceil((ymax-ymin)/ysep);
+
+   for (var i=0;i<=xnum;i++) { 
+     xval = xmin + i*xsep;
+     for (var j=0;j<=ynum;j++) { 
+       yval = ymin + j*ysep;
+
+       brd.create('segment',[
+// [xval-0.5*seglength*Math.cos(Math.atan( slope(f,xval,yval) )), yval-0.5*seglength*Math.sin(Math.atan( slope(f,xval,yval) ))], 
+// [xval+0.5*seglength*Math.cos(Math.atan( slope(f,xval,yval) )), yval+0.5*seglength*Math.sin(Math.atan( slope(f,xval,yval) ))]
+       [xval-0.5*seglength*Math.cos(Math.atan( f(xval,[yval])[0] )), yval-0.5*seglength*Math.sin(Math.atan( f(xval,[yval])[0] ))], 
+       [xval+0.5*seglength*Math.cos(Math.atan( f(xval,[yval])[0] )), yval+0.5*seglength*Math.sin(Math.atan( f(xval,[yval])[0] ))]
+       ], 
+       {strokeWidth:2, dash:0, color:'#006ae0'});    
+     }
+   }
+}
+
+function plotFunction() {
+    var g = brd.create('curve', [[0],[0]], {strokeColor:'red', strokeWidth:3, highlight:false});
+    g.updateDataArray = function() {
+        var data = solutiondata();
+        var h = N/200;
+        this.dataX = [];
+        this.dataY = [];
+        for(var i=0; i<data.length; i++) {
+            this.dataX[i] = P.X()+i*h;
+            this.dataY[i] = data[i][0];
+        }
+    };
+};
+
+doIt();
+</script>
+
+</td>
+
+
+</tr>
+
+</table>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+<style>
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<script>
+var Complex = (function() {
+var tmp = function(a, b) {
+    this.assign(a, b);
+}
+    var makeComplex = function(b, re, im) {
+        if (b instanceof Complex) {
+            b.re = re;
+            b.im = im;
+        }
+        else {
+            b = new Complex(re, im);
+        }
+
+        return b;
+    }
+
+    var p = tmp.prototype;
+
+    p.assign = function(a, b) {
+        if (a instanceof Complex ) {
+            this.re = a.re;
+            this.im = a.im;
+        }
+        else {
+            this.re = a;
+            this.im = b;
+        }
+
+        return this;
+    }
+
+    p.add = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re + a.re;
+            i = this.im + a.im;
+        }
+        else {
+            r = this.re + a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.sub = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re - a.re;
+            i = this.im - a.im;
+        }
+        else {
+            r = this.re - a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rsub = function(a, b) {
+        if (a instanceof Complex) {
+            return a.sub(this, b);
+        }
+
+        return makeComplex(b, this.re - a, this.im);
+    }
+
+    p.mul = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re*a.re - this.im*a.im;
+            i = this.re*a.im + this.im*a.re;
+        }
+        else {
+            r = this.re*a;
+            i = this.im*a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.div = function(a, b) {
+        var r, i, d;
+
+        if (a instanceof Complex) {
+            d = a.re*a.re + a.im*a.im;
+            r = (this.re*a.re + this.im*a.im)/d;
+            i = (this.im*a.re - this.re*a.im)/d;
+        }
+        else {
+            r = this.re/a;
+            i = this.im/a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rdiv = function(a, b) {
+        if (a instanceof Complex) {
+            return a.div(this, b);
+        }
+
+        return makeComplex(b, this.re/a, this.im/a);
+    }
+
+    p.conj = function(a) {
+        return makeComplex(a, this.re, -this.im);
+    }
+
+	return tmp;
+})();
+</script>
+
+<title>Complexe functies</title>
+
+<body>
+
+<h2>De natuurlijke logaritme</h2>
+<p>
+
+\(f(x) = \ln z\)
+
+
+<div id="jxgbox1" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 5px;"></div>
+<div style="float: left; margin-right: 5px; margin-top: 200px;">\(\rightarrow\)</div>
+<div id="jxgbox2" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 0px;"></div>
+
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    elements: { highlight: false }    
+});
+
+board = JXG.JSXGraph.initBoard('jxgbox1', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+        
+var r = board.create('slider',[[-9,9],[-4,9],[0,2,10]], {
+	strokeColor: '#006ae0', 
+	baseline: {strokeColor: '#006ae0'}, 
+	highline: {strokeColor: '#006ae0'} 
+	});
+var cirkel = board.create('circle',[[0,0], function() {return r.Value();}], { strokeColor: '#006ae0', strokeWidth: 3 } );
+var z1 = board.create('glider', [2,0,cirkel], {color: '#006ae0', name: ''});
+var hoek = board.create('slider',[[-9,8],[-4,8],[0,.7,2*Math.PI]], {
+	strokeColor: '#ff0000', 
+	baseline: {strokeColor: '#ff0000'}, 
+	highline: {strokeColor: '#ff0000'} 
+	});
+var halvelijn = board.create('line', [ [0,0], [
+	function() { return Math.cos(hoek.Value()); },
+	function() { return Math.sin(hoek.Value()); }
+	] ], { strokeColor: '#ff0000', straightFirst: false } 
+	);
+var punt = board.create('point', [0,0], {strokeColor: '#ff0000', fillColor: 'white'});
+var z2 = board.create('glider', [1,1,halvelijn], {color: '#ff0000', name: ''});
+
+
+</script>
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    
+});
+board2 = JXG.JSXGraph.initBoard('jxgbox2', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+var beeldfiguur1 = board2.create('line', [
+	[function() { return Math.log(r.Value()); }, 0 ],
+	[function() { return Math.log(r.Value()); }, 1 ] ],
+	{ strokeColor: '#006ae0', strokeWidth: 3 }
+	);
+var beeldpunt1 = board2.create('point', [
+	function() { return Math.log(r.Value()); },
+	function() { 
+		if ( Math.atan2(z1.Y(),z1.X()) < 0 ) {
+			return Math.atan2(z1.Y(),z1.X())+2*Math.PI; }
+		else { return Math.atan2(z1.Y(),z1.X());
+		}
+	}
+	], 
+	{ strokeColor: '#006ae0', fillColor: '#006ae0', name: '' }
+	);
+var beeldpunt1a = board2.create('point', [
+	function() { return Math.log(r.Value()); },
+	function() { 
+		if ( Math.atan2(z1.Y(),z1.X()) < 0 ) {
+			return Math.atan2(z1.Y(),z1.X())+4*Math.PI; }
+		else { return Math.atan2(z1.Y(),z1.X())+2*Math.PI;
+		}
+	}
+	], 
+	{ strokeColor: '#006ae0', fillColor: '#006ae0', name: '' }
+	);
+var beeldpunt1b = board2.create('point', [
+	function() { return Math.log(r.Value()); },
+	function() { 
+		if ( Math.atan2(z1.Y(),z1.X()) < 0 ) {
+			return Math.atan2(z1.Y(),z1.X()); }
+		else { return Math.atan2(z1.Y(),z1.X())-2*Math.PI;
+		}
+	}
+	], 
+	{ strokeColor: '#006ae0', fillColor: '#006ae0', name: '' }
+	);
+var beeldpunt1c = board2.create('point', [
+	function() { return Math.log(r.Value()); },
+	function() { 
+		if ( Math.atan2(z1.Y(),z1.X()) < 0 ) {
+			return Math.atan2(z1.Y(),z1.X())-2*Math.PI; }
+		else { return Math.atan2(z1.Y(),z1.X())-4*Math.PI;
+		}
+	}
+	], 
+	{ strokeColor: '#006ae0', fillColor: '#006ae0', name: '' }
+	);
+var beeldfiguur2 = board2.create('line',[
+	[0, function() { return hoek.Value(); }],
+	[1, function() { return hoek.Value(); }]
+	], 
+	{ strokeColor: '#ff0000', strokeWidth: 3 }
+	);
+var beeldpunt2 = board2.create('point', [
+	function() { return Math.log(Math.sqrt(z2.X()*z2.X()+z2.Y()*z2.Y())); },
+	function() { return hoek.Value(); }
+	], 
+	{ strokeColor: '#ff0000', fillColor: '#ff0000', name: '' }
+	);
+var beeldfiguur2a = board2.create('line',[
+	[0, function() { return hoek.Value()+2*Math.PI; }],
+	[1, function() { return hoek.Value()+2*Math.PI; }]
+	], 
+	{ strokeColor: '#ff0000', strokeWidth: 3 }
+	);
+var beeldpunt2a = board2.create('point', [
+	function() { return Math.log(Math.sqrt(z2.X()*z2.X()+z2.Y()*z2.Y())); },
+	function() { return hoek.Value()+2*Math.PI; }
+	], 
+	{ strokeColor: '#ff0000', fillColor: '#ff0000', name: '' }
+	);
+var beeldfiguur2b = board2.create('line',[
+	[0, function() { return hoek.Value()-2*Math.PI; }],
+	[1, function() { return hoek.Value()-2*Math.PI; }]
+	], 
+	{ strokeColor: '#ff0000', strokeWidth: 3 }
+	);
+var beeldpunt2b = board2.create('point', [
+	function() { return Math.log(Math.sqrt(z2.X()*z2.X()+z2.Y()*z2.Y())); },
+	function() { return hoek.Value()-2*Math.PI; }
+	], 
+	{ strokeColor: '#ff0000', fillColor: '#ff0000', name: '' }
+	);
+var beeldfiguur2c = board2.create('line',[
+	[0, function() { return hoek.Value()-4*Math.PI; }],
+	[1, function() { return hoek.Value()-4*Math.PI; }]
+	], 
+	{ strokeColor: '#ff0000', strokeWidth: 3 }
+	);
+var beeldpunt2c = board2.create('point', [
+	function() { return Math.log(Math.sqrt(z2.X()*z2.X()+z2.Y()*z2.Y())); },
+	function() { return hoek.Value()-4*Math.PI; }
+	], 
+	{ strokeColor: '#ff0000', fillColor: '#ff0000', name: '' }
+	);
+	
+board.addChild(board2);
+</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

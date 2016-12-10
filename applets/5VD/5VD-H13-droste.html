@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<script>
+var Complex = (function() {
+var tmp = function(a, b) {
+    this.assign(a, b);
+}
+    var makeComplex = function(b, re, im) {
+        if (b instanceof Complex) {
+            b.re = re;
+            b.im = im;
+        }
+        else {
+            b = new Complex(re, im);
+        }
+
+        return b;
+    }
+
+    var p = tmp.prototype;
+
+    p.assign = function(a, b) {
+        if (a instanceof Complex ) {
+            this.re = a.re;
+            this.im = a.im;
+        }
+        else {
+            this.re = a;
+            this.im = b;
+        }
+
+        return this;
+    }
+
+    p.add = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re + a.re;
+            i = this.im + a.im;
+        }
+        else {
+            r = this.re + a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.sub = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re - a.re;
+            i = this.im - a.im;
+        }
+        else {
+            r = this.re - a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rsub = function(a, b) {
+        if (a instanceof Complex) {
+            return a.sub(this, b);
+        }
+
+        return makeComplex(b, this.re - a, this.im);
+    }
+
+    p.mul = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re*a.re - this.im*a.im;
+            i = this.re*a.im + this.im*a.re;
+        }
+        else {
+            r = this.re*a;
+            i = this.im*a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.div = function(a, b) {
+        var r, i, d;
+
+        if (a instanceof Complex) {
+            d = a.re*a.re + a.im*a.im;
+            r = (this.re*a.re + this.im*a.im)/d;
+            i = (this.im*a.re - this.re*a.im)/d;
+        }
+        else {
+            r = this.re/a;
+            i = this.im/a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rdiv = function(a, b) {
+        if (a instanceof Complex) {
+            return a.div(this, b);
+        }
+
+        return makeComplex(b, this.re/a, this.im/a);
+    }
+
+    p.conj = function(a) {
+        return makeComplex(a, this.re, -this.im);
+    }
+
+	return tmp;
+})();
+</script>
+
+<title>Complexe functies</title>
+
+<body>
+
+<h2>Droste-effect</h2>
+<p>
+
+\(f(x) = \ln (z/r_1)\)
+
+
+<div id="jxgbox1" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 5px;"></div>
+<div style="float: left; margin-right: 5px; margin-top: 200px;">\(\rightarrow\)</div>
+<div id="jxgbox2" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 0px;"></div>
+
+<p style="clear: both;">&nbsp;</p>
+
+<div id="jxgbox3" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 0px;"></div>
+<div style="float: left; margin-right: 5px; margin-top: 200px;">\(\rightarrow\)</div>
+<div id="jxgbox4" class="jxgbox" style="width:450px; height:450px; border:1px solid gray; padding:0; float: left; margin-right: 0px;"></div>
+
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    elements: { highlight: false }    
+});
+
+board = JXG.JSXGraph.initBoard('jxgbox1', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+        
+var rklein = board.create('slider',[[-9,9],[-4,9],[1,2,4]], {
+	strokeColor: '#006ae0', 
+	baseline: {strokeColor: '#006ae0'}, 
+	highline: {strokeColor: '#006ae0'},
+	name: 'r<sub>1</sub>' 
+	});
+var rgroot = board.create('slider',[[-9,8],[-4,8],[4.1,7,10]], {
+	strokeColor: '#006ae0', 
+	baseline: {strokeColor: '#006ae0'}, 
+	highline: {strokeColor: '#006ae0'}, 
+	name: 'r<sub>2</sub>' 
+	});
+var kleinecirkel = board.create('circle',[[0,0], function() {return rklein.Value();}], { strokeColor: '#006ae0', strokeWidth: 3 } );
+var grotecirkel = board.create('circle',[[0,0], function() {return rgroot.Value();}], { strokeColor: '#006ae0', strokeWidth: 3 } );
+var streep0 = board.create('segment',[
+	[function() {return rklein.Value();},0],
+	[function() {return rgroot.Value();},0]],
+	{ strokeColor:'red', strokeWidth: 3 }
+	);
+var streep1 = board.create('segment',[
+	[0,function() {return rklein.Value();}],
+	[0,function() {return rgroot.Value();}]],
+	{ strokeColor:'green', strokeWidth: 3 }
+	);
+var streep0 = board.create('segment',[
+	[function() {return -1*rklein.Value();},0],
+	[function() {return -1*rgroot.Value();},0]],
+	{ strokeColor:'orange', strokeWidth: 3 }
+	);
+var streep0 = board.create('segment',[
+	[0,function() {return -1*rklein.Value();}],
+	[0,function() {return -1*rgroot.Value();}]],
+	{ strokeColor:'black', strokeWidth: 3 }
+	);
+
+
+</script>
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    
+});
+board2 = JXG.JSXGraph.initBoard('jxgbox2', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+var beeldfiguurklein = board2.create('segment', [
+	[0, 0 ],
+	[0, 2*Math.PI ] ],
+	{ strokeColor: '#006ae0', strokeWidth: 3 }
+	);
+var beeldfiguurgroot = board2.create('segment', [
+	[function() { return Math.log(rgroot.Value()/rklein.Value()); }, 0 ],
+	[function() { return Math.log(rgroot.Value()/rklein.Value()); }, 2*Math.PI ] ],
+	{ strokeColor: '#006ae0', strokeWidth: 3 }
+	);
+var beeldstreep0 = board2.create('segment', [
+	[0, 0 ],
+	[function() { return Math.log(rgroot.Value()/rklein.Value()); }, 0 ] ],
+	{ strokeColor:'red', strokeWidth:3 }
+	);
+var beeldstreep1 = board2.create('segment', [
+	[0, 0.5*Math.PI ],
+	[function() { return Math.log(rgroot.Value()/rklein.Value()); }, 0.5*Math.PI ] ],
+	{ strokeColor:'green', strokeWidth:3 }
+	);
+var beeldstreep2 = board2.create('segment', [
+	[0, Math.PI ],
+	[function() { return Math.log(rgroot.Value()/rklein.Value()); }, Math.PI ] ],
+	{ strokeColor:'orange', strokeWidth:3 }
+	);
+var beeldstreep3 = board2.create('segment', [
+	[0, 1.5*Math.PI ],
+	[function() { return Math.log(rgroot.Value()/rklein.Value()); }, 1.5*Math.PI ] ],
+	{ strokeColor:'black', strokeWidth:3 }
+	);
+var beeldstreep4 = board2.create('segment', [
+	[0, 2*Math.PI ],
+	[function() { return Math.log(rgroot.Value()/rklein.Value()); }, 2*Math.PI ] ],
+	{ strokeColor:'red', strokeWidth:3 }
+	);
+	
+board.addChild(board2);
+</script>
+
+
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    
+});
+board3 = JXG.JSXGraph.initBoard('jxgbox3', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+var xco = function() { return Math.log(rgroot.Value()/rklein.Value()); }
+var factor = function() { return 2*Math.PI/(4*Math.PI*Math.PI+xco()*xco()); }
+var L0 = board3.create('point',[0,0], {visible:false});
+var R0 = board3.create('point',[
+	function() { return factor()*(xco()*2*Math.PI); },
+	function() { return factor()*(xco()*xco()); }
+	], {visible:false});
+var L1 = board3.create('point',[
+		function() { return factor()*(-xco()*0.5*Math.PI); },
+		function() { return factor()*(2*Math.PI*0.5*Math.PI); }],
+		{visible:false});
+var R1 = board3.create('point',[ 
+		function() { return factor()*(2*Math.PI*xco()-xco()*0.5*Math.PI); },
+		function() { return factor()*(xco()*xco()+2*0.5*Math.PI*Math.PI); }
+		],
+		{visible:false});		
+var L2 = board3.create('point',[
+		function() { return factor()*(-xco()*Math.PI); },
+		function() { return factor()*(2*Math.PI*Math.PI); }],
+		{visible:false});
+var R2 = board3.create('point',[
+		function() { return factor()*(2*Math.PI*xco()-xco()*Math.PI); },
+		function() { return factor()*(xco()*xco()+2*Math.PI*Math.PI); }],
+		{visible:false});
+var L3 = board3.create('point',[
+		function() { return factor()*(-xco()*1.5*Math.PI); },
+		function() { return factor()*(2*Math.PI*1.5*Math.PI); }],
+		{visible:false});
+var R3 = board3.create('point',[
+		function() { return factor()*(2*Math.PI*xco()-xco()*1.5*Math.PI); },
+		function() { return factor()*(xco()*xco()+2*1.5*Math.PI*Math.PI); }],
+		{visible:false});
+var L4 = board3.create('point',[
+		function() { return factor()*(-xco()*2*Math.PI); },
+		function() { return factor()*(2*Math.PI*2*Math.PI); }],
+		{visible:false});
+var R4 = board3.create('point',[0,2*Math.PI],
+		{visible:false});
+var linkerzijde = board3.create('segment', [L0,L4],
+	{ strokeColor:'#006ae0', strokeWidth:3 }
+	);
+var rechterzijde = board3.create('segment', [R0,R4],
+	{ strokeColor:'#006ae0', strokeWidth:3 }
+	);
+var bbeeldstreep0 = board3.create('segment', [R0,L0],
+	{ strokeColor:'red', strokeWidth:3 }
+	);
+var bbeeldstreep1 = board3.create('segment', [R1,L1],
+	{ strokeColor:'green', strokeWidth:3 }
+	);
+var bbeeldstreep2 = board3.create('segment', [R2,L2],
+	{ strokeColor:'orange', strokeWidth:3 }
+	);
+var bbeeldstreep3 = board3.create('segment', [R3,L3],
+	{ strokeColor:'black', strokeWidth:3 }
+	);
+var bbeeldstreep4 = board3.create('segment', [R4,L4],
+	{ strokeColor:'red', strokeWidth:3 }
+	);
+
+board.addChild(board3);
+</script>
+
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    
+});
+board4 = JXG.JSXGraph.initBoard('jxgbox4', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-10,10,10,-10],
+	keepaspectratio:true
+	});
+board4.create('curve', [
+	function(t) { return Math.exp(t*R0.X()+(1-t)*R4.X())*Math.cos(t*R0.Y()+(1-t)*R4.Y()); },
+	function(t) { return Math.exp(t*R0.X()+(1-t)*R4.X())*Math.sin(t*R0.Y()+(1-t)*R4.Y()); },
+	0,
+	1
+	],
+	{strokeColor: '#006ae0', strokeWidth: 3}
+	);
+board4.create('curve', [
+	function(t) { return Math.exp(t*L0.X()+(1-t)*L4.X())*Math.cos(t*L0.Y()+(1-t)*L4.Y()); },
+	function(t) { return Math.exp(t*L0.X()+(1-t)*L4.X())*Math.sin(t*L0.Y()+(1-t)*L4.Y()); },
+	0,
+	1
+	],
+	{strokeColor: '#006ae0', strokeWidth: 3}
+	);
+board4.create('curve', [
+	function(t) { return Math.exp(t*L0.X()+(1-t)*R0.X())*Math.cos(t*L0.Y()+(1-t)*R0.Y()); },
+	function(t) { return Math.exp(t*L0.X()+(1-t)*R0.X())*Math.sin(t*L0.Y()+(1-t)*R0.Y()); },
+	0,
+	1
+	],
+	{strokeColor: 'red', strokeWidth: 3}
+	);
+board4.create('curve', [
+	function(t) { return Math.exp(t*L1.X()+(1-t)*R1.X())*Math.cos(t*L1.Y()+(1-t)*R1.Y()); },
+	function(t) { return Math.exp(t*L1.X()+(1-t)*R1.X())*Math.sin(t*L1.Y()+(1-t)*R1.Y()); },
+	0,
+	1
+	],
+	{strokeColor: 'green', strokeWidth: 3}
+	);
+board4.create('curve', [
+	function(t) { return Math.exp(t*L2.X()+(1-t)*R2.X())*Math.cos(t*L2.Y()+(1-t)*R2.Y()); },
+	function(t) { return Math.exp(t*L2.X()+(1-t)*R2.X())*Math.sin(t*L2.Y()+(1-t)*R2.Y()); },
+	0,
+	1
+	],
+	{strokeColor: 'orange', strokeWidth: 3}
+	);
+board4.create('curve', [
+	function(t) { return Math.exp(t*L3.X()+(1-t)*R3.X())*Math.cos(t*L3.Y()+(1-t)*R3.Y()); },
+	function(t) { return Math.exp(t*L3.X()+(1-t)*R3.X())*Math.sin(t*L3.Y()+(1-t)*R3.Y()); },
+	0,
+	1
+	],
+	{strokeColor: 'black', strokeWidth: 3}
+	);
+board4.create('curve', [
+	function(t) { return Math.exp(t*L4.X()+(1-t)*R4.X())*Math.cos(t*L4.Y()+(1-t)*R4.Y()); },
+	function(t) { return Math.exp(t*L4.X()+(1-t)*R4.X())*Math.sin(t*L4.Y()+(1-t)*R4.Y()); },
+	0,
+	1
+	],
+	{strokeColor: 'red', strokeWidth: 3}
+	);
+
+
+board.addChild(board4);
+</script>
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

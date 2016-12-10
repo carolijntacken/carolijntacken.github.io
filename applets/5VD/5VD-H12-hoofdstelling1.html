@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+<style>
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<script>
+
+
+var Complex = (function() {
+var tmp = function(a, b) {
+    this.assign(a, b);
+}
+    var makeComplex = function(b, re, im) {
+        if (b instanceof Complex) {
+            b.re = re;
+            b.im = im;
+        }
+        else {
+            b = new Complex(re, im);
+        }
+
+        return b;
+    }
+
+    var p = tmp.prototype;
+
+    p.assign = function(a, b) {
+        if (a instanceof Complex ) {
+            this.re = a.re;
+            this.im = a.im;
+        }
+        else {
+            this.re = a;
+            this.im = b;
+        }
+
+        return this;
+    }
+
+    p.add = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re + a.re;
+            i = this.im + a.im;
+        }
+        else {
+            r = this.re + a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.sub = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re - a.re;
+            i = this.im - a.im;
+        }
+        else {
+            r = this.re - a;
+            i = this.im;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rsub = function(a, b) {
+        if (a instanceof Complex) {
+            return a.sub(this, b);
+        }
+
+        return makeComplex(b, this.re - a, this.im);
+    }
+
+    p.mul = function(a, b) {
+        var r, i;
+
+        if (a instanceof Complex) {
+            r = this.re*a.re - this.im*a.im;
+            i = this.re*a.im + this.im*a.re;
+        }
+        else {
+            r = this.re*a;
+            i = this.im*a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.div = function(a, b) {
+        var r, i, d;
+
+        if (a instanceof Complex) {
+            d = a.re*a.re + a.im*a.im;
+            r = (this.re*a.re + this.im*a.im)/d;
+            i = (this.im*a.re - this.re*a.im)/d;
+        }
+        else {
+            r = this.re/a;
+            i = this.im/a;
+        }
+
+        return makeComplex(b, r, i);
+    }
+
+    p.rdiv = function(a, b) {
+        if (a instanceof Complex) {
+            return a.div(this, b);
+        }
+
+        return makeComplex(b, this.re/a, this.im/a);
+    }
+
+    p.conj = function(a) {
+        return makeComplex(a, this.re, -this.im);
+    }
+
+	return tmp;
+})();
+</script>
+
+<title>Hoofdstelling van de algebra I</title>
+
+<body>
+
+<h2>Hoofdstelling van de algebra I</h2>
+<p>
+
+Hieronder zie je hoe de functie \(f(z) = z^3 +1-i\) de blauwe cirkel afbeeldt op de zwarte. Maak de straal van de blauwe cirkel kleiner. Het beeld, dus de zwarte cirkel, wordt dan ook aangepast. Gaat de zwarte cirkel op zeker moment door 0? Voor welke \(r\) is dat ongeveer?
+
+
+<div id="jxgbox1" class="jxgbox" style="width:650px; height:450px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+    axis: {
+    	ticks: { majorHeight : 10, ticksDistance:.4 },
+    	
+    },
+    
+});
+board = JXG.JSXGraph.initBoard('jxgbox1', {
+	showCopyright: false,
+	showNavigation: false,
+	axis: true, 
+	grid: true, 
+	ticksDistance:2, 
+	boundingbox:[-8,8,14,-8],
+	keepaspectratio:true
+	});
+var r = board.create('slider',[[4,7],[9,7],[0,1.7,2]], {});
+var cirkel = board.create('circle',[[0,0], function() {return r.Value();}], {strokeColor: '#006ae0'} );
+var Z = board.create('glider', [1.5,0,cirkel], {color: '#006ae0', name: 'z'});
+
+var c0 = new Complex(1, -1);
+
+var z = new Complex(0,0);
+var w = new Complex(0,0);
+var beeld = function(t) {
+	if (t) {
+		z.assign(Math.cos(t),Math.sin(t)).mul(r.Value(),z);
+	}
+	else {
+		z.assign(Z.X(), Z.Y());
+	}
+	return z.mul(z,w).mul(z,w).add(c0,w);
+}
+
+var W = board.create('point',[function() { return beeld().re; }, function() { return beeld().im; }], {color: 'black', name: 'w'});
+
+var beeldfiguur = board.create('curve', [
+	function(t) { return beeld(t).re; },
+	function(t) { return beeld(t).im; },
+	-0.01, 2*Math.PI],
+	{strokeColor: 'black', strokeWidth: 2}
+	);
+	
+/* var W = board.create('point', [
+	function() { return Math.pow(Z.X(),3)-3*Z.X()*Z.Y()*Z.Y()+1 ;},
+	function() { return 3*Z.X()*Z.X()*Z.Y()-Math.pow(Z.Y(),3)-1 ;}
+	], {} ); */
+</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

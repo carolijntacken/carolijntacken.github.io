@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Bijzondere lijnen in driehoeken</title>
+
+<body>
+
+<h2>Bijzondere lijnen in driehoeken</h2>
+
+<table style='margin-bottom: 2em;'>
+	<tr>
+		<td><input type="checkbox" onclick="bissectrices()" id="biss" /> bissectrices</td>
+		<td><input type="checkbox" onclick="incirkel()" id="incirkel" /> ingeschreven cirkel</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" onclick="hoogtelijnen()" id="hoog" /> hoogtelijnen</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" onclick="zwaartelijnen()" id="zwaar" /> zwaartelijnen</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" onclick="middelloodlijnen()" id="mll" /> middelloodlijnen</td>
+		<td><input type="checkbox" onclick="omcirkel()" id="omcirkel" /> omgeschreven cirkel</td>
+	</tr>
+</table>
+
+
+<div id="box" class="jxgbox" style="float: left; width:500px; height:500px; margin-bottom:1em; margin-right: 1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	    point: {
+	    	fillColor: '#454545',
+	    	strokeWidth: 1,
+	    	strokeColor: '#000000',
+	    	size: 2,
+	    	showInfobox: false
+	    },
+	    segment: {
+	    	strokeColor: 'black',
+	    	highlight: false
+	    }
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:false, 
+		keepaspectratio:true,
+		boundingbox:[-1.5,1.5,1.5,-1.5] 
+		});
+	var A = board.create('point',[-1,-.5]);
+	var B = board.create('point',[1,-.2]);
+	var C = board.create('point',[-.5,1]);
+	var segmentAB = board.create('segment',[A,B]);
+	var segmentBC = board.create('segment',[B,C]);
+	var segmentAC = board.create('segment',[A,C]);
+	var lijnAB = board.create('line',[A,B], { visible:false } );
+	var lijnBC = board.create('line',[B,C], { visible:false } );
+	var lijnAC = board.create('line',[A,C], { visible:false } );	
+</script>
+
+<script>
+var bissA, bissB, bissC;
+function bissectrices(){
+	if (document.getElementById("biss").checked == true) {
+		bissA = board.create('bisector',[B,A,C], {strokeColor: '#006ae0', highlight:false} );
+		bissB = board.create('bisector',[A,B,C], {strokeColor: '#006ae0', highlight:false} );
+		bissC = board.create('bisector',[B,C,A], {strokeColor: '#006ae0', highlight:false} );	
+		document.getElementById('tekst').innerHTML = '<p>Een bissectrice van een hoek deelt die hoek middendoor.</p><p>De drie bissectrices in een driehoek gaan door één punt, dat punt is het middelpunt van de ingeschreven cirkel (de cirkel die in de driehoek ligt en raakt aan alle drie de zijden).</p><p>Voor elk punt op de bissectrice geldt dat het gelijke afstanden heeft tot de beide benen van de hoek. En omgekeerd: als een punt gelijke afstanden heeft tot de benen van een hoek dan ligt dat punt op de bissectrice van die hoek.'
+	} else {
+		board.removeObject(bissA);	   
+		board.removeObject(bissB);	   
+		board.removeObject(bissC);	   
+		board.removeObject(ingeschrevencirkel);
+		document.getElementById("incirkel").checked = false;
+		document.getElementById('tekst').innerHTML = '';	
+	}
+	board.update();
+}
+</script>
+<script>
+var ingeschrevencirkel;
+function incirkel(){
+	if (document.getElementById("incirkel").checked == true) {
+		if (document.getElementById("biss").checked == true) {
+		ingeschrevencirkel = board.create('incircle',[A,B,C], {strokeColor: '#006ae0', highlight:false} );
+		} else {}
+	} else {
+		board.removeObject(ingeschrevencirkel);
+	}
+	board.update();
+}
+</script>
+<script>
+var hoogA, hoogB, hoogC;
+function hoogtelijnen(){
+	if (document.getElementById("hoog").checked == true) {
+		hoogA = board.create('perpendicular',[A,lijnBC], {strokeColor: '#006ae0', highlight:false} );
+		hoogB = board.create('perpendicular',[B,lijnAC], {strokeColor: '#006ae0', highlight:false} );
+		hoogC = board.create('perpendicular',[C,lijnAB], {strokeColor: '#006ae0', highlight:false} );
+		document.getElementById('tekst').innerHTML = '<p>Een hoogtelijn gaat door een hoekpunt van de driehoek en staat loodrecht op de zijde ertegenover.</p><p>De drie hoogtelijnen in een driehoek gaan door één punt, het hoogtepunt.</p>'
+	} else {
+		board.removeObject(hoogA);	   
+		board.removeObject(hoogB);	   
+		board.removeObject(hoogC);	 
+		document.getElementById('tekst').innerHTML = '';  
+	}
+	board.update();
+}
+</script>
+<script>
+var middenAB, middenAC, middenBC, zwaarA, zwaarB, zwaarC;
+function zwaartelijnen(){
+	if (document.getElementById("zwaar").checked == true) {
+		middenAB = board.create('midpoint',[A,B], { name:''} );
+		middenBC = board.create('midpoint',[B,C], { name:''} );
+		middenAC = board.create('midpoint',[A,C], { name:''} );
+		zwaarA = board.create('line',[A,middenBC], {strokeColor: '#006ae0', highlight:false} );
+		zwaarB = board.create('line',[B,middenAC], {strokeColor: '#006ae0', highlight:false} );
+		zwaarC = board.create('line',[C,middenAB], {strokeColor: '#006ae0', highlight:false} );
+		document.getElementById('tekst').innerHTML = 'Een zwaartelijn gaat door een hoekpunt van de driehoek en door het midden van de zijde ertegenover.</p><p>De drie zwaartelijnen in een driehoek gaan door één punt, het zwaartepunt.</p><p>De zwaartelijnen verdelen elkaar in stukken die zich verhouden als 2 : 1.</p>'
+	} else {
+		board.removeObject(zwaarA);	   
+		board.removeObject(zwaarB);	   
+		board.removeObject(zwaarC);
+		board.removeObject(middenAB);
+		board.removeObject(middenBC);
+		board.removeObject(middenAC);
+		document.getElementById('tekst').innerHTML = '';
+	}
+	board.update();
+}
+</script>
+<script>
+var middenAB, middenAC, middenBC, mllAB, mllBC, mllAC;
+function middelloodlijnen(){
+	if (document.getElementById("mll").checked == true) {
+		middenAB = board.create('midpoint',[A,B], { name:''} );
+		middenBC = board.create('midpoint',[B,C], { name:''} );
+		middenAC = board.create('midpoint',[A,C], { name:''} );
+		mllAB = board.create('perpendicular',[middenAB,lijnAB], {strokeColor: '#006ae0', highlight:false} );
+		mllBC = board.create('perpendicular',[middenBC,lijnBC], {strokeColor: '#006ae0', highlight:false} );
+		mllAC = board.create('perpendicular',[middenAC,lijnAC], {strokeColor: '#006ae0', highlight:false} );
+		document.getElementById('tekst').innerHTML = '<p>Een middelloodlijn gaat door het midden van een zijde en staat er loodrecht op. </p><p>De drie middelloodlijnen van een driehoek gaan door één punt en dat punt is het middelpunt van de omgeschreven cirkel.</p><p>Voor elk punt op de middelloodlijn van AB geldt dat de afstand tot A en tot B hetzelfde is. En omgekeerd: elk punt met gelijke afstanden tot A en tot B ligt op de middelloodlijn van AB.';
+	} else {
+		board.removeObject(mllAB);	   
+		board.removeObject(mllBC);	   
+		board.removeObject(mllAC);	   
+		board.removeObject(middenAB);
+		board.removeObject(middenBC);
+		board.removeObject(middenAC);
+		board.removeObject(omgeschrevencirkel);
+		document.getElementById("omcirkel").checked = false;
+		document.getElementById('tekst').innerHTML = '';	
+	}
+	board.update();
+}
+</script>
+<script>
+var omgeschrevencirkel;
+function omcirkel(){
+	if (document.getElementById("omcirkel").checked == true) {
+		if (document.getElementById("mll").checked == true) {
+		omgeschrevencirkel = board.create('circumcircle',[A,B,C], {strokeColor: '#006ae0', highlight:false} );
+		} else {}
+	} else {
+		board.removeObject(omgeschrevencirkel);
+	}
+	board.update();
+}
+</script>
+
+
+
+
+<div style='height:  10em;'>
+	<div id='tekst'>	
+	
+	</div>
+</div>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>

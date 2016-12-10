@@ -1,0 +1,98 @@
+
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script>document.createElement('footer')</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+
+<title>Kwadrateren</title>
+
+<body> 
+<h2>De functie \(f(z)=\frac1z\)</h2>
+
+<p>In het linkervenster is een halve lijn getekend. Met het zwarte punt kun je de hoek die de halve lijn maakt met de positieve \(x\)-as wijzigen: de \(x\)-coördinaat van dit punt is de hoek in radialen. In het rechtervenster is het beeld van de halve lijn onder de functie \(f(z)=\frac1z\) getekend.</p>
+<p>Het blauwe punt op de beeldgrafiek in het rechtervenster is het beeld van het blauwe punt op de cirkel in het linkervenster. Je kunt het punt verslepen, het beeldpunt wijzigt dan ook.</p>
+
+<div id="calculator" style="float: left; width: 450px; height: 450px;"></div>
+<div id="calculator2" style="float: left; width: 450px; height: 450px; padding-left: 20px"></div>
+  
+  
+<script >
+    var elt = document.getElementById('calculator');
+    var elt2 = document.getElementById('calculator2');
+    var valueElt = document.getElementById('value');
+
+	var calculator = Desmos.GraphingCalculator(elt, {
+		expressionsCollapsed: true,
+		lockViewport: true,
+		zoomButtons: false,
+		settingsMenu: false,
+		});
+    calculator.setMathBounds({
+      	left: -10,
+      	right: 10,
+      	bottom: -10,
+      	top: 10
+    	});
+    
+    var calculator2 = Desmos.GraphingCalculator(elt2, {
+    	expressionsCollapsed: true,
+    	zoomButtons: true,
+    	settingsMenu: false,
+    	});
+    calculator2.setMathBounds({
+      	left: -10,
+      	right: 10,
+      	bottom: -10,
+      	top: 10
+    	});
+    	    
+    //a, s
+    calculator.setExpressions([
+    	{id:'slidera', latex:'a=2', sliderBounds: {min: 0, max: 6.28}},
+    	{id:'sliders1', latex:'s=3', sliderBounds: {min: 0, max: 15}},
+    	{id:'hoek', latex: '(a,0)', color: 'black'}
+    	]);
+    var helpera1 = calculator.HelperExpression({latex: 'a'});
+	var helpers1 = calculator.HelperExpression({latex: 's'});
+    
+	calculator.setExpressions([
+		{id:'puntoplijn', latex: '(s\\cdot cos(a), s\\cdot sin(a))', color: '#006ae0', dragMode: Desmos.DragModes.X},
+		{id:'lijn', latex: '(t\\cdot cos(a), t\\cdot sin(a))', domain: {min: 0, max: 30}, color: '#006ae0'},
+		]);
+		
+    helpera1.observe('numericValue', function() {
+    	calculator2.setExpression({id: 'a2', latex: 'a='+helpera1.numericValue}
+    	);
+    	});
+    
+	helpers1.observe('numericValue', function() {
+		calculator2.setExpression({id: 's2', latex: 's='+helpers1.numericValue}
+		);
+		});
+    		
+    calculator2.setExpressions([
+    	{id: 'beeldlijn', latex: '(t\\cdot cos(-a), t\\cdot sin(-a))', domain: {min: 0, max: 30}, color: '#006ae0'},
+    	{id: 'beeldpunt', latex: '(cos(a)/s, -sin(a)/s)', color: '#006ae0', dragMode: Desmos.DragModes.NONE}
+  		]);
+  			
+  </script>
+
+
+
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

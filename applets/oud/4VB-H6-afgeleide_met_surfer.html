@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+<script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>
+
+
+
+<title>Surfer</title>
+</head>
+
+<body>
+<h1 align="center">Function Surfing - Derivatives<br>
+    </h1>
+    <hr style="width: 100%; height: 2px;"><br>
+    <table width="100%">
+      <tbody>
+        <tr style="vertical-align:top;">
+          <td> The<span style="color: #cc0000;"><span style="font-style: italic;">
+              </span></span><span style="font-style:italic; color: rgb(204, 0, 0);">derivative</span>
+            of a function $f(x)$ at a point $a$ measures the <span style="color: #cc0000; font-style: italic;">slope
+              of the tangent line</span> to the function at that point. To help
+            visualize the derivative, imagine the function as a wave that you
+            are surfing. The tilt of your surf board is the slope. <br>
+            <br>
+            In the applet below we have two windows. The top window displays the
+            graph of the function in the text box. (You can change this if you
+            wish to) As you move point $a$ along the graph, your "surf board"
+            changes to match the slope of the curve, and a triangle is created
+            with base length of 1 and height equal to the slope. &nbsp; This
+            height is then plotted in the bottom window as a function.&nbsp; The
+            bottom window thus graphs the <span style="font-style: italic;color: rgb(204, 0, 0);">derivative</span>.
+            <br>
+            <br>
+            <input id="input" value="sin(x)*x" type="text"> 
+            <input id = "plotBtn" value="Plot"
+                name="" onclick="plotter()" type="button">&nbsp;&nbsp;
+            <input id="showBtn" value="Hide Surfer" onclick="changeSurferVis()" type="button">&nbsp;&nbsp;
+            <div id="box" class="jxgbox" style="width: 500px; height: 250px; margin-top: 10px; margin-bottom: 10px;">
+            </div>
+            <div id="dbox" class="jxgbox" style="width: 500px; height: 250px;">
+            </div>
+            <script type="text/javascript">
+              var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10,5,10,-5], axis:true, showCopyright: false,
+              showNavigation: false,});
+              var dboard = JXG.JSXGraph.initBoard('dbox', {boundingbox: [-10,5,10,-5], axis:true, showCopyright: false,
+              showNavigation: false,});
+              var surferIsVis = true;
+              var surfer_im, dupSlopeHline;
+              
+              plotter();
+              function replaceAll(txt, replace, with_this) {
+                return txt.replace(new RegExp(replace, 'g'),with_this);
+              }
+              function plotter() {
+                clearAll();
+                var txtraw = document.getElementById('input').value;
+                txtraw2 = replaceAll(txtraw, 'ln', 'log');
+                f = board.jc.snippet(txtraw2, true, 'x', true);
+  				curve = board.create('functiongraph',[f,
+                	function(){ 
+                  		var c = new JXG.Coords(JXG.COORDS_BY_SCREEN,[0,0],board);
+                  		return c.usrCoords[1];
+                	},
+                	function(){ 
+                  		var c = new JXG.Coords(JXG.COORDS_BY_SCREEN,[board.canvasWidth,0],board);
+                  		return c.usrCoords[1];
+                	}
+              	],{name:txtraw, withLabel:false, strokeColor:'black', strokeWidth:2, highlight: false});
+                df = JXG.Math.Numerics.D(f);
+                
+                var a = board.create('glider', [1, 1, curve], {name:'',highlight: false});
+                a.on('drag', function() {
+                  dboard.update();
+                });
+                
+                
+                //a point on the tangent
+                //  variable x coordinate   
+                //  variable y coordinate depending on the derivative of f at point a.X()
+                p2 = board.create('point', 
+                  [function() {return a.X()+1;}, 
+                   function() {return a.Y()+df(a.X());}], 
+                                        {visible:false, style:1, name:''});
+                //the tangent 
+                l1 = board.create('line', [a,p2],{strokeColor:'#006ae0', highlight: false}); 
+                //a third point for the slope triangle
+                p3 = board.create('point', 
+                          [function() { return p2.X();}, 
+                           function() {return a.Y();}],{visible:false, style:1, name:''});
+                //the slope triangle
+                tri = board.create('polygon', [a,p2,p3], {});
+                //large green line for right side
+                slopeHline = board.create('segment', [p2,p3],
+                                          {strokeColor:'red', strokeWidth:4});
+                
+                phoriz = board.create('point', 
+                  [function() {return a.X()+1;}, 
+                   function() {return a.Y();}], 
+                                        {visible:false, style:1, name:''});
+                var urlImg = "surfer4.png";
+                surfer_im = board.create('image',[urlImg, [-1,0], [2,2]]);
+                var trans_to_a = board.create('transform', 
+                              [function(){return a.X()},function(){return a.Y()}], 
+                                              {type:'translate'});
+                var rot_transf = board.create('transform', 
+                       [function(){return JXG.Math.Geometry.angle(phoriz,a,p2)}], 
+                                              {type:'rotate'});
+                rot_transf.bindTo(surfer_im);
+                trans_to_a.bindTo(surfer_im);
+                
+                //a text for displaying slope's value  
+                t = board.create('text', 
+                  [function(){return a.X()+1.3;},
+                   function(){return a.Y()+(p2.Y()-p3.Y())/2;},
+                   function(){ return "rc="+(p2.Y()-p3.Y()).toFixed(2);}],
+                                        {visible:true,fontSize:15});
+                
+                // Plot the derivative 
+                dcurve = dboard.create('functiongraph',[df,
+                  function(){ var c = new JXG.Coords(JXG.COORDS_BY_SCREEN,[0,0],dboard);
+                    return c.usrCoords[1];
+                  },
+                  function(){ var c = new JXG.Coords(JXG.COORDS_BY_SCREEN,[dboard.canvasWidth,0],dboard);
+                    return c.usrCoords[1];
+                  }
+                ],{name:'deriv_f', withLabel:false, strokeColor:'#006ae0',strokeWidth:2, highlight: false});
+                da = dboard.create('point', 
+                  [function() {return a.X();}, 
+                   function() {return df(a.X());}], 
+                                  {visible:true, style:1, fixed:true, name:''});
+                dxpt = dboard.create('point', 
+                  [function() {return a.X();}, 
+                   function() {return 0.0;}], 
+                                  {visible:false, style:1, fixed:true, name:''});
+                dupSlopeHline = dboard.create('segment', [da,dxpt],
+                                          {strokeColor:'red', strokeWidth:4});
+                board.update();
+                dboard.update();
+            }
+              
+            var changeSurferVis=function() {
+              if(surferIsVis) {
+                document.getElementById("showBtn").value="Show Surfer";
+                surfer_im.setProperty({visible:false});
+                surferIsVis=false;
+              }
+              else {
+                document.getElementById("showBtn").value="Hide Surfer";
+                surfer_im.setProperty({visible:true});
+                surferIsVis=true;
+              }
+              board.update();
+              dboard.update();
+            }
+                
+          function clearAll() {
+            JXG.JSXGraph.freeBoard(board);
+            JXG.JSXGraph.freeBoard(dboard);
+            board = JXG.JSXGraph.initBoard('box', {boundingbox:[-10,5,10,-5], axis:true, showCopyright: false,
+            showNavigation: false,});
+            dboard = JXG.JSXGraph.initBoard('dbox', {boundingbox: [-10, 5, 10, -5], axis:true, showCopyright: false,
+            showNavigation: false,});
+            f = null;
+            curve = null;
+          }
+
+          function addTangent() {
+            if (JXG.isFunction(f)) {
+              board.suspendUpdate();
+              var p = board.create('glider',[1,0,curve], {name:'drag me'});
+              board.create('tangent',[p], {name:'drag me'});
+              board.unsuspendUpdate();
+            }
+          }
+
+          function addDerivative() {
+             if (JXG.isFunction(f)) {
+              board.create('functiongraph',[JXG.Math.Numerics.D(f),
+               function(){ var c = new JXG.Coords(JXG.COORDS_BY_SCREEN,[0,0],board);
+		               return c.usrCoords[1];
+               },
+               function(){ var c = new JXG.Coords(JXG.COORDS_BY_SCREEN,[board.canvasWidth,0],board);
+		               return c.usrCoords[1];
+               }], {dash:2});
+            }
+          }
+    </script> </td>
+        </tr>
+      </tbody>
+    </table>
+
+</body>
+</html>

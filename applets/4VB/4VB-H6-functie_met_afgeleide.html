@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script>document.createElement('footer')</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+
+<title>Functie met afgeleide</title>
+
+<body> 
+<h2>Functie met afgeleide</h2>
+
+<div>
+	<p>Beweeg punt P en de bijbehorende raaklijn over de grafiek van \(f\). Op de grafiek van \(f'\) en zie je een punt met dezelfde x-co&ouml;rdinaat meebewegen.</p>
+	<p>Hoe hangt het stijgen en dalen van \(f\) samen met de grafiek van de afgeleide?</p>
+	<p>Hoe kun je de x-co&ouml;rdinaten van de bijzondere punten in de grafiek van \(f\) berekenen?</p>
+</div>
+
+<p>De grafiek van \(f\):</p>      
+<div id="calculator" style="width: 500px; height: 300px;"></div>
+
+<p>De grafiek van \(f'\):</p>
+<div id="calculator2" style="width: 500px; height: 300px;"></div>
+  
+  
+<script >
+    var elt = document.getElementById('calculator');
+    var elt2 = document.getElementById('calculator2');
+    var valueElt = document.getElementById('value');
+
+	var calculator = Desmos.GraphingCalculator(elt, {
+		expressions: false,
+		lockViewport: true,
+		zoomButtons: false,
+		settingsMenu: false,
+		});
+    calculator.setMathBounds({
+      	left: -3,
+      	right: 5,
+      	bottom: -25,
+      	top: 15
+    	});
+    
+    var calculator2 = Desmos.GraphingCalculator(elt2, {
+    	expressions: false,
+    	lockViewport: true,
+    	zoomButtons: false,
+    	settingsMenu: false,
+    	});
+    calculator2.setMathBounds({
+      	left: -3,
+      	right: 5,
+      	bottom: -25,
+      	top: 15
+    	});
+    
+    calculator.setExpression({id: 1, latex: 'a=1'});
+    var a = calculator.HelperExpression({latex: 'a'});
+    
+    calculator.setExpression({
+    	id: 'functie', 
+    	latex: 'f(x)=x^4-4x^3+5',
+    	color: '#006ae0'
+    	});
+    calculator.setExpression({
+    	id: 'puntA', 
+    	latex: '(a, f(a))', 
+    	color: 'red'
+    	});
+    calculator.setExpression({
+    	id: 'vlijn1', 
+    	latex: 'x=a', 
+    	style: 'dashed', 
+    	color: '#006ae0' 
+    	});
+    calculator.setExpression({
+    	id: 'raaklijn', 
+    	latex: "y=f'(a)(x-a)+f(a)", 
+    	color: 'red'
+    	});
+    
+    calculator2.setExpression({
+    	id: 'afgeleide', 
+    	latex: 'g(x)=4x^3-12x^2', 
+    	color: '#006ae0'
+    	});
+
+    a.observe('numericValue', function () {
+      	$(valueElt).text(a.numericValue);
+      	calculator2.setExpression({
+      		id: 'vlijn2', 
+      		latex: 'x='+a.numericValue, 
+      		style: 'dashed',
+      		color: '#006ae0'
+      		});
+      	calculator2.setExpression({
+      		id: 'punt2', //zonder id wordt het punt niet geupdatet maar getracet
+      		latex: '('+a.numericValue+', g('+a.numericValue+'))', 
+      		color: 'red'
+      		});
+    	});
+    
+  </script>
+
+
+
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

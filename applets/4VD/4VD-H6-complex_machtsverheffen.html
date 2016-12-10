@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.97/jsxgraphcore.js"></script>
+
+<title>Machten van z (stelling van de Moivre)</title>
+
+<body>
+
+<h2>Machten van z (stelling van de Moivre)</h2>
+<p>
+Gebruik de slider om machten van \(z\) te tekenen.<br/>
+Voor het vermenigvuldigen van twee complexe getallen geldt dat de moduli vermenigvuldigd worden en de hoeken opgeteld.<br/>
+1. Wat heeft \(|z^n|\) te maken met \(|z|\)?<br/>
+2. En wat is het verband tussen \(\text{arg}(z^n)\) en \(\text{arg}(z)\)?</p>
+
+
+<div id="jxgbox1" class="jxgbox" style="width:650px; height:650px; border:1px solid gray; padding:0; margin-right:  20px;"></div>
+<script type='text/javascript'>
+JXG.Options = JXG.merge(JXG.Options, {
+	axis: {
+		ticks: { scaleSymbol: 'i', majorHeight : 10 }
+	},
+});
+board = JXG.JSXGraph.initBoard('jxgbox1', {
+		showNavigation: false,
+		showCopyright: false,
+		axis: false, 
+		boundingbox:[-7.5,7.5,7.5,-7.5],
+		keepaspectratio:true
+		});
+var xaxis = board.create('axis', [[0,0], [1,0]], {ticks: { needsRegularUpdate: false, scaleSymbol: '', majorHeight : 10, ticksDistance:.4 }});
+var yaxis = board.create('axis', [[0,0], [0,1]], {ticks: { needsRegularUpdate: false, scaleSymbol: 'i', majorHeight : 10, ticksDistance:.4 }});
+var c = [];
+for (var n=1; n<=10; ++n) {	
+	c[n] = board.create('circle',[[0,0],n],{strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});	
+	}
+
+line2 = board.create('segment',[
+            [-10*Math.cos(Math.PI/6),-10*Math.sin(Math.PI/6)],
+            [10*Math.cos(Math.PI/6),10*Math.sin(Math.PI/6)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});
+line3 = board.create('segment',[
+            [-10*Math.cos(Math.PI/3),-10*Math.sin(Math.PI/3)],
+            [10*Math.cos(Math.PI/3),10*Math.sin(Math.PI/3)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});
+line4 = board.create('segment',[
+            [-10*Math.cos(-Math.PI/6),-10*Math.sin(-Math.PI/6)],
+            [10*Math.cos(-Math.PI/6),10*Math.sin(-Math.PI/6)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});                        
+line5 = board.create('segment',[
+            [-10*Math.cos(-Math.PI/3),-10*Math.sin(-Math.PI/3)],
+            [10*Math.cos(-Math.PI/3),10*Math.sin(-Math.PI/3)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});
+line6 = board.create('segment',[
+            [-10*Math.cos(Math.PI/4),-10*Math.sin(Math.PI/4)],
+            [10*Math.cos(Math.PI/4),10*Math.sin(Math.PI/4)]],
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed: true});
+line7 = board.create('segment',[
+            [-12*Math.cos(-Math.PI/4),-12*Math.sin(-Math.PI/4)],
+            [12*Math.cos(-Math.PI/4),12*Math.sin(-Math.PI/4)]],
+            {strokeColor:'#bfbfbf', strokeWidth:0.5, highlight: false, fixed: true});                        
+
+var p1 = board.create('point', [0,0], {visible:false});
+var p2 = board.create('point', [10,0], {visible:false});
+var z = board.create('point', [1,.4], {strokeColor: '#009a0a', fillColor: '#009a0a', labelColor: '#009a0a', name: 'z', label: {strokeColor:'#009a0a'}});
+board.create('segment', [[0,0],z], {strokeColor: '#009a0a'}); 
+
+var exponent = board.create('slider', [[-6,6],[-2,6],[1,1,30]], {snapWidth:1, precision: 0});
+	
+var macht = [];
+macht[1] = z;
+board.on('update', function () {
+for (i=2; i<=30; ++i) {	board.removeObject(macht[i]);};	
+for (var m=2; m<= exponent.Value(); ++m) {
+	macht[m] = board.create('point',[
+	Math.pow(z.Dist(p1),m)*Math.cos(m*JXG.Math.Geometry.angle(p2,p1,z)),
+	Math.pow(z.Dist(p1),m)*Math.sin(m*JXG.Math.Geometry.angle(p2,p1,z))
+	],
+	{strokeColor:'#009a0a', fillColor:'#009a0a', name: ''});
+	board.create('segment', [macht[m-1],macht[m]], {strokeColor: '#009a0a', strokeWidth:0.5});
+	}
+	board.update();
+});	
+
+</script>
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

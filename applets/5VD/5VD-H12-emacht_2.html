@@ -1,0 +1,96 @@
+
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script>document.createElement('footer')</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+
+<title>E-macht</title>
+
+<body> 
+<h2>De functie \(f(z)=e^z\)</h2>
+
+<p>In het linkervenster is een lijn getekend. Met het zwarte punt kun je de hoek die de lijn maakt met de positieve \(x\)-as wijzigen: de \(x\)-coördinaat van dit punt is de hoek in radialen. In het rechtervenster is het beeld van de lijn onder de functie \(f(z)=e^z\) getekend.</p>
+<p>Het blauwe punt op de beeldgrafiek in het rechtervenster is het beeld van het blauwe punt op de cirkel in het linkervenster. Je kunt het punt verslepen, het beeldpunt wijzigt dan ook.</p>
+
+<div id="calculator" style="float: left; width: 450px; height: 450px;"></div>
+<div id="calculator2" style="float: left; width: 450px; height: 450px; padding-left: 20px"></div>
+  
+  
+<script >
+    var elt = document.getElementById('calculator');
+    var elt2 = document.getElementById('calculator2');
+    var valueElt = document.getElementById('value');
+
+	var calculator = Desmos.GraphingCalculator(elt, {
+		expressionsCollapsed: true,
+		lockViewport: true,
+		zoomButtons: false,
+		settingsMenu: false,
+		});
+    calculator.setMathBounds({
+      	left: -10,
+      	right: 10,
+      	bottom: -10,
+      	top: 10
+    	});
+    
+    var calculator2 = Desmos.GraphingCalculator(elt2, {
+    	expressionsCollapsed: true,
+    	zoomButtons: true,
+    	settingsMenu: false,
+    	});
+    calculator2.setMathBounds({
+      	left: -10,
+      	right: 10,
+      	bottom: -10,
+      	top: 10
+    	});
+    	    
+    //a, s
+    calculator.setExpressions([
+    	{id:'slidera', latex:'a=2', sliderBounds: {min: -10, max: 10}},
+    	{id:'sliderb', latex:'b=3', sliderBounds: {min: -10, max: 10}},
+    	]);
+    var helpera1 = calculator.HelperExpression({latex: 'a'});
+    var helperb1 = calculator.HelperExpression({latex: 'b'});
+    
+	calculator.setExpressions([
+		{id:'puntA', latex: '(a,b)', color: 'black', dragMode: Desmos.DragModes.XY},
+		{id:'lijnAC', latex: 'y=(b/a)\\cdot (x-a)+b', color: '#006ae0'},
+		]);
+		
+    helpera1.observe('numericValue', function() {
+    	calculator2.setExpression({id: 'a2', latex: 'a='+helpera1.numericValue}
+    	);
+    	});
+    
+	helperb1.observe('numericValue', function() {
+		calculator2.setExpression({id: 'b2', latex: 'b='+helperb1.numericValue}
+		);
+		});
+	
+    calculator2.setExpressions([
+    	{id: 'beeldlijn', latex: '(e^{t\\cdot a}\\cdot cos(t\\cdot b), e^{t\\cdot a}\\cdot sin(t\\cdot b))', domain: {min: -5, max: 15}, color: '#006ae0'},
+  		]);
+  			
+  </script>
+
+
+
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

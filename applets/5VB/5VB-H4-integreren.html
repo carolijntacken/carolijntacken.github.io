@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<style>
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Riemannsommen</title>
+
+<body>
+<h2>Oppervlakte onder een grafiek</h2>
+<p>We willen weten wat de oppervlakte is van het gebied onder de grafiek van $f(x)=-\frac12x^3+2x^2-x+1$ tussen $-1$ en 3, het grijze gebied in het plaatje hieronder. Die oppervlakte kunnen we benaderen met rechthoeken. Zo'n benadering wordt een Riemannsom genoemd.</p>
+
+<table>
+	<tr>
+		<td><input type="checkbox" onclick="onderSom()" id="onderSom" /> ondersom</td>
+		<td><input type="checkbox" onclick="bovenSom()" id="bovenSom" /> bovensom</td>
+		<td><input type="checkbox" onclick="middenSom()" id="middenSom" /> middensom</td>
+	</tr>
+</table>
+
+<div id="box" class="jxgbox" style="width:600px; height:400px;"></div>
+
+<script type="text/javascript">
+var board = JXG.JSXGraph.initBoard('box', {
+	showCopyright: false,
+	showNavigation: false,
+	boundingbox: [-2, 5, 4, -1], 
+	axis: true
+	});
+var lower,textlower,upper, textupper,integraal,textintegraal,diff;
+var n = board.create('slider',[[1,4.5],[3,4.5],[1,4,100]],{name:'n',snapWidth:1, precision:0,withTicks:false, size:3});
+var f = function(x){ return -0.5*x*x*x+2*x*x-x+1; };
+var plot = board.create('functiongraph',[f,-2,4], {strokeColor:'black', strokeWidth:2, highlight:false});
+var onzichtbare_x_as = board.create('line',[[0,0],[1,0]], {visible: false, highlight:false});
+puntA = board.create('glider',[-1,0,onzichtbare_x_as], {name:'a', label:{offset:[-3,-15]}});
+puntB = board.create('glider',[3,0,onzichtbare_x_as], {name:'b', label:{offset:[-3,-15]}});
+lijn = board.create('segment',[[
+	function() {return puntA.X();},
+	0
+	],[
+	function() {return puntA.X();}, 
+	function() { return f(puntA.X()); }
+	]],
+	{dash:2,strokeColor:'gray', highlight:false});
+lijn = board.create('segment',[[
+	function() {return puntB.X();},
+	0
+	],[
+	function() {return puntB.X();}, 
+	function() { return f(puntB.X()); }
+	]],
+	{dash:2,strokeColor:'gray', highlight:false});
+
+opp = board.create('integral',[[
+		function() {return puntA.X();},
+		function() {return puntB.X();}],
+		plot
+		],{
+	color:'black',
+	fillOpacity:0.15,
+	label: { visible:false },
+	curveLeft:{visible:false},
+	curveRight:{visible:false},
+	baseLeft:{visible:false},
+	baseRight:{visible:false},
+	highlight:false
+	});
+
+	function onderSom() {
+	  
+	  // Redraw the points, color the excluded one
+	  if (document.getElementById("onderSom").checked == true) {
+	  	lower = board.create('riemannsum',[
+	  		f, 
+	  		function(){ return n.Value();}, 
+	  		'lower', 
+	  		function() {return puntA.X();}, 
+	  		function() {return puntB.X();}
+	  		], {color:'#ff8f00', fillOpacity:0.3, highlight:false});
+	  	textlower = board.create('text',[2,-0.5,function(){ return 'ondersom = '+lower.Value().toFixed(5); }]);
+	  	if (document.getElementById("bovenSom").checked == true) {
+	  		diff = board.create('text',[0.5,-0.8,
+	  		  function(){ 
+	  				return 'verschil = '+(upper.Value()-lower.Value()).toFixed(5); 
+	  			}
+	  			]);  		
+	  	 
+	  	} else {}
+	   	board.removeObject(opp);	   
+	  }
+	  
+	  // Redraw all of the points
+	  else {
+	  	board.removeObject(textlower);
+	  	board.removeObject(lower);
+	  	board.removeObject(diff);  	
+	    	  }
+	
+	}
+	
+	function bovenSom() {
+	  
+	  // Redraw the points, color the excluded one
+	  if (document.getElementById("bovenSom").checked == true) {
+	  	upper = board.create('riemannsum',[
+	  		f, 
+	  		function(){ return n.Value();}, 
+	  		'upper', 
+	  		function() {return puntA.X();}, 
+	  		function() {return puntB.X();}
+	  		], {color:'#006ae0', fillOpacity:0.3,highlight:false});
+	  	textupper = board.create('text',[0.5,-0.5,function(){ return 'bovensom = '+upper.Value().toFixed(5); }]);
+	  	if (document.getElementById("onderSom").checked == true) {
+	  		diff = board.create('text',[0.5,-0.8,
+	  		  function(){ 
+	  				return 'verschil = '+(upper.Value()-lower.Value()).toFixed(5); 
+	  			}
+	  			]);  		
+	  	 
+	  	} else {}
+	   	board.removeObject(opp);
+	   	
+	  }
+	  
+	  // Redraw all of the points
+	  else {
+	  	board.removeObject(textupper);
+	  	board.removeObject(upper);
+	  	board.removeObject(diff);  	
+	    	  }
+	
+	}
+
+	function middenSom() {
+	  
+	  // Redraw the points, color the excluded one
+	  if (document.getElementById("middenSom").checked == true) {
+	  	middle = board.create('riemannsum',[
+	  		f, 
+	  		function(){ return n.Value();}, 
+	  		'middle', 
+	  		function() {return puntA.X();}, 
+	  		function() {return puntB.X();}
+	  		], {color:'#009a0a', fillOpacity:0.3,highlight:false});
+	  	textmiddle = board.create('text',[2,-0.8,function(){ return 'middensom = '+middle.Value().toFixed(5); }]);
+	  	board.removeObject(opp);
+	  }
+	  
+	  // Redraw all of the points
+	  else {
+	  	board.removeObject(middle);
+	  	board.removeObject(textmiddle);
+	    	  }
+	
+	}
+
+</script>
+
+<ol>
+	<li>Bekijk achtereenvolgens de onder-, boven- en middensom. Beschrijf hoe de bovenkanten van de rechthoeken liggen ten opzichte van de grafiek.</li>
+	<li>De drie sommen geven alle drie een benadering van de oppervlakte onder de grafiek. Deze benadering wordt beter als je $n$, het aantal rechthoeken, groter maakt. Wat weet je van de benadering van de exacte oppervlakte met een ondersom? En met een bovensom? En een middensom?</li>
+	<li>Vink nu de onder- en bovensom aan. Wat gebeurt er met het verschil tussen onder- en bovensom als $n$ groter wordt?</li>
+	<li>Hoe groot zou je $n$ moeten kiezen als je de oppervlakte exact wilt weten?</li>
+</ol>
+
+<p>Integreren is gebaseerd op dit idee van het benaderen van de oppervlakte onder een grafiek met rechthoeken. Als we oneindig veel rechthoeken nemen die oneindig smal zijn dan geeft dat de exacte oppervlakte onder de grafiek.</p>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

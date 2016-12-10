@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.4/jsxgraphcore.js"></script>
+
+<style>
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+</style>
+
+<title>Functie met eerste en tweede afgeleide</title>
+</head>
+
+
+<body>
+<h2>Functie met eerste en tweede afgeleide</h2>
+
+<div style="float: left;">
+	<div  id="box1" class="jxgbox" style="margin-right: 30px; width:500px; height:300px;"></div>
+	<div id="box2" class="jxgbox" style="margin-top: 10px; width:500px; height:300px;"></div>
+	<div id="box3" class="jxgbox" style="margin-top: 10px; margin-bottom: 20px; width:500px; height:300px;"></div>
+</div>
+
+<div>
+	<p>Beweeg punt P en de bijbehorende raaklijn over de grafiek van \(f\). Op de grafieken van \(f'\) en \(f''\) zie je een punt met dezelfde x-co&ouml;rdinaat meebewegen.</p>
+	<p>Hoe hangen de verschillende soorten van stijgen en dalen van \(f\) samen met de grafieken van de eerste en tweede afgeleide?</p>
+	<p>Hoe kun je de bijzondere punten in de grafiek van \(f\) berekenen?</p>
+</div>
+
+<div style="clear: both;">
+<h4>Berekenen van:</h4>
+<table>
+	<tr>
+		<td>nulpunten:</td> <td>los op \(f(x)=0\)</td>
+	</tr>
+	<tr>
+		<td>toppen:</td> <td>los op \(f'(x)=0\)</td>
+	</tr>
+	<tr>
+		<td></td> <td>er is alleen een top als \(f'\) van teken wisselt</td>
+	</tr>
+	<tr>
+		<td>buigpunten:</td> <td>los op \(f''(x)=0\)</td>
+	</tr>
+	<tr>
+		<td></td> <td>er is alleen sprake van een buigpunt als \(f''\) van teken wisselt, dus als \(f'\) een top heeft</td>
+	</tr>
+</table>
+</div>
+
+<script type="text/javascript">
+JXG.Options.text.useMathJax = true;
+
+var board1 = JXG.JSXGraph.initBoard('box1', {
+        boundingbox: [-3,15,5,-30], 
+        axis: { ticks: { majorHeight: 10 } },
+        grid: false,
+        showCopyright: false,
+        showNavigation: false
+    });
+
+var f = function(x) { return Math.pow(x,4)-4*Math.pow(x,3)+5; };
+var g = JXG.Math.Numerics.D(f);
+var h = JXG.Math.Numerics.D(g);
+var fgr = board1.create('functiongraph', 
+	[f, -6, 6], 
+	{ strokeColor:'#006ae0', strokeWidth:3 }
+	);
+
+var A = board1.create('point', [0,5], { label:{offset:[5,15], fontSize: 24}, strokeColor:'#006ae0', fillColor:'#006ae0'} );
+var B = board1.create('point', [2,-11], { label:{offset:[5,10], fontSize: 24}, strokeColor:'#006ae0', fillColor:'#006ae0'} );
+var C = board1.create('point', [3,-22], { label:{offset:[-4,-18], fontSize: 24}, strokeColor:'#006ae0', fillColor:'#006ae0'} );
+var xcoo = board1.create('slider', [[2,10],[4,10],[-3,-1,5]], {snapWidth:.05,withTicks:false});
+var P = board1.create('point', [
+	function() {return xcoo.Value();},
+	function() {return f(xcoo.Value());}
+	], {name: 'P'});
+
+var lijn1 = board1.create('line', 
+	[[function() {return P.X();},-30],[function() {return P.X();},15]], 
+	{ strokeColor:'#006ae0', dash:2}
+	);
+
+var P2 = board1.create('point', [function() { return P.X()+1;}, function() {return P.Y()+g(P.X());}], {visible: false, name:''});
+raaklijn = board1.create('line', [P,P2],{strokeColor:'red'}); 
+
+board1.create('text',
+	[-2.5,12,function(){ return '\\(f\\)'; }], 
+	{ strokeColor:'red', fontSize: 28}
+	);
+</script>
+
+<script type="text/javascript">
+var board2 = JXG.JSXGraph.initBoard('box2', {
+        boundingbox: [-3,15,5,-30], 
+        axis: { ticks: { majorHeight: 10 } },
+        showCopyright: false,
+        showNavigation: false
+    });
+
+var d1 = board2.create('functiongraph',
+	[g,-3,5],
+	{ strokeColor:'#006ae0', strokeWidth:3 }
+	);
+var P1 = board2.create('point', 
+	[function() { return P.X();}, function() {return g(P.X());}], 
+	{ name:'' } 
+	);
+var lijn2 = board2.create('line', 
+	[[function() {return P.X();},-30],[function() {return P.X();},15]], 
+	{ strokeColor:'#006ae0', dash:2 }
+	);
+board2.create('text',
+	[-2.5,12,function(){ return '\\(f\'\\)'; }], 
+	{ strokeColor:'red', fontSize: 28}
+	);
+board1.addChild(board2);
+</script>
+
+<script type="text/javascript">
+var board3 = JXG.JSXGraph.initBoard('box3', {
+        boundingbox: [-3,15,5,-30], 
+        axis: { ticks: { majorHeight: 10 } },
+        showCopyright: false,
+        showNavigation: false
+    });
+
+var d2 = board3.create('functiongraph',
+	[h,-3,5],
+	{ strokeColor:'#006ae0', strokeWidth:3 }
+	);
+var P2 = board3.create('point', 
+	[function() {return P.X();}, function() {return h(P.X());}], 
+	{ name:'' } 
+	);
+var lijn3 = board3.create('line', 
+	[[function() {return P.X();},-30],[function() {return P.X();},15]], 
+	{ strokeColor:'#006ae0', dash:2}
+	);
+board3.create('text',
+	[-2.5,12,function(){ return '\\(f\'\'\\)'; }], 
+	{ strokeColor:'red', fontSize: 28}
+	);
+board1.addChild(board3);
+</script>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

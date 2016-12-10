@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<title>Formules van lijnen</title>
+
+<body> 
+<h2>Formules van lijnen</h2>
+<p>Bereken de formule van de lijn door de twee punten. Vul de formule in op de derde regel om te controleren.</p>
+
+<p><button id="btnNext">Opnieuw</button></p>
+    
+<div id="calculator" style="width: 900px; height: 600px;"></div>
+  
+  
+<script src="https://www.desmos.com/api/v0.7/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script>
+(function () {
+  "use strict";
+  
+  var calculator;
+
+  function between (a, b) {
+    var range = b - a + 1;
+    return a + Math.floor(Math.random() * range);
+  }
+
+  function getPoints () {
+  	var x1 = between(-9, 9)
+  	var x2 = between(-9, 8)
+  	if (x2 >= x1){
+  		x2 = x2+1
+  		}
+    return [
+      { x: x1, y: between(-10, 10) },
+      { x: x2, y: between(-10, 10) }
+    ];
+  }
+  
+  function pointString (point) {
+    return '(' + point.x + ', ' + point.y + ')';
+  }
+
+  function showLine (points) {
+    points.forEach(function (point, i) {
+      calculator.setExpression({id: 'p' + i, latex: pointString(point), color: Desmos.Colors.PURPLE});
+    });
+
+  }
+
+  function next () {
+    showLine(getPoints());
+    calculator.setExpression({id: 'line', latex: 'y=', color: Desmos.Colors.ORANGE});
+    
+  }
+
+  function init () {
+    var elt = document.getElementById('calculator');
+    calculator = Desmos.Calculator(elt, {keypad: false});
+  
+    document.getElementById("btnNext").addEventListener('click', next);
+    showLine(getPoints());
+    calculator.setExpression({id: 'line', latex: 'y=', color: Desmos.Colors.ORANGE});
+  }
+  
+  init();
+})();
+</script>
+
+<p style="padding-top: 30px;">Gebaseerd op een idee van John Larsen, zie <a href="http://www.room51.co.uk/tutorials/desmos/generating-lines/part1.html">room 51</a>.</p>
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>
