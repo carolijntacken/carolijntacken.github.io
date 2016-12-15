@@ -4,48 +4,12 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
-<style>
-.jxgbox {
-    position:relative;
-    overflow:hidden;
-    background-color:#ffffff;
-    border-style:solid;
-    border-width:1px;
-    border-color:#C0C0C0;
-   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
-    -webkit-box-shadow:4px 4px 3px #F0F0F0;
-}
-
-.JXGtext {
-    background-color: transparent;
-    font-family: Arial, Helvetica, Geneva;
-    padding: 0px;
-    margin: 0px;
-}
-	
-</style>
-	
 <script>
 	document.createElement('footer')
 </script>
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
-  });
-</script>
-
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
-
-<script type="text/javascript"
-   src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML'></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>
 
 
 
@@ -61,14 +25,14 @@
         <tr style="vertical-align:top;">
           <td> The<span style="color: #cc0000;"><span style="font-style: italic;">
               </span></span><span style="font-style:italic; color: rgb(204, 0, 0);">derivative</span>
-            of a function $f(x)$ at a point $a$ measures the <span style="color: #cc0000; font-style: italic;">slope
+            of a function \(f(x)\) at a point \(a\) measures the <span style="color: #cc0000; font-style: italic;">slope
               of the tangent line</span> to the function at that point. To help
             visualize the derivative, imagine the function as a wave that you
             are surfing. The tilt of your surf board is the slope. <br>
             <br>
             In the applet below we have two windows. The top window displays the
             graph of the function in the text box. (You can change this if you
-            wish to) As you move point $a$ along the graph, your "surf board"
+            wish to) As you move point \(a\) along the graph, your "surf board"
             changes to match the slope of the curve, and a triangle is created
             with base length of 1 and height equal to the slope. &nbsp; This
             height is then plotted in the bottom window as a function.&nbsp; The

@@ -4,26 +4,6 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
-<style>
-.jxgbox {
-    overflow:hidden;
-    background-color:#ffffff;
-    border-style:solid;
-    border-width:1px;
-    border-color:#C0C0C0;
-   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
-    -webkit-box-shadow:4px 4px 3px #F0F0F0;
-}
-
-.JXGtext {
-    background-color: transparent;
-    font-family: Arial, Helvetica, Geneva;
-    padding: 0px;
-    margin: 0px;
-}
-	
-</style>
-	
 <script>
 	document.createElement('footer')
 </script>
@@ -31,24 +11,9 @@
 <script type="text/x-mathjax-config">
 MathJax.Hub.processSectionDelay = 0;
 </script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
-  });
-</script>
-
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.4/jsxgraphcore.js"></script>
+        
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
 
 <title>Inproduct</title>
 
@@ -81,11 +46,11 @@ board = JXG.JSXGraph.initBoard('jxgbox1', {
 	});
 var A = board.create('point', [4,4], {size: 2, strokeColor: '#ff0000', fillColor: '#ff0000'} );
 A.setProperty({
-    snapToGrid: true,
+    snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5
 });
 var B = board.create('point', [-4,2], {size: 2, strokeColor: '#006ae0', fillColor: '#006ae0'} );
 B.setProperty({
-    snapToGrid: true,
+    snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5
 });
 var vecA = board.create('arrow', [[0,0], A], {strokeColor: '#ff0000',fixed:true} );
 var vecB = board.create('arrow', [[0,0], B], {strokeColor: '#006ae0',fixed:true} );
@@ -109,6 +74,6 @@ board.create('text',[-8,6.3, function() {
 </script>
 
 <footer style="clear: both; padding-top: 30px;">
-<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
 </body>
 </html>
