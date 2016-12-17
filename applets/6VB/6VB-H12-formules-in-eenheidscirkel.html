@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Eenheidscirkel en formules</title>
+</head>
+<body>
+
+<h2>Formules in de eenheidscirkel</h2>
+<p>Met behulp van de eenheidscirkel kun je een aantal regels voor sinus en cosinus afleiden. <ol type="a">
+	<li>Klik op \(-\alpha\). Welk verband is er tussen \(\sin(\alpha)\) en \(\sin(-\alpha)\)? En tussen \(\cos(\alpha)\) en \(\cos(-\alpha)\)? Bedenk formules en controleer ze. Klik niet te snel op `formules' maar probeer ze eerst zelf te bedenken!</li>
+	<li>Beantwoord dezelfde vragen voor \(\pi+\alpha\) en \(\pi-\alpha\).</li>
+</ol>
+</p>
+
+<div id="box" class="jxgbox" style="float: left; width:650px; height:500px; margin-bottom:1em; margin-right: 1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:false, 
+		keepaspectratio:true,
+		boundingbox:[-1.6,1.2,1.5,-1.2] 
+		});
+	var xaxis = board.create('axis', [[0, 0], [1, 0]], {ticks: {drawLabels: false}}); 
+	var yaxis = board.create('axis', [[0, 0], [0, 1]], {ticks: {drawLabels: false}}); 
+	var c = board.create('circle', [[0,0], [1,0]], {strokeColor: 'black', highlight: false});
+	var P = board.create('glider',[.8,.6,c],{
+		name:'P(<span style="color: #006ae0">cos(&alpha;)</span>, <span style="color: red">sin(&alpha;)</span>)', 
+		color: 'black',
+		size:2, 
+		label:{offset:[5,10]}});
+	var O = board.create('point',[0,0],{name:'', visible:false});
+	var A = board.create('point',[1,0],{name:'', visible:false});
+	var B = board.create('point',[function() {return -P.X();}, function() {return P.Y();}],{name:'', color: 'black', size:2});
+	var C = board.create('point',[function() {return -P.X();}, function() {return -P.Y();}],{name:'', color: 'black', size:2});
+	var D = board.create('point',[function() {return P.X();}, function() {return -P.Y();}],{name:'', color: 'black', size:2});
+	var alpha = board.create('angle',[A,O,P], {radius:.2, color: '#ff8f00', 
+		label:{offset:[0,0], color:'#ff8f00'}});
+	board.create('segment',[[0,0],P], {color:'gray'});
+	board.create('segment',[[0,0],B], {color:'gray',dash:3});
+	board.create('segment',[[0,0],C], {color:'gray',dash:3});
+	board.create('segment',[[0,0],D], {color:'gray',dash:3});
+	var vert = board.create('segment', [P,[function() {return P.X();},0]],{strokeColor:'red',strokeWidth:3});
+	var hor = board.create('segment', [O,[function() {return P.X();},0]],{strokeColor:'#006ae0',strokeWidth:3});
+</script>
+
+	<script>
+		var sMin = [];
+		function hoekMinAlpha(){
+		board.removeObject(sPiMin);
+		board.removeObject(sPiPlus);
+		board.removeObject(sMin);
+		sMin[0] = board.create('segment', [D,[function() {return P.X();},0]],{strokeColor:'red',strokeWidth:3});
+		sMin[1] = board.create('segment', [O,[function() {return P.X();},0]],{strokeColor:'#006ae0',strokeWidth:3});
+		sMin[2] = board.create('point',[
+			function() {return P.X();},
+			function() {return -P.Y();},
+			],
+			{name: '(<span style="color: #006ae0">cos(-&alpha;)</span>, <span style="color: red">sin(-&alpha;)</span>)',
+			color: 'black',
+			size:2, 
+			label:{offset:[5,-10]}}
+			);
+		sPiMin[3] = board.create('angle',[D,O,A], {radius:.15, color: '#009a0a', name:'-&alpha;',
+			label:{offset:[0,0], color:'#009a0a'}});
+		document.getElementById('PiMin').style.display = 'none';
+		document.getElementById('PiPlus').style.display = 'none';
+		document.getElementById('Min').style.display = 'none';
+		}
+		function formulesMinAlpha(){
+		document.getElementById('Min').style.display = 'inline';
+		}
+		
+		</script>
+	
+			<button type="button" onClick="hoekMinAlpha()" style="font-size: 1em;">\(-\alpha\)</button>
+			<button type="button" onClick="formulesMinAlpha()" style="font-size: .9em;">formules</button>
+			<div style='height: 7em;'>
+				<div id='Min' style='display: none;'>	
+					<p style='color: red;'>\(\sin(-\alpha)=-\sin(\alpha)\)</p>
+					<p style='color: #006ae0'>\(\cos(-\alpha)=\cos(\alpha)\)</p>
+				</div>
+			</div>
+		
+	<script>
+		var sPiPlus = [];
+		function hoekPiPlusAlpha(){
+		board.removeObject(sPiMin);
+		board.removeObject(sPiPlus);
+		board.removeObject(sMin);
+		sPiPlus[0] = board.create('segment', [C,[function() {return -P.X();},0]],{strokeColor:'red',strokeWidth:3});
+		sPiPlus[1] = board.create('segment', [O,[function() {return -P.X();},0]],{strokeColor:'#006ae0',strokeWidth:3});
+		sPiPlus[2] = board.create('point',[
+			function() {return -P.X();},
+			function() {return -P.Y();},
+			],
+			{name: '(<span style="color: #006ae0">cos(&pi;+&alpha;)</span>, <span style="color: red">sin(&pi;+&alpha;)</span>)',
+			color: 'black',
+			size:2, 
+			label:{offset:[-150,-10]}}
+			);
+		sPiPlus[3] = board.create('angle',[A,O,C], {radius:.15, color: '#009a0a', name:'&pi;+&alpha;',
+			label:{offset:[0,0], color:'#009a0a'}});
+		board.update();
+		document.getElementById('PiMin').style.display = 'none';
+		document.getElementById('PiPlus').style.display = 'none';
+		document.getElementById('Min').style.display = 'none';
+		}
+		function formulesPiPlusAlpha(){
+		document.getElementById('PiPlus').style.display = 'inline';
+		}
+
+	</script>
+
+		<button type="button" onClick="hoekPiPlusAlpha()" style="font-size: 1em;">\(\pi+\alpha\)</button>
+		<button type="button" onClick="formulesPiPlusAlpha()" style="font-size: .9em;">formules</button>
+		<div style='height: 7em;'>
+			<div id='PiPlus' style='display: none;'>	
+				<p style='color: red;'>\(\sin(\pi+\alpha)=-\sin(\alpha)\)</p>
+				<p style='color: #006ae0'>\(\cos(\pi+\alpha)=-\cos(\alpha)\)</p>
+			</div>
+		</div>
+
+	<script>
+		var sPiMin = [];
+		function hoekPiMinAlpha(){
+		board.removeObject(sPiMin);
+		board.removeObject(sPiPlus);
+		board.removeObject(sMin);
+		sPiMin[0] = board.create('segment', [B,[function() {return -P.X();},0]],{strokeColor:'red',strokeWidth:3});
+		sPiMin[1] = board.create('segment', [O,[function() {return -P.X();},0]],{strokeColor:'#006ae0',strokeWidth:3});
+		sPiMin[2] = board.create('point',[
+			function() {return -P.X();},
+			function() {return P.Y();},
+			],
+			{name: '(<span style="color: #006ae0">cos(&pi;-&alpha;)</span>, <span style="color: red">sin(&pi;-&alpha;)</span>)',
+			color: 'black',
+			size:2, 
+			label:{offset:[-140,10]}}
+			);
+				sPiMin[4] = board.create('angle',[A,O,B], {radius:.15, color: '#009a0a', name:'&pi;-&alpha;',
+			label:{offset:[0,0], color:'#009a0a'}});
+		board.update();
+		document.getElementById('PiMin').style.display = 'none';
+		document.getElementById('PiPlus').style.display = 'none';
+		document.getElementById('Min').style.display = 'none';
+		}
+		function formulesPiMinAlpha(){
+		document.getElementById('PiMin').style.display = 'inline';
+		}
+	
+	</script>
+
+		<button type="button" onClick="hoekPiMinAlpha()" style="font-size: 1em;">\(\pi-\alpha\)</button>
+		<button type="button" onClick="formulesPiMinAlpha()" style="font-size: .9em;">formules</button>
+		<div style='height: 7em;'>
+			<div id='PiMin' style='display: none;'>	
+				<p style='color: red;'>\(\sin(\pi-\alpha)=\sin(\alpha)\)</p>
+				<p style='color: #006ae0'>\(\cos(\pi-\alpha)=-\cos(\alpha)\)</p>
+			</div>
+		</div>
+
+
+<div style="clear: both;"></div>
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>

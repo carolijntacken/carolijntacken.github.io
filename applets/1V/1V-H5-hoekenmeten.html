@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 20px; 
+	margin-right: 20px;
+	color: #454545;
+	}
+		
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Hoeken meten</title>
+
+<body>
+
+<h2>Hoeken meten</h2>
+
+<div id="box1" class="jxgbox" style="width:650px; height:600px; border:1px solid gray; padding:0; margin-right:  20px; float:  left;"></div>
+<p>Meet hoek A. De geodriehoek kun je met het blauwe punt verplaatsen en met het rode punt draaien. (1 graad te veel of te weinig is niet erg.)</p>
+
+<p>
+<button type="button" onclick ="check();">check</button> &angle;A = <span id="graden">...</span>
+</p>
+<p>
+<button type="button" onclick="board.removeObject(A); maakHoek(); document.getElementById('graden').innerHTML='...';">reset</button>
+</p>
+
+<script type='text/javascript'>
+	var board = JXG.JSXGraph.initBoard('box1', {
+		boundingbox:[-3,4.5,5,-3], 
+		axis:false, 
+		showCopyright: false,
+		showNavigation: false,
+		keepaspectratio:true
+		});
+  	
+  	var A,rotB,rotC,B,C,AB,AC;
+  	maakHoek = function() {
+	A = board.create('point',[
+		Math.random()*1.5,
+		Math.random()*1.5],{ name:'A', size: 1, color: 'black', label:{offset:[-5,-15], fontSize: 18, strokeColor: 'black'} });
+	rotB = Math.random()*Math.PI*.6;
+	rotC = Math.random()*Math.PI*.8;
+  	B = board.create('point',[
+  		function() { return A.X()+4*Math.cos(rotB); },
+  		function() { return A.X()+4*Math.sin(rotB); }
+  		],{ visible: false });
+	C = board.create('point',[
+		function() { return A.X()+4*Math.cos(rotC+rotB); },
+		function() { return A.X()+4*Math.sin(rotC+rotB); }
+		],{ visible: false });
+  	AB = board.create('segment',[A,B],{strokeColor: 'black'});
+  	AC = board.create('segment',[A,C],{strokeColor: 'black'});
+  	board.create('angle',[B,A,C],{radius:.5, withLabel: false, strokeWidth: 2, strokeColor: '#ff8f00', fillColor: 'white', orthoType: 'sector'});
+  	};
+  	maakHoek();
+  	
+  	function check() {
+  		document.getElementById('graden').innerHTML= JXG.Math.Geometry.trueAngle(B,A,C).toFixed(0) + '&deg;'; 
+  		}
+  		
+  	var urlImg = "geodriehoek.png";
+ 
+  	var p0 = board.create('point', [0,0], {visible: false}); 
+  	var cirkel = board.create('circle',[p0,2.5], {visible: false});
+  	var p1 = board.create('glider', [2,0,cirkel], {size:8, name:'', opacity:0.5}); 
+  	var p2 = board.create('point', [0,-2], {fillColor: '#006ae0', strokeColor: '#006ae0', size:8, name:'', opacity:0.6});
+  	
+  	var im = board.create('image',[urlImg, [
+  		function() { return p0.X()-4; },
+  		function() { return p0.Y()-4.05; }
+  		], [8,4.05]]);
+  	board.create('group',[p0,p2]);
+   
+  	//geo draaien
+  	var tRot = board.create('transform', [function(){return Math.atan2(p1.Y()-p0.Y(),p1.X()-p0.X())}, p0], {type:'rotate'}); 
+  	tRot.bindTo([im]);
+ 
+	brd.update();
+</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

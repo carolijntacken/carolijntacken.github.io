@@ -1,0 +1,988 @@
+.stici_ci button.open {
+  padding: 3px 3px 3px 3px;
+}
+.stici_ci {
+  font-size: 14px;
+}
+
+.stici_ci .area_info {
+  width: 100%;
+  height: 15px;
+  position: absolute;
+  bottom: 60px;
+  padding-left: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 16pt;
+}
+
+.stici_ci .statsText ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/**
+ * Rules to align the general sections (top, middle, bottom).
+ */
+.stici_ci .top_controls {
+  height: 35px;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 5px;
+}
+.stici_ci div.middle {
+  position: absolute;
+  top: 35px;
+  width: 100%;
+  padding: 0 2px 0 2px;
+}
+.stici.stici_ci>.bottom_controls {
+  height: 35px;
+  text-align: center;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+.stici.stici_ci>.bottom_controls>div {
+  height: 25px;
+  margin-top: 10px;
+}
+
+.stici_ci .bottom_controls p {
+  display: inline-block;
+  margin: 0 0 0 0;
+}
+
+/**
+ * Rules to align the midle subsections.
+ */
+.stici_ci div.middle>* {
+  display: inline-block;
+  height: 100%;
+}
+
+.stici_ci .statsText {
+  font-size: 14px;
+  width: 120px;
+  float: left;
+  margin-left: 2px;
+}
+
+.stici_ci div.population {
+  float: right;
+  position: relative;
+  margin: 0 12px 0 0;
+  padding: 0 0 0 0;
+  width: 100px;
+}
+
+/**
+ * Customizations to individual controls.
+ */
+.stici_ci .stici_check {
+  display: inline-block;
+}
+.stici_ci .population textarea {
+  width: inherit;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+.stici_ci .statsText p {
+  margin: 0 0 0 0;
+  padding: 3px 0 3px 0;
+}
+.stici_ci div.stici_combobox {
+  display: inline-block;
+}
+.stici_ci .stici_textbar {
+  width: inherit;
+  height: 20px;
+}
+.stici_ci .stici_textbar>div {
+  display: inline-block;
+  width: inherit;
+}
+.stici_ci .stici_textbar .stici_textbar_slider {
+  display: inline-block;
+  width: 100px;
+  margin: 0 15px 0 15px;
+}
+.stici_ci rect {
+  stroke: #000000;
+  stroke-width: 1px;
+}
+.stici_ci rect.inner {
+  fill: #37DA7E;
+}
+.stici_ci rect.outer {
+  fill: #CA1F7B;
+}
+.stici_ci rect.hidden {
+  fill: #e1ff00;
+}
+.stici_ci .stici_chartbox {
+  position: relative;
+}
+.stici_ci svg {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.stici_ci svg.axis {
+  top: auto;
+  bottom: 0px;
+  height: 20px;
+}
+
+.stici_ci .axis path,
+.stici_ci .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.stici_ci svg.truth path {
+  stroke: #0032A8;
+  stroke-width: 2px;
+}
+
+.stici>.top_controls {
+  height: 30px;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 5px;
+}
+.stici>.stici_chart {
+  background: #fff;
+}
+
+.stici_histhilite .additional_info {
+  text-align: center;
+  vertical-align: middle;
+  height: 30px;
+}
+.stici_histhilite {
+  font-size: 14px;
+}
+.stici_histhilite .stici_histogram {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.stici>.area_info {
+  width: 100%;
+  height: 15px;
+  position: absolute;
+  bottom: 60px;
+  padding-left: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 10pt;
+}
+.stici>.bottom_controls .binomialBars,
+.stici>.bottom_controls .areaHiLite {
+  text-align: center;
+  padding-top: 5px;
+}
+.stici>.bottom_controls .popbox {
+  margin: 0 0 0 0;
+  text-align: inherit;
+  display: inline-block;
+}
+.stici>.bottom_controls button.open {
+  padding: 3px 3px 3px 3px;
+}
+.stici>.bottom_controls .popbox button {
+  margin-right: 5px;
+}
+.stici>.bottom_controls .popbox .box {
+  padding: 5px 5px 5px 5px;
+  font-size: 12pt;
+}
+.stici>.bottom_controls .popbox .box p {
+  margin-top: 0px;
+  margin-bottom: 15px;
+  min-width: 200px;
+}
+.stici>.bottom_controls .popbox .box p td {
+  text-align: right;
+}
+.stici>.bottom_controls .popbox .box p table {
+}
+.stici_histhilite .stici_textbar {
+  width: inherit;
+  height: 20px;
+}
+.stici_histhilite .stici_textbar>div {
+  display: inline-block;
+  width: inherit;
+}
+.stici_histhilite .stici_textbar .stici_textbar_slider {
+  display: inline-block;
+  width: 100px;
+  margin: 0 15px 0 15px;
+}
+
+.stici_lln {
+  font-family: Helvetica;
+  font-size: 14px;
+}
+
+.stici_lln div.stici_textbar {
+  width: 200px;
+  margin-right: 15px;
+}
+
+.stici_lln div.controls {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  display: table-cell;
+  text-align: center;
+}
+
+.stici_lln div.controls button {
+  position: absolute;
+  height: 25px;
+  top: 50%;
+  margin-top: -12px;
+}
+
+.stici_lln path,
+.stici_lln line {
+  stroke: #000000;
+  fill: none;
+  stroke-width: 1px;
+}
+
+.stici_lln .chart_box .simulation {
+  position: absolute;
+  left: 30px;
+  right: 0px;
+  top: 20px;
+  bottom: 20px;
+}
+
+.stici_lln .chart_box .x_axis {
+  position: absolute;
+  height: 20px;
+  left: 30px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.stici_lln .chart_box .y_axis {
+  position: absolute;
+  width: 30px;
+  left: 0px;
+  bottom: 0px;
+  top: 0px;
+}
+
+.stici_lln .axis text {
+  font-family: sans-serif;
+  font-size: 11px;
+}
+
+.stici_lln .x_axis svg g:first-of-type>text {
+  text-anchor: start;
+}
+
+.stici_lln .x_axis svg g:last-of-type>text {
+  text-anchor: end;
+}
+
+.stici_lln .title {
+  height: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
+.stici_normhilite .overlay path {
+  fill: #f8ff53;
+}
+.stici_normhilite .chart_box svg {
+  vertical-align: top;
+  width: 100%;
+}
+.stici_normhilite path {
+  stroke: #000000;
+  fill: none;
+  stroke-width: 2px;
+}
+.stici_normhilite .area_info {
+  text-align: top;
+  font-size: 100%;
+}
+.stici_normhilite {
+  font-size: 14px;
+}
+.stici_normhilite .axis path,
+.stici_normhilite .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.stici_normhilite .bottom_controls {
+  text-align: center;
+}
+
+.stici_normhilite .stici_textbar {
+  width: 27%;
+  margin-right: 2%;
+  margin-left: 2%;
+}
+.stici.stici_normhilite .stici_textbar input[type="text"]{
+  width: 30px;
+}
+
+.stici_sampledist button.open {
+  padding: 3px 3px 3px 3px;
+}
+.stici_sampledist {
+  font-size: 14px;
+}
+
+.stici_sampledist .area_info {
+  width: 100%;
+  height: 15px;
+  position: absolute;
+  bottom: 60px;
+  padding-left: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 10pt;
+}
+
+.stici_sampledist .statsText ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/**
+ * Rules to align the general sections (top, middle, bottom).
+ */
+.stici_sampledist .top_controls {
+  height: 35px;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 5px;
+}
+.stici_sampledist div.middle {
+  position: absolute;
+  top: 35px;
+  width: 100%;
+  padding: 0 2px 0 2px;
+}
+.stici_sampledist .bottom_controls {
+  height: 75px;
+  text-align: center;
+}
+
+/**
+ * Rules to align the midle subsections.
+ */
+.stici_sampledist div.middle>* {
+  display: inline-block;
+  height: 100%;
+}
+
+.stici_sampledist .statsText {
+  font-size: 14px;
+  width: 120px;
+  float: left;
+  margin-left: 2px;
+}
+
+.stici_sampledist div.population {
+  float: right;
+  margin: 0 4px 0 0;
+  padding: 0 0 0 0;
+  width: 100px;
+}
+
+/**
+ * Customizations to individual controls.
+ */
+.stici_sampledist .population textarea {
+  width: inherit;
+  position: absolute;
+  top: 30px;
+  bottom: 0px;
+}
+.stici_sampledist .population>div {
+  width: inherit;
+  position: absolute;
+  top: 0px;
+  height: 30px;
+}
+.stici_sampledist .statsText p {
+  margin: 0 0 0 0;
+  padding: 3px 0 3px 0;
+}
+.stici_sampledist div.stici_combobox {
+  display: inline-block;
+}
+.stici_sampledist .stici_textbar {
+  width: inherit;
+  height: 20px;
+}
+.stici_sampledist .stici_textbar>div {
+  display: inline-block;
+  width: inherit;
+}
+.stici_sampledist .stici_textbar .stici_textbar_slider {
+  display: inline-block;
+  width: 100px;
+  margin: 0 15px 0 15px;
+}
+.stici_sampledist .stici_histogram .chart_box.overlay rect.set0 {
+  display: none;
+}
+
+.stici>.bottom_controls button.selected, .stici>.bottom_controls button:active {
+  top: 1px;
+  background: rgb(229,229,229); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(229,229,229,1) 0%, rgba(255,255,255,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(229,229,229,1)), color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(229,229,229,1) 0%,rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(229,229,229,1) 0%,rgba(255,255,255,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(229,229,229,1) 0%,rgba(255,255,255,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(229,229,229,1) 0%,rgba(255,255,255,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+  -moz-box-shadow: inset 0 1px 1px #333;
+  -webkit-box-shadow: inset 0 1px 1px #333;
+  box-shadow: inset 0 1px 1px #333;
+}
+
+.stici>.bottom_controls .cursor-pos {
+  display: inline-block;
+  width: 150px;
+  text-align: left;
+  margin-left: 5px;
+}
+
+.stici>.bottom_controls .popbox-controls {
+  display: inline-block;
+}
+
+.stici_scatterplot>.stici_chart {
+  margin-top: 30px;
+}
+.stici_scatterplot {
+  text-align: center;
+}
+
+.stici_scatterplot>.stici_chart svg path {
+  display: none;
+}
+.stici_scatterplot>.stici_chart .axis text {
+  font-size: 11px;
+}
+.stici_scatterplot>.stici_chart svg line {
+  stroke: #333;
+  stroke-width: 1px;
+}
+.stici_scatterplot>.stici_chart svg .graph-of-ave rect {
+  fill: #ff0;
+  stroke: #333;
+}
+.stici_scatterplot>.stici_chart svg .sd-line line {
+  stroke: rgba(245, 20, 255, 1);
+  stroke-width: 1px;
+}
+.stici_scatterplot>.stici_chart svg .reg-line line {
+  stroke: rgba(81, 255, 0, 1);
+  stroke-width: 1px;
+}
+.stici_scatterplot>.stici_chart svg line.x-axis {
+  stroke: #000;
+}
+.stici_scatterplot>.stici_chart svg circle {
+  cursor: pointer;
+}
+
+.stici_scatterplot>.stici_chart svg .data-point.added {
+  fill: rgba(0, 255, 0, 1);
+}
+.stici_scatterplot>.stici_chart svg .data-point.selected {
+  fill: #E0FFFF;
+}
+.stici_scatterplot>.stici_chart svg .data-point.active {
+  stroke-width: 2px;
+  fill: #FFF799;
+}
+
+.popbox-content {
+  padding: 10px;
+}
+
+.popbox-content ul {
+  text-align: left;
+  list-style-type: none;
+  padding: 5px 2px;
+  margin: 0;
+}
+
+.popbox-content ul li {
+  padding: 2px 0;
+}
+
+.popbox-content .univariate-stats-container {
+  background: #fafafa;
+  padding: 0 10px;
+  width: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 200px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: inset 1px 1px 8px #999;
+  -webkit-box-shadow: inset 1px 1px 8px #999;
+  box-shadow: inset 1px 1px 8px #999;
+}
+
+.popbox-content .univariate-stats-container h3 {
+  padding: 0;
+  margin: 3px auto;
+}
+
+.popbox-content .univariate-stat-wrapper {
+  padding: 10px;
+  border-bottom: 1px solid #bbb;
+  -moz-box-shadow: 0 1px 0 #fff;
+  -webkit-box-shadow: 0 1px 0 #fff;
+  box-shadow: 0 1px 0 #fff;
+}
+
+.popbox-content .table-container {
+  border: 1px solid #999;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: inset 1px 1px 8px #999;
+  -webkit-box-shadow: inset 1px 1px 8px #999;
+  box-shadow: inset 1px 1px 8px #999;
+}
+
+.popbox-content table {
+  position: relative;
+  text-align: center;
+  font-size: 12px;
+  border: 0;
+  border-bottom: 1px solid #999;
+  border-spacing: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.popbox-content table td {
+  border: 1px solid #999;
+  border-left: 0;
+  padding: 5px;
+  overflow: hidden;
+  display: table-cell;
+  width: 100%;
+}
+
+.popbox-content .table-header {
+  border: 0;
+}
+
+.popbox-content .table-header thead {
+  font-weight: bold;
+}
+
+.popbox-content .table-header td {
+  border: 1px solid #999;
+  border-left: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.popbox-content .table-body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 150px;
+}
+
+.popbox-content .table-body tbody tr:nth-child(odd) {
+  background: #eee;
+}
+.popbox-content .table-body tbody tr:nth-child(even) {
+  background: #fff;
+}
+.popbox-content .table-body tbody tr.selected {
+  background: #E0FFFF;
+}
+.popbox-content .table-body tbody tr:hover {
+  background: #FFF799;
+  cursor: pointer;
+}
+
+.stici_venn {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Helvetica", sans-serif;
+  text-align: left;
+}
+
+.stici_venn .container {
+  position: relative;
+  display: inline-block;
+}
+
+.stici_venn .buttons {
+  width: 160px;
+  margin-top: 25px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.stici_venn .scrollbars {
+  font-weight: bold;
+  width: 420px;
+  display: block;
+  font-size: 14px;
+  margin: 0 auto;
+  height: 60px;
+}
+
+.stici_venn .text {
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.stici_venn .button {
+  font-size: 12px;
+  width: 70px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.stici_venn .scrollbar,
+.stici_venn .info {
+  width: 140px;
+  display: inline-block;
+}
+
+.stici_venn .box {
+ position: absolute;
+ font-size: 14px;
+ font-family: sans-serif;
+}
+
+.stici_venn .box.outline,
+.stici_venn .box.S {
+ border: 1px solid black;
+}
+
+.stici_venn .box.fill {
+  border: 1px solid transparent;
+}
+
+.stici_venn .box.S,
+.stici_venn .box.opaque {
+ background-color: #eee;
+}
+
+.stici_venn .box.selected {
+ background-color: DodgerBlue;
+}
+.stici_venn .box.hilite {
+ background-color: GreenYellow;
+}
+.stici_venn input[type="text"] {
+  width: 40px;
+}
+
+.stici_venn3 .buttons {
+  width: 400px;
+}
+.stici_venn3 .button {
+  width: 100px;
+}
+
+.stici {
+  position: relative;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  height: 100%;
+  width: 100%;
+}
+.stici .chart_box {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 10px;
+}
+.stici>.bottom_controls {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  padding-left: 5px;
+  display: table-cell;
+  vertical-align: middle;
+  padding-bottom: 5px;
+}
+.stici>.top_controls {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+}
+.stici>.bottom_controls input[type="text"],
+.stici>.top_controls input[type="text"] {
+  width: 50px;
+}
+.stici button,
+.stici .popbox button.open {
+  cursor: pointer;
+  position: relative;
+  margin: 5px 3px;
+  padding: 4px 8px;
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+  border: 1px solid #aaa;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 1px 1px #333;
+  -webkit-box-shadow: 0 1px 1px #333;
+  box-shadow: 0 1px 1px #333;
+}
+
+.stici .popbox .box {
+  z-index: 5;
+}
+.stici .slider {
+  display: inline-block;
+  width: 100px;
+  height: 10px;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.stici .ui-slider-handle {
+  margin-top: 4px;
+  height: 10px;
+}
+
+#calc {
+  width: 400px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+#calc table {
+  margin-left: 0;
+  margin-right: 0;
+  border-spacing: 0px;
+}
+#calc input[type="text"] {
+  width: 395px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#calc input[type="button"] {
+  width: 100%;
+  font-size: 12px;
+  margin: 0 0 0 0;
+}
+#calc {
+  margin-left: auto;
+  margin-right: auto;
+}
+#calc td {
+  width: 75px;
+}
+
+/* CSS Rules for SticiGui Histogram Control. */
+/* Author: James Eady <jeady@berkeley.edu>   */
+
+/* Critical rules necessary for the chart to function. You may change the
+ * stici_histogram width and height but don't touch the other rules in this
+ * section.
+ */
+.stici_histogram {
+  width: 400px;
+  height: 400px;
+  position: relative;
+}
+.stici_histogram .chart_box,
+.stici_histogram .chart_box svg {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+.stici_histogram .chart_box.axis {
+  height: 20px;
+  top: auto;
+  bottom: 0;
+}
+.stici_histogram .chart_box.axis text {
+  font-family: sans-serif;
+  font-size: 11px;
+}
+
+/* Default rules for rendering objects in the chart. Often overridden by the
+ * set-specific rules at the bottom of the file.
+ */
+.stici_histogram .chart_box rect {
+  stroke: black;
+  stroke-width: 1;
+}
+.stici_histogram path {
+  stroke: #000000;
+  fill: none;
+  stroke-width: 2px;
+}
+
+/* The axis at the bottom */
+.stici_histogram .axis path,
+.stici_histogram .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+.stici_histogram .axis svg g:first-of-type>text {
+  text-anchor: start;
+}
+.stici_histogram .axis svg g:last-of-type>text {
+  text-anchor: end;
+}
+
+/* Set 0 Colors */
+.stici_histogram .chart_box rect.set0 {
+  fill: #6594ff;
+}
+.stici_histogram .chart_box.overlay rect.set0 {
+  fill: #f8ff53;
+}
+.stici_histogram path.set0 {
+  stroke: #0032A8;
+}
+
+/* Set 1 Colors */
+.stici_histogram .chart_box rect.set1 {
+  fill: #37DA7E;
+}
+.stici_histogram .chart_box.overlay rect.set1 {
+  fill: #CA1F7B;
+}
+.stici_histogram path.set1 {
+  stroke: #136738;
+}
+
+.stici_textbar {
+  width: 105px;
+  height: 50px;
+  display: inline-block;
+}
+.stici_textbar * {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+.stici_textbar>div {
+  height: 25px;
+  text-align: center;
+}
+.stici_textbar>div>span {
+  padding-right: 10px;
+  display: inline-block;
+}
+.stici_textbar>div>input[type="text"] {
+  width: 40px;
+}
+.stici_textbar>div>.ui-slider {
+  width: 100%;
+  height: 10px;
+}
+.stici_textbar .ui-slider-handle {
+  margin-top: 4px;
+  height: 10px;
+}
+
+.popbox {
+  margin:0px auto;
+  text-align:center;
+  position:relative;
+}
+
+.popbox .collapse { position:relative; }
+
+.popbox .open {
+  background:#DDD;
+  border:solid 1px #FFF;
+  border-radius:5px;
+  box-shadow: 0px 0px 5px #CCC;
+  background:-webkit-gradient(linear,left top,left bottom,from(#f4f4f4),to(#e8e8e8));
+  background:-moz-linear-gradient(top,#f4f4f4,#e8e8e8);
+  background:linear-gradient(top,#f4f4f4,#e8e8e8);
+  padding:8px;
+}
+
+.popbox .box {
+  display:block;
+  display:none;
+  background:#FFF;
+  border:solid 1px #BBBBBB;
+  border-radius:5px;
+  box-shadow:0px 0px 15px #999;
+  position:absolute;
+}
+
+.popbox .box a.close {
+  color:red;
+  font-size:12px;
+  font-family:arial;
+  text-decoration:underline;
+}
+
+.popbox .arrow {
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 11px solid #FFF;
+  position:absolute;
+  left:1px;
+  top:-10px;
+  z-index:1001;
+}
+
+.popbox .arrow-border {
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 11px solid #BBBBBB;
+  position:absolute;
+  top:-12px;
+  z-index:1000;
+}

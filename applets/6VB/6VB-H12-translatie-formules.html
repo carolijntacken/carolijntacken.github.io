@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Translatie-formules</title>
+
+<body>
+
+<h2>Translaties en formules</h2>
+
+<p>De standaardgrafieken:</p>
+
+<div id="box1" class="jxgbox" style="float: left; width:233px; height:130px; margin-bottom:1em;"></div>
+<div id="box2" class="jxgbox" style="float: left; width:233px; height:130px; margin-bottom:1em;"></div>
+<div id="box3" class="jxgbox" style="float: left; width:233px; height:130px; margin-bottom:1em;"></div>
+<div id="box4" class="jxgbox" style="float: left; width:233px; height:130px; margin-bottom:1em;"></div>
+
+<script type="text/javascript">
+	board1 = JXG.JSXGraph.initBoard('box1', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-1,2,6.5,-1.5] 
+		});
+	var sinus = function(x) {return Math.sin(x); }
+	var plotsinus = board1.create('functiongraph',[sinus,0,6.28],{ strokeColor: 'red', strokeWidth:2 });
+	board1.create('text',[3.2,1.5,'y = sin(x)'], {fontSize: 16});
+</script>
+<script type="text/javascript">
+	board2 = JXG.JSXGraph.initBoard('box2', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-1,2,6.5,-1.5] 
+		});
+	var minsinus = function(x) {return -1*Math.sin(x); }
+	var plotminsinus = board2.create('functiongraph',[minsinus,0,6.28],{ strokeColor: 'red', strokeWidth:2 });
+	board2.create('text',[3.2,1.5,'y = &ndash;&thinsp;sin(x)'], {fontSize: 16});
+</script>
+<script type="text/javascript">
+	board3 = JXG.JSXGraph.initBoard('box3', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-1,2,6.5,-1.5] 
+		});
+	var cosinus = function(x) {return Math.cos(x); }
+	var plotcosinus = board3.create('functiongraph',[cosinus,0,6.28],{ strokeColor: '#006ae0', strokeWidth:2 });
+	board3.create('text',[3.2,1.5,'y = cos(x)'], {fontSize: 16});
+</script>
+<script type="text/javascript">
+	board4 = JXG.JSXGraph.initBoard('box4', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-1,2,6.5,-1.5] 
+		});
+	var mincosinus = function(x) {return -1*Math.cos(x); }
+	var plotsinus = board4.create('functiongraph',[mincosinus,0,6.28],{ strokeColor: '#006ae0', strokeWidth:2 });
+	board4.create('text',[3.2,1.5,'y = &ndash;&thinsp;cos(x)'], {fontSize: 16});
+</script>
+
+<p>
+<table style="clear: left;">
+	<tr>
+		<td><input type="radio" name="f" checked onChange="wisselPlot()" id="sin"/>sin</td>
+		<td><input type="radio" name="f" onChange="wisselPlot()" id="cos"/>cos</td>
+	</tr>
+</table>
+</p>
+
+<p>Met de slider kun je het beginpunt van de grafiek be&iuml;nvloeden.
+<ol type="a">
+<li>Transleer \(y=\sin(x)\) over \( (\frac{1}{2}\pi, 0)\). Welke standaardgrafiek zie je nu?</li>
+<li>Welke formule levert dat op?</li>
+<li>Bekijk ook translaties over \( (\pi, 0)\), \( (-\frac{1}{2}\pi, 0)\) en \( (-\pi, 0)\) en bedenk formules daarbij.</li>
+<li>Beantwoord dezelfde vragen als je start met \( y=\cos(x)\).
+</ol>
+</p>
+
+<div id="box" class="jxgbox" style="width:940px; height:400px; margin-bottom:1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options.text.useMathJax = true;
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-1,1.7,6.5,-1.3] 
+		});
+	var d = board.create('slider',[[2,1.2],[4,1.2],[-12,0,12]],{
+		name:'', 
+		snapWidth:1, 
+		strokeColor:'#ff8f00', 
+		baseline: {strokeColor: '#ff8f00'}, 
+		highline: {strokeColor: '#ff8f00'},
+		withTicks:false,
+		withLabel:false
+		});
+
+
+	var f, g, plotf,plotg, textf, textg;
+	var textd = '';
+	
+	function wisselPlot() {
+  
+	if (document.getElementById("sin").checked == true) {
+		f = function(x) {return Math.sin(x+(d.Value()/12)*Math.PI); }
+		plotf = board.create('functiongraph',[f,-1,6.5],{ strokeColor: 'black', strokeWidth:3 });
+		textf = board.create('text',[2,1.5,
+			function() {
+				if (d.Value()==0) { textd = '' ;} else if (d.Value()>0) { textd = ' + ' + (d.Value()/12*Math.PI).toFixed(2)} else { textd = ' &ndash; ' + (d.Value()/12*-Math.PI).toFixed(2)}
+				if (d.Value()==3) { textd = ' + &frac14;&pi;' ;} 
+				if (d.Value()==4) { textd = ' + &frac13;&pi;' ;} 
+				if (d.Value()==6) { textd = ' + &frac12;&pi;' ;} 
+				if (d.Value()==8) { textd = ' + &frac34&pi;' ;} 
+				if (d.Value()==9) { textd = ' + &frac23;&pi;' ;} 
+				if (d.Value()==12) { textd = ' + &pi;' ;} 
+				if (d.Value()==-3) { textd = ' &ndash; &frac14;&pi;' ;} 
+				if (d.Value()==-4) { textd = ' &ndash; &frac13;&pi;' ;} 
+				if (d.Value()==-6) { textd = ' &ndash; &frac12;&pi;' ;} 
+				if (d.Value()==-8) { textd = ' &ndash; &frac34&pi;' ;} 
+				if (d.Value()==-9) { textd = ' &ndash; &frac23;&pi;' ;} 
+				if (d.Value()==-12) { textd = ' &ndash; &pi;' ;} 
+			    return 'y = sin(x' + textd + ')';
+				}], {fontSize: 24, fixed: true, highlight:false });
+		board.removeObject(plotg);
+		board.removeObject(textg);
+		}
+	if (document.getElementById("cos").checked == true) {
+		g = function(x) {return Math.cos(x+d.Value()/12*Math.PI); }
+		plotg = board.create('functiongraph',[g,-1,6.5],{ strokeColor: 'black', strokeWidth:3 });
+		textg = board.create('text',[2,1.5,
+		function() {
+			if (d.Value()==0) { textd = '' ;} else if (d.Value()>0) { textd = ' + ' + (d.Value()/12*Math.PI).toFixed(2)} else { textd = ' &ndash; ' + (d.Value()/12*-Math.PI).toFixed(2)}
+			if (d.Value()==3) { textd = ' + &frac14;&pi;' ;} 
+			if (d.Value()==4) { textd = ' + &frac13;&pi;' ;} 
+			if (d.Value()==6) { textd = ' + &frac12;&pi;' ;} 
+			if (d.Value()==8) { textd = ' + &frac34&pi;' ;} 
+			if (d.Value()==9) { textd = ' + &frac23;&pi;' ;} 
+			if (d.Value()==12) { textd = ' + &pi;' ;} 
+			if (d.Value()==-3) { textd = ' &ndash; &frac14;&pi;' ;} 
+			if (d.Value()==-4) { textd = ' &ndash; &frac13;&pi;' ;} 
+			if (d.Value()==-6) { textd = ' &ndash; &frac12;&pi;' ;} 
+			if (d.Value()==-8) { textd = ' &ndash; &frac34&pi;' ;} 
+			if (d.Value()==-9) { textd = ' &ndash; &frac23;&pi;' ;} 
+			if (d.Value()==-12) { textd = ' &ndash; &pi;' ;} 
+		    return 'y = cos(x' + textd + ')';
+			}], {fontSize: 24, fixed: true, highlight:false });
+		board.removeObject(plotf);
+		board.removeObject(textf);
+		}
+	
+	}
+	f = function(x) {return Math.sin(x+d.Value()/12*Math.PI); }
+	plotf = board.create('functiongraph',[f,-1,6.5],{ strokeColor: 'black', strokeWidth:3 });
+	textf = board.create('text',[2,1.5,
+		function() {
+			if (d.Value()==0) { textd = '' ;} else if (d.Value()>0) { textd = ' + ' + (d.Value()/12*Math.PI).toFixed(2)} else { textd = ' &ndash; ' + (d.Value()/12*-Math.PI).toFixed(2)}
+			if (d.Value()==3) { textd = ' + &frac14;&pi;' ;} 
+			if (d.Value()==4) { textd = ' + &frac13;&pi;' ;} 
+			if (d.Value()==6) { textd = ' + &frac12;&pi;' ;} 
+			if (d.Value()==8) { textd = ' + &frac34&pi;' ;} 
+			if (d.Value()==9) { textd = ' + &frac23;&pi;' ;} 
+			if (d.Value()==12) { textd = ' + &pi;' ;} 
+			if (d.Value()==-3) { textd = ' &ndash; &frac14;&pi;' ;} 
+			if (d.Value()==-4) { textd = ' &ndash; &frac13;&pi;' ;} 
+			if (d.Value()==-6) { textd = ' &ndash; &frac12;&pi;' ;} 
+			if (d.Value()==-8) { textd = ' &ndash; &frac34&pi;' ;} 
+			if (d.Value()==-9) { textd = ' &ndash; &frac23;&pi;' ;} 
+			if (d.Value()==-12) { textd = ' &ndash; &pi;' ;} 
+		    return 'y = sin(x' + textd + ')';
+		  }], {fontSize:24, fixed:true, highlight:false});
+	</script>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

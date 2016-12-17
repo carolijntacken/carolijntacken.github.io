@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<title>Herleiden</title>
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 40px; 
+	margin-right: 40px;
+	color: #454545;
+	}
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+.vraagteken {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    behavior: url(PIE.htc);
+
+    width: 14px;
+    height: 14px;
+    padding: 1px;
+
+    background: #fff;
+    border: 2px solid #95B03F;
+    color: #95B03f;
+    text-align: center;
+
+    font: 14px Arial, sans-serif;
+}
+
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="extracted-jsxgraph.css" />
+<script type="text/javascript" src="options-jsxgraph.js"></script>
+
+<style type="text/css">
+    .scope .subject {
+        display: none;
+        }
+</style>
+<script type="text/javascript">
+function smartSwitch(event) {
+    event.stopPropagation();
+    var scope = $(this).closest('.scope');
+    var switches = scope.find('> .smartSwitch');
+    var subjects = scope.find('> .subject');
+    var index = switches.index(this);
+    if (index >= 0) {
+        subjects.eq(index).toggle();
+    }
+}
+
+function smartList(event) {
+    event.stopPropagation();
+    var scope = $(this).closest('.scope');
+    scope.find('.subject:hidden:first').show();
+}
+
+        </script>
+
+</head>
+
+
+<body>
+<h1>Rekenen met letters</h1>
+
+<p>Bereken eerst zelf het antwoord en kijk het na.<br />
+Oefen elke vorm net zo lang tot je er minstens 5 foutloos achter elkaar kunt maken!</p>
+
+<div style="float: left;" class="scope" id="opg1">
+<div id="vraag1"></div>
+<div id="uitw1" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap1" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave1()">Nieuwe opgave</button>
+</div>
+
+
+<script type="text/javascript">
+function maakOpgave1() {
+		var vartypes1 = new Array("a","x","p");
+		var vartypes2 = new Array("a","b","b","b","x","y","y","y","p","q","q","q");
+		var kiesvar = Math.floor(3*Math.random());
+		var var1 = vartypes1[kiesvar];
+		var kiesvar1 = Math.floor(4*Math.random()); 
+		var kiesvar2 = 4*kiesvar + kiesvar1;
+		var var2 = vartypes2[kiesvar2];
+		var varanswer = var1 + var2;
+		if (kiesvar1==0) {varanswer = var1 + "^2";}
+        var u1 = Math.round(12*Math.random()+1);
+        var v1 = Math.round(8*Math.random()+1);
+        if (u1==1) {u="";} else {u=u1;}
+        if (v1==1) {v=" ";} else {v=v1;}
+        if (u1*v1==1) {w="";} else {w=u1*v1;}
+	
+
+$('#vraag1').html("\\(" + u + var1 + "\\cdot " + v + var2 + " = \\)");
+
+$('#stap1').html("\\( " + w + varanswer + " \\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg1"]);
+$("#uitw1").children('.subject').hide();
+
+}
+
+</script>
+</div>
+
+<div style="float: left; margin-left: 6em;" class="scope" id="opg2">
+<div id="vraag2"></div>
+<div id="uitw2" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap2" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave2()">Nieuwe opgave</button>
+</div>
+
+<script type="text/javascript">
+function maakOpgave2() {
+	var vartypes1 = new Array("a","a","x","x","p","p");
+	var vartypes2 = new Array("b","a^2","y","x^2","q","p^2");
+	var kiesvar = Math.floor(6*Math.random());
+	var var1 = vartypes1[kiesvar];
+	var var2 = vartypes2[kiesvar];
+	var g3 = Math.round(5*Math.random()+1);
+	var g4 = Math.round(4*Math.random()+1);
+	var g1 = Math.round(3*Math.random()+1)+g3;
+	var g2 = Math.round(4*Math.random()+1)+g4;
+	if (g1==1) {c1="";} else {c1=g1;}
+	if (g2==1) {c2=" ";} else {c2=g2;}
+	var tekens = new Array("+","-");
+	var kiesteken1 = Math.floor(2*Math.random());
+	var teken1 = tekens[kiesteken1];
+	var kiesteken2 = Math.floor(2*Math.random());
+	var teken2 = tekens[kiesteken2];
+	if (kiesteken1==0) {
+		if (g3==1) {c3 = "+";} else {c3 = "+" + g3;} 
+		}
+		else {
+		if (g3==1) {c3 = "-";} else {c3 = "-" + g3;}
+		}
+	if (kiesteken2==0) {
+		if (g4==1) {c4 = "+";} else {c4 = "+" + g4;} 
+		}
+		else {
+		if (g4==1) {c4 = "-";} else {c4 = "-" + g4;}
+		}
+	var u1, u2;
+	if (kiesteken1==0) {u1=g1+g3;} else {u1=g1-g3;}
+	if (kiesteken2==0) {u2=g2+g4;} else {u2=g2-g4;}
+	if (u1==1) {u1=" ";}
+	if (u2==1) {u2=" ";}
+
+$('#vraag2').html("\\(" + c1 + var1 + "+" + c2 + var2 + c3 + var1 + c4 + var2 + "= \\)");
+
+$('#stap2').html("\\( " + u1 + var1 + "+" + u2 + var2 + "\\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg2"]);
+$("#uitw2").children('.subject').hide();
+
+}
+
+</script>
+</div>
+
+
+<div style="float: left; margin-left: 6em;" class="scope" id="opg3">
+<div id="vraag3"></div>
+<div id="uitw3" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap3" class="subject"></div>
+<div id="stp3" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave3()">Nieuwe opgave</button>
+</div>
+
+<script type="text/javascript">
+function maakOpgave3() {
+	var vartypes1 = new Array("a","x","p");
+	var vartypes2 = new Array("a","b","b","b","x","y","y","y","p","q","q","q");
+	var kiesvar = Math.floor(3*Math.random());
+	var var1 = vartypes1[kiesvar];
+	var kiesvar1 = Math.floor(4*Math.random()); 
+	var kiesvar2 = 4*kiesvar + kiesvar1;
+	var var2 = vartypes2[kiesvar2];
+	var varanswer = var1 + var2;
+	if (kiesvar1==0) {varanswer = var1 + "^2";}
+	var g3 = Math.round(5*Math.random()+1);
+	var g4 = Math.round(4*Math.random()+1);
+	var g1 = Math.round(3*Math.random()+1)+g3;
+	var g2 = Math.round(4*Math.random()+1)+g4;
+	if (g1==1) {c1="";} else {c1=g1;}
+	if (g2==1) {c2=" ";} else {c2=g2;}
+	var tekens = new Array("+","-");
+	var kiesteken1 = Math.floor(2*Math.random());
+	var teken1 = tekens[kiesteken1];
+	if (kiesteken1==0) {
+		if (g3==1) {c3 = "+";} else {c3 = "+" + g3;} 
+		}
+		else {
+		if (g3==1) {c3 = "-";} else {c3 = "-" + g3;}
+		}
+	if (g4==1) {c4=" ";} else {c4 = g4;}
+	var u1 = g1*g2;
+	var u2;
+	if (kiesteken1==0) {u2="+" + g3*g4;} else {u2="-" + g3*g4;}
+	var u3;
+	if (kiesteken1==0) {u3 = g1*g2+g3*g4;} else {u3 = g1*g2-g3*g4;}
+
+$('#vraag3').html("\\("  + c1 + var1 + "\\cdot" + c2 + var2  + c3 + var1 + "\\cdot" + c4 + var2 + "= \\)");
+
+$('#stap3').html("\\( " + u1 + varanswer + u2 + varanswer + "=\\)");
+
+$('#stp3').html("\\( " + u3 + varanswer + "\\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg3"]);
+$("#uitw3").children(".subject").hide();
+
+}
+
+</script>
+
+<div style="clear: both; height: 25px; border-bottom: 1px solid #c0c0c0;"></div>
+<div style="clear: both; height: 25px;"></div>
+
+
+<div style="float: left; " class="scope" id="opg4">
+<div id="vraag4"></div>
+<div id="uitw4" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap4" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave4()">Nieuwe opgave</button>
+</div>
+
+<script type="text/javascript">
+function maakOpgave4() {
+	var vartypes1 = new Array("","a","a","","x","x","","p","p");
+	var vartypes2 = new Array("a","a","a","x","x","x","p","p","p");
+	var vartypes3 = new Array("b","","b","y","","y","q","","q");
+	var kiesvar = Math.floor(9*Math.random());
+	var var1 = vartypes1[kiesvar];
+	var var2 = vartypes2[kiesvar];
+	var var3 = vartypes3[kiesvar];
+	var g1 = Math.round(6*Math.random()+2);
+	var g2 = Math.round(4*Math.random()+1);
+	var g3 = Math.round(5*Math.random()+1);
+	if (g2==1) {c2="";} else {c2=g2;}
+	if (g3==1) { if (var3 == "") {c3="1"} else {c3 = ""}
+	} else {c3=g3;}
+	var tekens = new Array("+","-");
+	var kiesteken1 = Math.floor(2*Math.random());
+	var teken1 = tekens[kiesteken1];
+	var u1 = g1*g2;
+	var u2=g1*g3;	
+	var varanswer;
+	if (var1 == var2) {varanswer = var1 + "^2";} else {varanswer = var1 + var2;}
+
+$('#vraag4').html("\\(" + g1 + var1 + "(" + c2 + var2 + teken1 + c3 + var3 + ") = \\)");
+
+$('#stap4').html("\\( " + u1 + varanswer + teken1 + u2 + var1 + var3 + "\\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg4"]);
+$("#uitw4").children('.subject').hide();
+
+}
+
+</script>
+</div>
+
+<div style="float: left; margin-left: 6em;" class="scope" id="opg5">
+<div id="vraag5"></div>
+<div id="uitw5" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap5" class="subject"></div>
+<div id="stap5a" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave5()">Nieuwe opgave</button>
+</div>
+
+<script type="text/javascript">
+function maakOpgave5() {
+	var vartypes1 = new Array("","a","a","","x","x","","p","p");
+	var vartypes2 = new Array("a","a","a","x","x","x","p","p","p");
+	var vartypes3 = new Array("b","","b","y","","y","q","","q");
+	var vartypes0 = new Array("a","a","ab","x","x","xy","p","p","pq");
+	var kiesvar = Math.floor(9*Math.random());
+	var var0 = vartypes0[kiesvar];
+	var var1 = vartypes1[kiesvar];
+	var var2 = vartypes2[kiesvar];
+	var var3 = vartypes3[kiesvar];
+	var g0 = Math.round(6*Math.random()+2);
+	var g1 = Math.round(1*Math.random()+2);
+	var g2 = Math.round(5*Math.random()+1);
+	var g3 = Math.round(2*Math.random()+1);
+	if (g2==1) {c2="";} else {c2=g2;}
+	if (g3==1) { if (var3 == "") {c3="1"} else {c3 = ""}
+	} else {c3=g3;}
+	var u1 = g1*g2;
+	var u2 = g1*g3;
+	var varanswer1;
+	if (var1 == var2) {varanswer1 = var1 + "^2";} else {varanswer1 = var1 + var2;}
+	var varanswer2 = var1 + var3;	
+	var u3, u4;
+	if (var0==var1+var2) {
+		u3=g0+u1;
+		u4=u2;
+		} 
+		else {
+		u3=u1;
+		u4=g0+u2;
+		}
+
+$('#vraag5').html("\\(" + g0 + var0 + "+" + g1 + var1 + "(" + c2 + var2 + "+" + c3 + var3 + ") = \\)");
+
+$('#stap5').html("\\( " + g0 + var0 + "+" + u1 + varanswer1 + "+" + u2 + var1 + var3 + "=\\)");
+$('#stap5a').html("\\( " + u3 + varanswer1 + "+" + u4 + varanswer2 + "\\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg5"]);
+$("#uitw5").children('.subject').hide();
+
+}
+
+</script>
+</div>
+
+<div style="float: left; margin-left: 6em;" class="scope" id="opg6">
+<div id="vraag6"></div>
+<div id="uitw6" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap6" class="subject"></div>
+<div id="stap6a" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave6()">Nieuwe opgave</button>
+</div>
+
+<script type="text/javascript">
+function maakOpgave6() {
+	var vartypes1 = new Array("","a","a","","x","x","","p","p");
+	var vartypes2 = new Array("a","a","a","x","x","x","p","p","p");
+	var vartypes3 = new Array("b","","b","y","","y","q","","q");
+	var vartypes0 = new Array("a","a","ab","x","x","xy","p","p","pq");
+	var kiesvar = Math.floor(9*Math.random());
+	var var0 = vartypes0[kiesvar];
+	var var1 = vartypes1[kiesvar];
+	var var2 = vartypes2[kiesvar];
+	var var3 = vartypes3[kiesvar];
+	var g0 = Math.round(6*Math.random()+7);
+	var g1 = Math.round(1*Math.random()+2);
+	var g2 = Math.round(5*Math.random()+1);
+	var g3 = Math.round(2*Math.random()+1);
+	if (g2==1) {c2="";} else {c2=g2;}
+	if (g3==1) { if (var3 == "") {c3="1"} else {c3 = ""}
+	} else {c3=g3;}
+	var u1 = g1*g2;
+	var u2 = g1*g3;
+	var varanswer1;
+	if (var1 == var2) {varanswer1 = var1 + "^2";} else {varanswer1 = var1 + var2;}
+	var varanswer2 = var1 + var3;	
+	var u3, u4, teken2;
+	if (var0==var1+var2) {
+		u3=g0+u1;
+		u4=u2;
+		teken2="-";
+		} 
+		else {
+		u3=u1;
+		u4=g0-u2;
+		teken2="+";
+		}
+
+$('#vraag6').html("\\(" + g0 + var0 + "+" + g1 + var1 + "(" + c2 + var2 + "-" + c3 + var3 + ") = \\)");
+
+$('#stap6').html("\\( " + g0 + var0 + "+" + u1 + varanswer1 + "-" + u2 + var1 + var3 + "=\\)");
+$('#stap6a').html("\\( " + u3 + varanswer1 + teken2 + u4 + varanswer2 + "\\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg6"]);
+$("#uitw6").children('.subject').hide();
+
+}
+
+</script>
+</div>
+
+<div style="clear: both; height: 25px; border-bottom: 1px solid #c0c0c0;"></div>
+<div style="clear: both; height: 25px;"></div>
+
+<div style="float: left;" class="scope" id="opg7">
+<div id="vraag7"></div>
+<div id="uitw7" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap7" class="subject"></div>
+<div id="stap7a" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave7()">Nieuwe opgave</button>
+</div>
+
+<script type="text/javascript">
+function maakOpgave7() {
+	var vartypes1 = new Array("","a","a","","x","x","","p","p");
+	var vartypes2 = new Array("a","a","a","x","x","x","p","p","p");
+	var vartypes3 = new Array("b","","b","y","","y","q","","q");
+	var kiesvar = Math.floor(9*Math.random());
+	var var1 = vartypes1[kiesvar];
+	var var2 = vartypes2[kiesvar];
+	var var3 = vartypes3[kiesvar];
+	var g1 = Math.round(4*Math.random()+2);
+	var g2 = Math.round(4*Math.random()+1);
+	var g3 = Math.round(3*Math.random()+1);
+	var g4 = Math.round(2*Math.random()+2);
+	var g5 = Math.round(4*Math.random()+1);
+	var g6 = Math.round(5*Math.random()+1);
+	if (g2==1) {c2="";} else {c2=g2;}
+	if (g3==1) { if (var3 == "") {c3="1"} else {c3 = ""}
+	} else {c3=g3;}
+	if (g5==1) {c5="";} else {c5=g5;}
+	if (g6==1) { if (var3 == "") {c6="1"} else {c6 = ""}
+	} else {c6=g6;}
+	var u1 = g1*g2;
+	var u2 = g1*g3;
+	var u3 = g4*g5;
+	var u4 = g4*g6;
+	var u5 = u1+u3;
+	var u6 = u2+u4;	
+	var varanswer;
+	if (var1 == var2) {varanswer = var1 + "^2";} else {varanswer = var1 + var2;}
+
+$('#vraag7').html("\\(" + g1 + var1 + "(" + c2 + var2 + "+" + c3 + var3 + ") +" + g4 + var1 + "(" + c5 + var2 + "+" + c6 + var3 +") = \\)");
+
+$('#stap7').html("\\( " + u1 + varanswer + "+" + u2 + var1 + var3 + "+" + u3 + varanswer + "+" + u4 + var1 + var3 +"=\\)");
+$('#stap7a').html("\\( " + u5 + varanswer + "+" + u6 + var1 + var3 + "\\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg7"]);
+$("#uitw7").children('.subject').hide();
+
+}
+
+</script>
+</div>
+
+<div style="float: left; margin-left: 6em;" class="scope" id="opg8">
+<div id="vraag8"></div>
+<div id="uitw8" class="uitw" style="height: 6em"><div class="vraagteken smartList" style="margin-top: 10px; margin-bottom: 10px;">?</div>
+<div id="stap8" class="subject"></div>
+<div id="stap8a" class="subject"></div>
+</div>
+
+<button type="button" onclick="maakOpgave8()">Nieuwe opgave</button>
+</div>
+
+<script type="text/javascript">
+function maakOpgave8() {
+	var vartypes1 = new Array("","a","a","","x","x","","p","p");
+	var vartypes2 = new Array("a","a","a","x","x","x","p","p","p");
+	var vartypes3 = new Array("b","","b","y","","y","q","","q");
+	var kiesvar = Math.floor(9*Math.random());
+	var var1 = vartypes1[kiesvar];
+	var var2 = vartypes2[kiesvar];
+	var var3 = vartypes3[kiesvar];
+	var g1 = Math.round(4*Math.random()+3);
+	var g2 = Math.round(4*Math.random()+1);
+	var g3 = Math.round(3*Math.random()+3);
+	var g4 = Math.round(1*Math.random()+2);
+	var g5 = Math.round(4*Math.random()+1);
+	var g6 = Math.round(2*Math.random()+1);
+	if (g2==1) {c2="";} else {c2=g2;}
+	if (g3==1) { if (var3 == "") {c3="1"} else {c3 = ""}
+	} else {c3=g3;}
+	if (g5==1) {c5="";} else {c5=g5;}
+	if (g6==1) { if (var3 == "") {c6="1"} else {c6 = ""}
+	} else {c6=g6;}
+	var u1 = g1*g2;
+	var u2 = g1*g3;
+	var u3 = g4*g5;
+	var u4 = g4*g6;
+	var u5 = u1+u3;
+	var u6 = u2-u4;	
+	var varanswer;
+	if (var1 == var2) {varanswer = var1 + "^2";} else {varanswer = var1 + var2;}
+
+$('#vraag8').html("\\(" + g1 + var1 + "(" + c2 + var2 + "+" + c3 + var3 + ") +" + g4 + var1 + "(" + c5 + var2 + "-" + c6 + var3 +") = \\)");
+
+$('#stap8').html("\\( " + u1 + varanswer + "+" + u2 + var1 + var3 + "+" + u3 + varanswer + "-" + u4 + var1 + var3 +"=\\)");
+$('#stap8a').html("\\( " + u5 + varanswer + "+" + u6 + var1 + var3 + "\\)");
+
+MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg8"]);
+$("#uitw8").children('.subject').hide();
+
+}
+
+$(function() {
+		maakOpgave1();
+		maakOpgave2();
+		maakOpgave3();
+		maakOpgave4();
+		maakOpgave5();
+		maakOpgave6();
+		maakOpgave7();
+		maakOpgave8();
+        var scopes = $('.scope');
+        scopes.find('.smartList').click(smartList);
+        scopes.find('.smartSwitch').click(smartSwitch);
+})
+
+</script>
+</div>
+
+
+<footer>
+<br />		
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+
+</body>
+</html>

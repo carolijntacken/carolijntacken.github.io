@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 20px; 
+	margin-right: 20px;
+	color: #454545;
+	}
+		
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: portrait)
+{/* This block provides CSS that only applies to the iPad in portrait orientation */
+
+	body
+	{font-size: 130%;}
+
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: landscape)
+{/* This CSS kicks in only when an iPad is in landscape mode. It makes the font bigger, the table rows taller, etc */
+
+	body
+	{font-size: 100%;}
+
+}
+
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.4/jsxgraphcore.js"></script>
+
+<title>Titel</title>
+
+</head>
+<body>
+<h2>Lijnen</h2>
+<p>Versleep de sliders a en b om uit te zoeken hoe de formule, de grafiek en de tabel met elkaar samenhangen.</p>
+
+<div id="box1" class="jxgbox" style="width:720px; height:90px; margin-bottom:1em;"></div>
+<div id="box2" class="jxgbox" style="float: left; width:538px; height:540px; margin-bottom:2em;"></div>
+<div id="box3" class="jxgbox" style="width:180px; height:540px; margin-bottom:2em;"></div>
+
+<script type="text/javascript">
+var board = JXG.JSXGraph.initBoard('box1', {
+	boundingbox: [0, 2, 10, 0], 
+	axis: false,
+	showNavigation: false,
+	showCopyright: false
+
+	});
+
+var a = board.create('slider',[[.3,1],[2.7,1],[-10,2,10]],{snapWidth: .1, withLabel: false, strokeColor: '#006ae0', highlightStrokeColor: '#006ae0', baseline: {strokeColor: '#006ae0', highlightStrokeColor: '#006ae0'}, highline: { strokeColor: '#006ae0', highlightStrokeColor: '#006ae0' }});
+var b = board.create('slider',[[3.3,1],[5.7,1],[-5,0,5]],{snapWidth: .1, withLabel: false, strokeColor: 'red', highlightStrokeColor: 'red', baseline: {strokeColor: 'red', highlightStrokeColor: 'red'}, highline: { strokeColor: 'red', highlightStrokeColor: 'red' }});
+var tekst_a = board.create('text',[1.5,1.5,
+	function(){
+		return 'a = '+ a.Value().toFixed(1)
+		}], {anchorX:'middle', fontSize: 20, color: '#006ae0'});
+var tekst_b = board.create('text',[4.5,1.5,
+	function(){
+		return 'b = '+ b.Value().toFixed(1)
+		}], {anchorX:'middle', fontSize: 20, color: 'red'} );
+		
+var tekst_formule = board.create('text',[7,1,
+	function() {
+		var tekenb = ' + ';
+		var tekstb = Math.abs(b.Value()).toFixed(2);
+		if (b.Value()<0) { tekenb = ' <span style="color: red"> &ndash; </span> ';}
+		if (b.Value()==0) { tekenb = ' '; tekstb = ' ';}
+		return 'y = <span style="color:#006ae0">' + a.Value().toFixed(2) + '</span>&thinsp;x' + tekenb + '<span style="color: red">' + tekstb + '</span>'
+		}], {fontSize: 24});
+	
+	
+</script>
+
+<script type="text/javascript">
+var board2 = JXG.JSXGraph.initBoard('box2', {
+	boundingbox: [-10, 10, 10, -10], 
+	axis: true,
+	grid: true,
+	showNavigation: false,
+	showCopyright: false
+	});
+	
+var lijn = board2.create('line', [
+	[0, function() { return b.Value();}],
+	[1, function() { return b.Value()+a.Value();}]
+	],
+	{ strokeWidth: 3, strokeColor: 'black' }
+	);	
+	
+var pijlhor1 = board2.create('arrow',[
+	[0, function() { return b.Value();}],
+	[1, function() { return b.Value();}]],
+	{ strokeColor: '#006ae0'}
+	);
+var pijlvert1 = board2.create('arrow',[
+	[1, function() { return b.Value();}],
+	[1, function() { return b.Value()+a.Value();}]],
+	{ strokeColor: '#006ae0'}
+	);
+var teksthor1 = board2.create('text', [.5, function() { return b.Value()-.4;}, '1'], { anchorX: 'middle', color: '#006ae0', fontSize: 14 });
+var tekstvert1 = board2.create('text', [1.2, function() { return b.Value()+0.5*a.Value();}, function() { return a.Value().toFixed(1);}], { color: '#006ae0', fontSize: 14 });
+
+var pijlhor2 = board2.create('arrow',[
+	[1, function() { return b.Value()+a.Value();}],
+	[2, function() { return b.Value()+a.Value();}]],
+	{ strokeColor: '#006ae0'}
+	);
+var pijlvert2 = board2.create('arrow',[
+	[2, function() { return b.Value()+a.Value();}],
+	[2, function() { return b.Value()+2*a.Value();}]],
+	{ strokeColor: '#006ae0'}
+	);
+var teksthor2 = board2.create('text', [1.5, function() { return b.Value()+a.Value()-.4;}, '1'], { anchorX: 'middle', color: '#006ae0', fontSize: 14 });
+var tekstvert2 = board2.create('text', [2.2, function() { return b.Value()+1.5*a.Value();}, function() { return a.Value().toFixed(1);}], { color: '#006ae0', fontSize: 14 });
+
+	
+board.addChild(board2);
+</script>
+
+<script type="text/javascript">
+var board3 = JXG.JSXGraph.initBoard('box3', {
+	boundingbox: [0, 10, 3, 0], 
+	axis: false,
+	showNavigation: false,
+	showCopyright: false
+	});
+
+xx = board3.create('text', [1,9.5,'x'], { fontSize: 20, anchorX: 'middle'});
+x0 = board3.create('text', [1,9,-3], { fontSize: 20, anchorX: 'middle'});
+x1 = board3.create('text', [1,8.5,-2], { fontSize: 20, anchorX: 'middle'});
+x2 = board3.create('text', [1,8,-1], { fontSize: 20, anchorX: 'middle'});
+x3 = board3.create('text', [1,7.5,0], { fontSize: 20, anchorX: 'middle'});
+x4 = board3.create('text', [1,7,1], { fontSize: 20, anchorX: 'middle'});
+x5 = board3.create('text', [1,6.5,2], { fontSize: 20, anchorX: 'middle'});
+x6 = board3.create('text', [1,6,3], { fontSize: 20, anchorX: 'middle'});
+
+yy = board3.create('text', [2,9.5,'y'], { fontSize: 20, anchorX: 'middle'});
+y0 = board3.create('text', [2,9, function() {return (a.Value()*-3+b.Value()).toFixed(1);}], { fontSize: 20, anchorX: 'middle'});
+y1 = board3.create('text', [2,8.5, function() {return (a.Value()*-2+b.Value()).toFixed(1);}], { fontSize: 20, anchorX: 'middle'});
+y2 = board3.create('text', [2,8, function() {return (a.Value()*-1+b.Value()).toFixed(1);}], { fontSize: 20, anchorX: 'middle'});
+y3 = board3.create('text', [2,7.5, function() {return (b.Value()).toFixed(1);}], { fontSize: 20, anchorX: 'middle'});
+y4 = board3.create('text', [2,7, function() {return (a.Value()+b.Value()).toFixed(1);}], { fontSize: 20, anchorX: 'middle'});
+y5 = board3.create('text', [2,6.5, function() {return (a.Value()*2+b.Value()).toFixed(1);}], { fontSize: 20, anchorX: 'middle'});
+y6 = board3.create('text', [2,6, function() {return (a.Value()*3+b.Value()).toFixed(1);}], { fontSize: 20, anchorX: 'middle'});
+
+board.addChild(board3);
+
+</script>
+
+<p style='clear: both;'><ol>
+<li>Welke regelmaat zie je in de tabel? Wat heeft die met a en/of b te maken?</li>
+<li>Hoe moet je a kiezen zodat je een lijn krijgt die van links naar rechts omhoog loopt? En omlaag?</li>
+<li>Hoe moet je a kiezen zodat de lijn horizontaal loopt?</li>
+<li>Hoe zie je a terug in de grafiek? En b?</li>
+<li>Kun je door a en/of b te wijzigen voor elkaar krijgen dat de lijn verticaal loopt? Licht toe.</li>
+</ol>
+</p>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

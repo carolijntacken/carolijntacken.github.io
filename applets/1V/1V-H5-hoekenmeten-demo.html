@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 20px; 
+	margin-right: 20px;
+	color: #454545;
+	}
+		
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Hoeken meten</title>
+
+<body>
+
+<h2>Hoeken meten - demo</h2>
+
+<div id="box1" class="jxgbox" style="width:650px; height:600px; border:1px solid gray; padding:0; margin-right:  35px; float:  left;"></div>
+<p>We gaan hoek A opmeten.</p>
+<ol>
+	<li>Leg de 0 van de geodriehoek op het hoekpunt.
+		<p>
+		<button type="button" onclick="schuifgeo()">stap 1</button>
+		</p>
+	</li>
+	<li>Draai de geodriehoek totdat de lange kant op &eacute;&eacute;n van de benen van de hoek ligt.
+		<p>
+		<button type="button" onclick="draaigeo()">stap 2</button>
+		</p>
+	</li>
+	<li>Lees het aantal graden af. Kijk goed of de hoek groter of kleiner dan 90&deg; is.
+		<p>
+		<button type="button" onclick ="check();">stap 3</button> &angle;A = <span id="graden">...</span>
+		</p>
+	</li>
+</ol>
+
+
+
+
+<p style="margin-top: 60px;">
+<button type="button" onclick="
+	board.removeObject(A); 
+	maakHoek();p0.moveTo([0,0]);
+	p1.moveTo([2,0]);
+	p2.moveTo([-2,0]);
+	document.getElementById('graden').innerHTML='...';
+	">reset</button>
+</p>
+
+<script type='text/javascript'>
+	var board = JXG.JSXGraph.initBoard('box1', {
+		boundingbox:[-3,4.5,5,-3], 
+		axis:false, 
+		showCopyright: false,
+		showNavigation: false,
+		keepaspectratio:true
+		});
+  	
+  	var A,rotB,rotC,B,C,AB,AC;
+  	function maakHoek() {
+	A = board.create('point',[
+		Math.random()*1.5,
+		Math.random()*1.5],{ name:'A', size: 1, color: 'black', label:{offset:[-5,-15], fontSize: 18, strokeColor: 'black', fixed: true } });
+	rotB = Math.random()*Math.PI*.6;
+	rotC = Math.random()*Math.PI*.8;
+  	B = board.create('point',[
+  		function() { return A.X()+4*Math.cos(rotB); },
+  		function() { return A.X()+4*Math.sin(rotB); }
+  		],{ visible: false });
+	C = board.create('point',[
+		function() { return A.X()+4*Math.cos(rotC+rotB); },
+		function() { return A.X()+4*Math.sin(rotC+rotB); }
+		],{ visible: false });
+	D = board.create('midpoint',[A,C],{ visible: false });
+	E = board.create('midpoint',[A,B],{ visible: false });
+  	AB = board.create('segment',[A,B],{strokeColor: 'black'});
+  	AC = board.create('segment',[A,C],{strokeColor: 'black'});
+  	board.create('angle',[B,A,C],{radius:.5, withLabel: false, strokeWidth: 2, strokeColor: '#ff8f00', fillColor: 'white', orthoType: 'sector'});
+  	};
+  	maakHoek();
+  	
+  	function check() {
+  		document.getElementById('graden').innerHTML= JXG.Math.Geometry.trueAngle(B,A,C).toFixed(0) + '&deg;'; 
+  	}
+  		
+  	var urlImg = "geodriehoek.png";
+ 
+  	var p0 = board.create('point', [0,0], { visible: false }); 
+  	var p1 = board.create('point', [2,0], { visible: false }); 
+  	var p2 = board.create('point', [-2,0], { visible: false });
+  	
+  	var im = board.create('image',[urlImg, [
+  		function() { return p0.X()-4; },
+  		function() { return p0.Y()-4.05; }
+  		], [8,4.05]]);
+  	
+  	function hoekpos() {
+  		return Math.atan2(p1.Y()-p0.Y(),p1.X()-p0.X());
+  	}
+  	  	
+  	function hoekneg() {
+  		return Math.atan2(p2.Y()-p0.Y(),p2.X()-p0.X()) - Math.PI;
+  	}
+  	
+  	var echtehoek = hoekpos;
+  	
+  	function hoek() {
+  		return echtehoek();
+  	}
+  	
+ 	var rot = board.create('transform', [hoek, p0], {type:'rotate'}); 
+  	rot.bindTo([im]);
+
+ 	function schuifgeo() {
+ 		p0.moveTo([A.X(),A.Y()],300);
+ 		p1.moveTo([A.X()+2,A.Y()],300);
+ 		p2.moveTo([A.X()-2,A.Y()],300);
+ 	}
+ 	
+ 	function draaigeo() {
+ 		var hellingAB = Math.PI-Math.atan2(B.Y()-A.Y(),B.X()-A.X());
+ 		var hellingAC = Math.atan2(C.Y()-A.Y(),C.X()-A.X());
+		if (Math.abs(hellingAB) > Math.abs(hellingAC)) {
+			echtehoek = hoekpos;
+			p1.moveTo([D.X(),D.Y()],500);
+		} else {
+			echtehoek = hoekneg;
+			p2.moveTo([E.X(),E.Y()],500);
+		}
+ 	}
+ 	
+ 	brd.update();
+</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

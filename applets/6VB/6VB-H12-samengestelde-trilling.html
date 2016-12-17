@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Samengestelde trilling</title>
+
+<body>
+
+<h2>Samengestelde trilling</h2>
+<p>
+Hieronder zijn, in groen en blauw, de grafieken van twee trillingen \(u_1=b\sin c(t-d)\) en \(u_2=B\sin (Ct)\) getekend. De waarden van \(b\), \(c\), \(d\), \(B\) en \(C\) kun je wijzigen met de sliders.<br/>
+Verder is, in rood, de grafiek van de samengestelde trilling \(u=u_1+u_2\) getekend.<br/>
+Onderzoek wat de invloed van de amplitude, frequentie en fase is op de grafiek van de som \(u\). Je zult zien dat je soms (altijd?) weer een periodieke functie krijgt en soms (wanneer wel/niet?) zelfs weer een sinuso&#239;de.</p>
+
+<div id="box" class="jxgbox" style="float: left; width:900px; height:550px; margin-bottom:1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-4,14,10,-8] 
+		});
+	var b = board.create('slider',[[0.5,11],[3.5,11],[0,3,6]],{name:'b', snapWidth:0.2, color:'#009a0a'}); 
+	var c = board.create('slider',[[0.5,10],[3.5,10],[0,2,12]],{name:'c', snapWidth:1, color:'#009a0a'});
+	var B = board.create('slider',[[5.5,11],[8.5,11],[0,4,6]],{name:'B', snapWidth:0.2, color:'#006ae0'});
+	var C = board.create('slider',[[5.5,10],[8.5,10],[0,1,12]],{name:'C',snapWidth:1, color:'#006ae0'});
+	var d = board.create('slider',[[0.5,9],[3.5,9],[0,1,2*Math.PI]],{name:'d', color:'#009a0a'}); 
+	
+	tekstfunctie = board.create('text',[0.5,13,function() {
+		var fase = d.Value().toFixed(2);
+		var cwaarde = c.Value().toFixed(2);
+		var tekst = '<span style="color: red"> u(t) </span><span style="color:black"> = </span> ' + b.Value().toFixed(2) + ' sin(' ;
+		if ( fase == '0.00')
+			if (cwaarde == '1.00')
+			tekst+= 't';
+			else { tekst+= c.Value() + 't';
+			}
+		else {
+			if (cwaarde == '1.00')
+			tekst+= 't &ndash; ' + fase;
+			else { tekst+= c.Value() + '(t &ndash; ' + fase + ')';
+			}
+		}
+		tekst+= ') <span style="color:black"> + </span>' ;
+		var Cwaarde = C.Value().toFixed(2);
+		tekst+= '<span style="color: #006ae0">' + B.Value().toFixed(2) + ' sin(' ;
+		if ( Cwaarde == '1.00')
+			tekst+= 't';
+		else {
+			tekst+= C.Value() + 't';
+			}
+		tekst+= ') </span>';
+		return tekst;
+		}], {fontSize:24, strokeColor:'#009a0a', fixed:true, anchorX: 'left', highlight: false} );
+	
+		
+	function u1(x) {return b.Value()*Math.sin(c.Value()*(x-d.Value()));};
+	function u2(x) {return B.Value()*Math.sin(C.Value()*x);};
+	function u(x) {return u1(x)+u2(x);}
+	
+	var grafiek_u1 = board.create('functiongraph', [u1,-4,10], { 
+	            strokeColor:'#009a0a', 
+	            strokeWidth:2,
+	            highlight: false
+	        });
+	var grafiek_u2 = board.create('functiongraph', [u2,-4,10], { 
+            	strokeColor:'#006ae0', 
+            	strokeWidth:2,
+            	highlight: false
+        	});
+	var grafiek_u = board.create('functiongraph', [u,-4,10], { 
+        		strokeColor:'red', 
+        		strokeWidth:4,
+        		highlight: false
+    		});
+</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

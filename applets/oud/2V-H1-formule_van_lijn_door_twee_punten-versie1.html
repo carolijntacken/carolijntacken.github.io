@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 20px; 
+	margin-right: 20px;
+	color: #454545;
+	}
+		
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: portrait)
+{/* This block provides CSS that only applies to the iPad in portrait orientation */
+
+	body
+	{font-size: 130%;}
+
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: landscape)
+{/* This CSS kicks in only when an iPad is in landscape mode. It makes the font bigger, the table rows taller, etc */
+
+	body
+	{font-size: 100%;}
+
+}
+
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"], scale: 90 }
+  });
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<script type="text/javascript">
+function smartSwitch(event) {
+    event.stopPropagation();
+    var scope = $(this).closest('.scope');
+    var switches = scope.find('> .smartSwitch');
+    var subjects = scope.find('> .subject');
+    var index = switches.index(this);
+    if (index >= 0) {
+        subjects.eq(index).toggle();
+    }
+}
+
+function smartList(event) {
+    event.stopPropagation();
+    var scope = $(this).closest('.scope');
+    scope.find('.subject:hidden:first').show();
+}
+</script>
+<title>Formule van een lijn door twee punten</title>
+
+<body>
+
+
+<h2>Formule van een lijn door twee punten</h2>
+
+
+<div class="scope" id="opg1" style="height: 25em">
+<div id="vraag1" style="margin-bottom: 2em"></div>
+<div id="uitw1" class="smartList uitw">Uitwerkingen
+<div id="stap1" class="subject"></div>
+<div id="stap2" class="subject"></div>
+<div id="stap3" class="subject"></div>
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+function rand(a,b) {
+	// randomly selects an integer between integers  a  and  b
+	var c = Math.floor((b+1-a)*Math.random() + a); 
+	return c;
+	}
+
+function randn(a,b) {
+	// randomly selects a NONZERO integer between integers  a  and  b
+	// returns the nonzero integer
+	var c;
+	do { c = Math.floor((b+1-a)*Math.random() + a); }
+	while ( c==0 ); 
+	return c;
+	}
+
+var xpt1, ypt1, xpt2, ypt2, ax, start, helling, startteken;
+
+function maakOpgave() {
+	xpt1 = rand(-10,10);
+	ypt1 = rand(-10,10);
+	do { xpt2 = rand(-10,10); }
+	while (xpt1==xpt2); // guarantees that xpt1 != xpt2
+	xdiff = xpt2-xpt1;
+	slopeKeuze = [0,1,-1,2,-2,3,-3,4,-4,5,-5,6,-6,7,-7,8,-8,9,-9,10,-10,15,-15,20,-20]
+//	slopeKeuze = [0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0,1,-1,0]
+	ydiffKeuze = rand(0,24);
+	helling = slopeKeuze[ydiffKeuze];
+	if (helling==1) {
+		hellingd = ""
+		}
+		else if (helling == -1) {
+		hellingd ="-"
+		}
+		else {
+		hellingd = helling
+		}
+	ax = helling*xpt1;
+	start = ypt1 - ax;
+	if ( start > 0 ) { startd = "+" + Math.abs(start) } else if ( start == 0) { startd = "" } else { startd = start }
+	ypt2 = ypt1 + xdiff * helling;
+	
+	if (helling == 0) { 
+		tekst2 = "dus de lijn loopt horizontaal"
+		} 
+		else { 
+		tekst2 = "dan weet je dat $" + "y = " + hellingd + "x+b $"
+		};
+		
+	if (helling == 0) {
+		tekst3 = "de formule is dan $" + "y = " + ypt2 + "$"
+		}
+		else {
+		tekst3= "de lijn gaat door $(" + xpt1 + ",\\," + ypt1 + ")$<br/>"
+		+ "punt invullen: $\\begin{array}[t]{l}" + ypt1  + "=" + helling + "\\cdot " + xpt1 + "+b\\\\ " 
+		+ ypt1  + "=" + ax + "{} + b\\\\"
+		+ "b = " + start + "\\\\"
+		+ "\\end{array}$</p>"
+		+ "<p>$" + "y = " + hellingd + "x" + startd + "$</p>"
+		}
+	
+	$('#vraag1').html("Geef de formule van de lijn door de punten $\\,(" + xpt1 + "," + ypt1 + ")\\,$ and $\\,(" + xpt2 + "," + ypt2 + ")\\,$.");
+	
+	$('#stap1').html("<p>eerst hellingsgetal berekenen: <br/> $a=\\dfrac{" + ypt2 + "-" + ypt1 + "}{" + xpt2 + "-" + xpt1 + "}=" + helling + "$</p>");
+	$('#stap2').html("<p>" + tekst2 + "</p>");
+	$('#stap3').html("<p>" + tekst3 + "</p>");
+	
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub, "opg1"]);
+	$("#uitw1").children().hide();
+	
+	}
+
+$(function() {
+	maakOpgave();
+    var scopes = $('.scope');
+    scopes.find('> .smartList').click(smartList);
+    scopes.find('> .smartSwitch').click(smartSwitch);
+})
+
+</script>
+</div>
+
+<button type="button" onclick="maakOpgave()">Reset</button>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+
+</body>
+</html>
+
+
+
+
+
+
+

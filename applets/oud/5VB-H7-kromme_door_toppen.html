@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 40px; 
+	margin-right: 40px;
+	color: #454545;
+	line-height:  1.3;
+}
+
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+@media only screen and (max-device-width: 1024px)
+{/* This block specifies CSS that only applies to an iPad
+max-device-width: 1024px seems to only select the iPad*/
+
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: portrait)
+{/* This block provides CSS that only applies to the iPad in portrait orientation */
+
+	body
+	{font-size: 130%;}
+
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: landscape)
+{/* This CSS kicks in only when an iPad is in landscape mode. It makes the font bigger, the table rows taller, etc */
+
+	body
+	{font-size: 100%;}
+
+}
+		
+.jxgbox {
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+</style>
+
+<title>Kromme door toppen</title>
+</head>
+
+
+<body>
+<h3>Kromme door toppen</h3>
+
+<p><button type="button" onClick="clearTrace()">clear trace</button>
+</p>
+<div style="float: left;">
+	<div  id="box" class="jxgbox" style="margin-right: 30px; width:600px; height:600px;"></div>
+</div>
+
+<div>
+	<p></p>
+</div>
+
+<div style="clear: both; padding-top: 20px;">
+<h4>Berekenen van de kromme door de toppen van \(f\):</h4>
+Wat weet je van de co&ouml;rdinaten van de top?
+<ol>
+	<li>De top ligt op de grafiek van \(f\) dus \(y=\frac13x^3+px^2+5\).</li>
+	<li>In de top is de rc van de raaklijn 0, dus \(f'(x)=0\) en dat geeft de vergelijking \(x^2+2px=0\).</li>
+</ol>
+Gebruik deze twee vergelijkingen om \(y\) uit te drukken in \(x\).
+</div>
+
+<script type="text/javascript">
+JXG.Options.text.useMathJax = true;
+JXG.Options = JXG.merge(JXG.Options, {
+	elements: {
+		highlight:false
+	},
+    text: {
+    	fontSize: 16,
+    },
+});
+
+var board = JXG.JSXGraph.initBoard('box', {
+        boundingbox: [-10,15,10,-15], 
+        axis: { ticks: { majorHeight: 10 } },
+        grid: false,
+        showCopyright: false,
+        showNavigation: false
+    });
+var p = board.create('slider',[[-9,13],[-4,13],[-2.5,-1,2.5]], { name:'p',withTicks:false });
+var f = function(x) { return Math.pow(x,3)/3+p.Value()*Math.pow(x,2)+5; };
+var fgr = board.create('functiongraph', 
+	[f, -10, 10], 
+	{ strokeColor:'black', strokeWidth:3 }
+	);
+var form = board.create('text',[-9,12,
+	function() {
+		var tekenp = ' + ';
+		var tekstp = Math.abs(p.Value()).toFixed(2);
+		if (p.Value()<0) { tekenp = '-';}
+		return '\\( f(x) = \\frac{1}{3}x^3 \\color\{orange\}\{' + tekenp + tekstp + '\}\\, x^2+5 \\)'
+		}], {fontSize: 16, fixed: true, anchorY:'top'});
+		
+var A = board.create('point', [0,5], { color:'red', name:'' });
+var B = board.create('point', [
+	function() { return -2*p.Value(); },
+	function() { return 4/3*Math.pow(p.Value(),3)+5; }
+	], {color:'#006ae0', trace:true, name:'' });
+	
+function clearTrace() {
+	B.clearTrace();
+	}
+
+
+</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Lissajous-figuren</title>
+
+<body>
+
+<h2>Lissajousfiguren</h2>
+<p>
+Je weet dat de formules \(x(t)=b \cos(c t)\) en \(y(t)=b \sin(c t)\) samen een eenparige cirkelbeweging geven.<br/>
+<br/>
+Wat gebeurt er als we niet meer bij beide dezelfde amplitude kiezen? Of niet meer dezelfde periode?</p>
+
+<div id="box" class="jxgbox" style="float: left; width:590px; height:590px; margin-bottom:1em;"></div>
+<div id="box2" class="jxgbox" style="float: left; margin-left: 10px; margin-bottom: 20px; width:330px; height:200px;"></div>
+<div id="box3" class="jxgbox" style="float: left; margin-left: 10px; width:330px; height:200px;"></div>
+
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-10,10,10,-10] 
+		});
+	var t = board.create('slider',[[2,-7],[6,-7],[0,2*Math.PI,4*Math.PI]], {style:6, name:'t',withTicks:false});
+	var b = board.create('slider',[[-9,8],[-4,8],[0,3,6]],{name:'b', snapWidth:0.2,withTicks:false}); 
+	var c = board.create('slider',[[-9,7],[-4,7],[0,1,12]],{name:'c', snapWidth:1,withTicks:false});
+	var B = board.create('slider',[[2,8],[7,8],[0,3,6]],{name:'B', snapWidth:0.2,withTicks:false});
+	var C = board.create('slider',[[2,7],[7,7],[0,1,12]],{name:'C',snapWidth:1,withTicks:false});
+	var d = board.create('slider',[[-9,6],[-4,6],[0,0,2*Math.PI]],{name:'d',withTicks:false}); 
+	
+	xtekst = board.create('text',[-9.7,9,function() {
+		var fase = d.Value().toFixed(2);
+		var cwaarde = c.Value().toFixed(2);
+		var tekst = 'x(t) = ' + b.Value().toFixed(2) + ' cos(' ;
+		if ( fase == '0.00')
+			if (cwaarde == '1.00')
+			tekst+= 't';
+			else { tekst+= c.Value() + 't';
+			}
+		else {
+			if (cwaarde == '1.00')
+			tekst+= 't &ndash; ' + fase;
+			else { tekst+= c.Value() + '(t &ndash; ' + fase + ')';
+			}
+		}
+		tekst+= ')';
+		return tekst;
+		}], {fontSize:24, strokeColor:'#009a0a', fixed:true} );
+	
+	ytekst = board.create('text',[1,9,function() {
+		var Cwaarde = C.Value().toFixed(2);
+		var tekst = 'y(t) = ' + B.Value().toFixed(2) + ' sin(' ;
+		if ( Cwaarde == '1.00')
+			tekst+= 't';
+		else {
+			tekst+= C.Value() + 't';
+			}
+		tekst+= ')';
+		return tekst;
+		}], {fontSize:24, strokeColor:'#006ae0', fixed:true} );
+		
+	function x(t) {return b.Value()*Math.cos(c.Value()*(t-d.Value()));};
+	function y(t) {return B.Value()*Math.sin(C.Value()*t);};
+	function plot(){
+	  graph = board.create('curve', [
+	            x,y, 
+	            0, 
+	            function(){return t.Value();}
+	            ], 
+	            {strokeColor:'red', strokeWidth:3}
+	          );
+	  point = board.create('point',[
+	  	function() { return x(t.Value()); }, function() { return y(t.Value());}], {size:3, strokeColor:'red',fillColor:'red',name:''});
+	  board.update();
+	} 
+	 
+	plot();
+</script>
+
+<script type="text/javascript">
+var board2 = JXG.JSXGraph.initBoard('box2', {
+		showCopyright: false,
+		showNavigation: false,
+		boundingbox: [-2,8,13,-8], 
+		axis: true, 
+		});
+tlabel = board2.create('text',[14,-1,'t']);
+xlabel = board2.create('text',[-1.2,7,'x(t)']);
+
+var p = board2.create('functiongraph', [
+        x,
+        0,
+        function() { return t.Value(); } ], { 
+            strokeColor:'#009a0a', 
+            strokeWidth:3
+        });
+        
+board.addChild(board2);
+</script>
+
+<script type="text/javascript">
+var board3 = JXG.JSXGraph.initBoard('box3', {
+		showCopyright: false,
+		showNavigation: false,
+		boundingbox: [-2,8,13,-8], 
+		axis: true });
+tlabel = board3.create('text',[14,-1,'t']);
+ylabel = board3.create('text',[-1.2,7,'y(t)']);
+
+var p = board3.create('functiongraph', [
+        y,
+        0,
+        function() { return t.Value(); } ], { 
+            strokeColor:'#006ae0', 
+            strokeWidth:3
+        });
+        
+board.addChild(board3);
+</script>
+
+
+<p style="clear: left">
+Een Lissajous-figuur ontstaat door twee trillingen, in richtingen die loodrecht op elkaar staan, te combineren.</p>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 20px; 
+	margin-right: 20px;
+	color: #454545;
+	}
+		
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: portrait)
+{/* This block provides CSS that only applies to the iPad in portrait orientation */
+
+	body
+	{font-size: 130%;}
+
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: landscape)
+{/* This CSS kicks in only when an iPad is in landscape mode. It makes the font bigger, the table rows taller, etc */
+
+	body
+	{font-size: 100%;}
+
+}
+
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Booglengte</title>
+
+<body>
+
+<h2>Booglengte</h2>
+<p>
+</p>
+
+<div id="box" class="jxgbox" style="float: left; width:700px; height:500px; margin-bottom:1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', {
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox: [-5, 4, 6.5, -2]
+		});
+	var n = board.create('slider',[[0.5,3.5],[4,3.5],[1,10,40]],{name:'n',snapWidth:1, withTicks:false, precision:0});
+	var f = function(x){ return 0.2*x*x+2.0*Math.sin(x); }
+	var plot = board.create('functiongraph',[f], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
+	var start = -3.0;
+	var end = 5.0;
+	board.create('point',[start,f(start)],{color:'#006ae0',fixed:true});
+	board.create('point',[end,f(end)],{color:'#006ae0',fixed:true});
+	var sc = board.create('curve',[[0],[0]],{dash:1,strokeWidth:1,strokeColor:'red'});
+	sc.updateDataArray = function() {
+	   var i;
+	   var m = n.Value();
+	   var d = (end-start)/m;
+	   this.dataX = [];
+	   this.dataY = [];
+	   this.dataX[0] = start;   
+	   this.dataY[0] = f(start);   
+	   for (i=1;i<=m;i++) {
+	     this.dataX.push(start+i*d);   
+	     this.dataY.push(f(start+(i-1)*d));   
+	     this.dataX.push(start+i*d);   
+	     this.dataY.push(f(start+i*d));   
+	   }  
+	}
+	var approx = board.create('curve',[[0],[0]], {strokeColor:'red',strokeWidth:2});
+	approx.updateDataArray = function() {
+	   var i;
+	   var m = n.Value();
+	   var d = (end-start)/m;
+	   this.dataX = [];
+	   this.dataY = [];
+	   this.dataX[0] = start;   
+	   this.dataY[0] = f(start);   
+	   for (i=1;i<=m;i++) {
+	     this.dataX.push(start+i*d);   
+	     this.dataY.push(f(start+i*d));   
+	   }  
+	}
+	 
+	board.create('text',[-4.7,-1,function(){ 
+	   var i,s,f0,f1;
+	   var m = n.Value();
+	   var d = (end-start)/m;
+	   s = 0.0;
+	   f0 = f(start);
+	   for (i=1;i<=m;i++) {
+	     f1 = f(start+i*d);
+	     s += Math.sqrt(d*d+(f1-f0)*(f1-f0));
+	     f0 = f1;
+	   }  
+	   return 'Lengte = '+s.toFixed(4); }],{fixed:true});
+	board.update();</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

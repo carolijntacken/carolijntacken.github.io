@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<head>
+<script language="JavaScript1.8" type="text/javascript"><!--
+	pageModDate = "27 January 2013 19:57 PST";
+	// copyright 1997--2013 by P.B. Stark, statistics.berkeley.edu/~stark.
+    // All rights reserved.
+// -->
+</script>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
+<script src="jquery.ui.touch-punch.min.js"></script>
+
+<link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery.bullseye-1.0.min.js"></script> 
+
+<script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
+<script type="text/javascript" src="sticigui.js"></script>
+<link href="sticigui.css" rel="stylesheet" type="text/css">
+<script language="JavaScript1.8" type="text/javascript" src="irGrade.js"></script>
+<script language="JavaScript1.8" type="text/javascript" src="statCalc.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="sticiGuiDefault.css">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>SticiGui Probability Calculator</title>
+
+</head>
+
+<body >
+
+
+<h3>Kansen berekenen</h3>
+<p><div id="prob"></div></p>
+
+<script language="JavaScript1.8" type="text/javascript"><!--
+ $(function() {
+    new distCalc('prob', {});
+  });
+// -->
+</script>
+<p></p>
+</p>
+
+
+<h3>Binomiale verdeling</h3>
+<div id="hist" class="histogram"></div>
+	<script>
+    	jQuery(function() {
+      	new Stici_HistHiLite('hist', {
+        n: 5,
+        p: 0.5,
+      	});
+    });
+    </script>
+
+
+<h3>Normale verdeling</h3>
+<div class="curvehilite" id="normhilite1">
+	
+</div>	
+	<script>
+		jQuery(function() {
+  		new Stici_NormHiLite('normhilite1', {
+  		});
+	});
+	</script>
+
+<h3>Student's t</h3>
+<div id="curvehilite" class="curvehilite"></div>
+	<script>
+		jQuery(function() {
+		  new Stici_NormHiLite('curvehilite', {
+		    df: 2,
+		    distribution: "Student-t"
+		  });
+		});
+	</script>
+		
+<h3>Chi-square</h3>
+<div id="curvehilite2" class="curvehilite"></div>
+	<script>
+		jQuery(function() {
+  		  new Stici_NormHiLite('curvehilite2', {
+    		df: 2,
+    		distribution: 'chi-square'
+  		  });
+		});
+</script>
+
+<p>&nbsp;</p>
+<small>Gebaseerd op applets van Philip B. Stark, UC Berkeley</small>
+
+</body>
+
+</html>
+

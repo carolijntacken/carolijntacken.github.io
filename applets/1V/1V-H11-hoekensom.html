@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.1/jsxgraphcore.js"></script>
+
+<title>Hoekensom driehoek</title>
+
+<body>
+
+<h2>Hoekensom driehoek</h2>
+
+<div id="jxgbox1" class="jxgbox" style="width:650px; height:550px; border:1px solid gray; padding:0; margin-right:  20px;"></div>
+<script type='text/javascript'>
+JXG.Options.sector.label = {color: 'black', offset:[0,0]};
+JXG.Options = JXG.merge(JXG.Options, {
+    text: {
+    	fontSize: 16
+    },
+    elements: { highlight: false, strokeColor: 'black' },
+    point: { strokeColor: 'black', fillColor: 'black', size: 2,  name:'' },
+    angle: { fillOpacity: 1, radius: 1},
+    polygon: { borders: { strokeWidth: 2 }, fillOpacity: 0, strokeColor: 'black' }
+});
+board = JXG.JSXGraph.initBoard('jxgbox1', 
+        {axis: false, boundingbox:[-9,7.5,9,-7.5],keepaspectratio:true,showCopyright: false,showNavigation: false});
+
+var hoek = board.create('slider', [[3,6.5], [5,6.5], [0, 0, Math.PI]], { withLabel: false, withTicks:false } );
+board.create('text', [6,6.5,'draaien'], {strokeColor: 'black', fixed: true} );
+var schuif = board.create('slider', [[3,5.5], [5,5.5], [0, 0, 1]], { withLabel: false, withTicks:false } );
+board.create('text', [6,5.5,'schuiven'], {strokeColor: 'black', fixed: true} );
+
+var A = board.create('point', [-7,-3], { } );
+var B = board.create('point', [.5,-4], { } );
+var C = board.create('point', [-4,2.5], { } );
+    C.on('drag', function() {
+    	C.moveTo([C.X(), 
+    	Math.max((B.Y()-A.Y())/(B.X()-A.X())*(C.X()-A.X())+A.Y()+0.2,
+    	C.Y())]);
+        });
+    B.on('drag', function() {
+    	B.moveTo([Math.max(
+    	(B.Y()-A.Y())*(C.X()-A.X())/(C.Y()-A.Y())+A.X()+0.2,
+    	B.X()), 
+    	B.Y()]);
+        });
+    A.on('drag', function() {
+    	A.moveTo([Math.min(
+    	(A.Y()-C.Y())*(B.X()-C.X())/(B.Y()-C.Y())+C.X()-0.2,
+    	A.X()), 
+    	A.Y()]);
+        });
+var driehoek = board.create('polygon', [A,B,C]);
+
+var hoekC = board.create('angle',[A,C,B],{
+	color: '#ff8f00',
+	label:{offset:[-20,-7]} 
+	});
+hoekC.label.setText(function () {
+    return (hoekC.Value() * 180 / Math.PI).toFixed(1) + '&deg;';
+})
+
+var hoekA = board.create('angle',[B,A,C],{
+	color: '#006ae0', 
+   	label:{offset:[0,0]} 
+   	});
+hoekA.label.setText(function () {
+    return (hoekA.Value() * 180 / Math.PI).toFixed(1) + '&deg;';
+})
+var hoekB = board.create('angle',[C,B,A],{
+	color: 'red', 
+   	label:{offset:[-25,-4]} 
+   	});
+hoekB.label.setText(function () {
+    return (hoekB.Value() * 180 / Math.PI).toFixed(1) + '&deg;';
+})
+var tekst = board.create('text', [-8,-7, function(){
+	return '&ang;A + &ang;B + &ang;C = '+(hoekA.Value() * 180 / Math.PI).toFixed(1) + '&deg; + ' + (hoekB.Value() * 180 / Math.PI).toFixed(1) + '&deg; + ' + (hoekC.Value() * 180 / Math.PI).toFixed(1) + '&deg; = 180&deg;';}],
+	{ strokeColor: 'black', fixed: true}
+	);
+
+var centrum = board.create('midpoint', [B,C], {visible: false} );
+var t = board.create('transform', [function() { return -1*hoek.Value();}, centrum], {type:'rotate'} );
+var b1 = board.create('point', [A,t]);
+var b2 = board.create('point', [B,t]);
+var b3 = board.create('point', [C,t]);
+var rotatiedriehoek = board.create('polygon', [b1,b2,b3] );
+var hoekb1 = board.create('angle',[b2,b1,b3],{ color: '#006ae0', withLabel: false });
+var hoekb2 = board.create('angle',[b3,b2,b1],{ color: 'red', withLabel: false });
+var hoekb3 = board.create('angle',[b1,b3,b2],{ color: '#ff8f00', withLabel: false });
+
+var t2 = board.create('transform', [
+	function() { return schuif.Value()*(B.X()-A.X());}, 
+	function() { return schuif.Value()*(B.Y()-A.Y());}
+	], 
+	{type:'translate'} 
+	);
+var B1 = board.create('point', [A,t2]);
+var B2 = board.create('point', [B,t2]);
+var B3 = board.create('point', [C,t2]);
+var translatiedriehoek = board.create('polygon', [B1,B2,B3] );
+var hoekB1 = board.create('angle',[B2,B1,B3],{ color: '#006ae0', withLabel: false });
+var hoekB2 = board.create('angle',[B3,B2,B1],{ color: 'red', withLabel: false });
+var hoekB3 = board.create('angle',[B1,B3,B2],{ color: '#ff8f00', withLabel: false });
+
+</script>
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

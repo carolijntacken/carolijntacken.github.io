@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Eenheidscirkel en exacte waarden</title>
+
+<body>
+
+<h2>Exacte waarden in de eenheidscirkel</h2>
+<p>Als je in de eenheidscirkel de sinus en cosinus van de basishoeken kent, weet je de rest ook. In deze applet zie je wat de samenhang is tussen de verschillende hoeken.
+</p>
+
+<div id="box" class="jxgbox" style="float: left; width:400px; height:400px; margin-bottom:1em; margin-right: 1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:false, 
+		keepaspectratio:true,
+		boundingbox:[-1.2,1.2,1.2,-1.2] 
+		});
+	var xaxis = board.create('axis', [[0, 0], [1, 0]], {ticks: {drawLabels: false}}); 
+	board.create('ticks',[xaxis, [-0.866, -0.707, -0.5, 0.5, 0.707, 0.866] ]);
+	var yaxis = board.create('axis', [[0, 0], [0, 1]], {ticks: {drawLabels: false}}); 
+	board.create('ticks',[yaxis, [-0.866, -0.707, -0.5, 0.5, 0.707, 0.866] ]);
+	var c = board.create('circle', [[0,0], [1,0]], {strokeColor: 'black', highlight: false});
+	//eenheden horizontale as
+	board.create('text', [-1.03, -0.1, (function() {  return '\\(-\\!\\frac{1}{2}\\!\\sqrt{3}\\)' })], {fixed:'true',color:'#006ae0'});
+	board.create('text', [-0.85, 0.12, (function() {  return '\\(-\\!\\frac{1}{2}\\!\\sqrt{2}\\)' })], {fixed:'true',color:'#006ae0'});
+	board.create('text', [-0.6, -0.1, (function() {  return '\\(-\\!\\frac{1}{2}\\)' })], {fixed:'true',color:'#006ae0'});
+	board.create('text', [0.47, -0.1, (function() {  return '\\(\\frac{1}{2}\\)' })], {fixed:'true',color:'#006ae0'});
+	board.create('text', [0.58, 0.07, (function() {  return '\\(\\frac{1}{2}\\!\\sqrt{2}\\)' })], {fixed:'true',color:'#006ae0'});
+	board.create('text', [0.75, -0.14, (function() {  return '\\(\\frac{1}{2}\\!\\sqrt{3}\\)' })], {fixed:'true',color:'#006ae0'});
+	//eenheden verticale as
+	board.create('text', [0.05, -0.855, (function() {  return '\\(-\\frac{1}{2}\\!\\sqrt{3}\\)' })], {fixed:'true',color:'red'});
+	board.create('text', [0.05, -0.7, (function() {  return '\\(-\\frac{1}{2}\\!\\sqrt{2}\\)' })], {fixed:'true',color:'red'});
+	board.create('text', [0.05, -0.49, (function() {  return '\\(-\\frac{1}{2}\\)' })], {fixed:'true',color:'red'});
+	board.create('text', [0.05, 0.51, (function() {  return '\\(\\frac{1}{2}\\)' })], {fixed:'true',color:'red'});
+	board.create('text', [0.05, 0.72, (function() {  return '\\(\\frac{1}{2}\\!\\sqrt{2}\\)' })], {fixed:'true',color:'red'});
+	board.create('text', [0.05, 0.875, (function() {  return '\\(\\frac{1}{2}\\!\\sqrt{3}\\)' })], {fixed:'true',color:'red'});
+	var A = board.create('point',[1,0],{name:'0 en 2\\(\\pi\\)', color: 'black',size:2, label:{offset:[5,10]}});
+	var O = board.create('point',[0,0],{name:'', visible:false});
+	var B = board.create('point',[-1,0],{name:'\\(\\pi\\)', color: 'black', size:2, label:{offset:[-18,10]}});
+	var C = board.create('point',[0,1],{name:'\\(\\frac{1}{2}\\pi\\)', color: 'black', size:2, label:{offset:[5,20]}});
+	var D = board.create('point',[0,-1],{name:'\\(1\\!\\frac{1}{2}\\pi\\)', color: 'black', size:2, label:{offset:[-10,-15]}});
+	var punt16 = board.create('point', [.866,0.5], {fixed:'true', name: '\\(\\frac{1}{6}\\pi\\)', color: 'black', size:2, label:{offset:[8,5]}} );
+	var punt14 = board.create('point', [.707,0.707], {fixed:'true', name: '\\(\\frac{1}{4}\\pi\\)', color: 'black', size:2, label:{offset:[8,10]}} );
+	var punt13 = board.create('point', [.5,0.866], {fixed:'true', name: '\\(\\frac{1}{3}\\pi\\)', color: 'black', size:2, label:{offset:[5,20]}} );
+	var punt23 = board.create('point', [-.5,0.866], {fixed:'true', name: '\\(\\frac{2}{3}\\pi\\)', color: 'black', size:2, label:{offset:[-20,20]}} );
+	var punt34 = board.create('point', [-.707,0.707], {fixed:'true', name: '\\(\\frac{3}{4}\\pi\\)', color: 'black', size:2, label:{offset:[-30,10]}} );
+	var punt56 = board.create('point', [-.866,0.5], {fixed:'true', name: '\\(\\frac{5}{6}\\pi\\)', color: 'black', size:2, label:{offset:[-32,5]}} );
+	var punt76 = board.create('point', [-.866,-0.5], {fixed:'true', name: '\\(1\\!\\frac{1}{6}\\pi\\)', color: 'black', size:2, label:{offset:[-32,-10]}} );
+	var punt54 = board.create('point', [-.707,-0.707], {fixed:'true', name: '\\(1\\!\\frac{1}{4}\\pi\\)', color: 'black', size:2, label:{offset:[-30,-12]}} );
+	var punt43 = board.create('point', [-.5,-0.866], {fixed:'true', name: '\\(1\\!\\frac{1}{3}\\pi\\)', color: 'black', size:2, label:{offset:[-20,-15]}} );
+	var punt53 = board.create('point', [.5,-0.866], {fixed:'true', name: '\\(1\\!\\frac{2}{3}\\pi\\)', color: 'black', size:2, label:{offset:[5,-15]}} );
+	var punt74 = board.create('point', [.707,-0.707], {fixed:'true', name: '\\(1\\!\\frac{3}{4}\\pi\\)', color: 'black', size:2, label:{offset:[8,-12]}} );
+	var punt116 = board.create('point', [.866,-0.5], {fixed:'true', name: '\\(1\\!\\frac{5}{6}\\pi\\)', color: 'black', size:2, label:{offset:[8,-10]}} );
+
+</script>
+
+<script>
+var s0 = [];
+function teken0GooiRestWeg(){
+board.removeObject(s0);
+board.removeObject(s16);
+board.removeObject(hoek16);
+board.removeObject(s14);
+board.removeObject(hoek14);
+board.removeObject(s13);
+board.removeObject(hoek13);
+board.removeObject(s12);
+board.removeObject(hoek12);
+s0[0] = board.create('segment', [B,A],{strokeColor:'#006ae0',strokeWidth:3});
+s0[1] = board.create('point', [1,0], {name: '', color:'red'} );
+s0[2] = board.create('point', [-1,0], {name: '', color:'red'} );
+board.update();
+document.getElementById('waarden0').style.display = 'inline';
+document.getElementById('waarden16').style.display = 'none';
+document.getElementById('waarden14').style.display = 'none';
+document.getElementById('waarden13').style.display = 'none';
+document.getElementById('waarden12').style.display = 'none';
+}
+
+</script>
+
+<div style='float: left;'>
+<button type="button" onClick="teken0GooiRestWeg()" style="font-size: 1em;">\(\alpha = 0\)</button>
+<div style='height: 5em;'>
+<div id='waarden0' style='display: none;'>	
+	<table style="width:500px;">
+		<tr style="color:red;">
+			<td>\(\sin(0)=\sin(\pi)=\sin(2\pi)=0\)</td>
+			<td></td>
+		</tr><tr style="color:#006ae0;">
+			<td>\(\cos(0)=\cos(2\pi)=1\)</td>
+			<td>\(\cos(\pi)=-1\)</td>
+		</tr>
+	</table>
+</div>
+</div>
+
+<script>
+var s16 = [];
+var hoek16;
+function teken16GooiRestWeg(){
+board.removeObject(s0);
+board.removeObject(s16);
+board.removeObject(hoek16);
+board.removeObject(s14);
+board.removeObject(hoek14);
+board.removeObject(s13);
+board.removeObject(hoek13);
+board.removeObject(s12);
+board.removeObject(hoek12);
+s16[0] = board.create('segment', [punt16,punt56],{strokeColor:'#006ae0',strokeWidth:3});
+s16[1] = board.create('segment', [punt56,punt76],{strokeColor:'red',strokeWidth:3});
+s16[2] = board.create('segment', [punt76,punt116],{strokeColor:'#006ae0',strokeWidth:3});
+s16[3] = board.create('segment', [punt116,punt16],{strokeColor:'red',strokeWidth:3});
+s16[4] = board.create('segment',[[0,0],punt16], {color:'gray'});
+s16[5] = board.create('segment',[[0,0],punt56], {color:'gray',dash:3});
+s16[6] = board.create('segment',[[0,0],punt76], {color:'gray',dash:3});
+s16[7] = board.create('segment',[[0,0],punt116], {color:'gray',dash:3});
+hoek16 = board.create('angle',[A,O,punt16], {radius:.2, color: '#ff8f00', 
+	label:{offset:[0,0], color:'#ff8f00'}});
+board.update();
+document.getElementById('waarden0').style.display = 'none';
+document.getElementById('waarden16').style.display = 'inline';
+document.getElementById('waarden14').style.display = 'none';
+document.getElementById('waarden13').style.display = 'none';
+document.getElementById('waarden12').style.display = 'none';
+}
+
+</script>
+<button type="button" onClick="teken16GooiRestWeg()" style="font-size: 1em;">\(\alpha = \frac{1}{6}\pi\)</button>
+<div style='height: 5em;'>
+<div id='waarden16' style='display: none;'>	
+	<table style="width:500px;">
+		<tr style="color:red;">
+			<td>\(\sin(\frac16\pi)=\sin(\frac56\pi)=\frac12\)</td>
+			<td>\(\sin(1\frac16\pi)=\sin(1\frac56\pi)=-\frac12\)</td>
+		</tr><tr style="color:#006ae0;">
+			<td>\(\cos(\frac16\pi)=\cos(1\frac56\pi)=\frac12\sqrt{3}\)</td>
+			<td>\(\cos(\frac56\pi)=\cos(1\frac16\pi)=-\frac12\sqrt{3}\)</td>
+		</tr>
+	</table>
+</div>
+</div>
+
+
+<script>
+var s14 = [];
+var hoek14;
+function teken14GooiRestWeg(){
+board.removeObject(s0);
+board.removeObject(s16);
+board.removeObject(hoek16);
+board.removeObject(s14);
+board.removeObject(hoek14);
+board.removeObject(s13);
+board.removeObject(hoek13);
+board.removeObject(s12);
+board.removeObject(hoek12);
+s14[0] = board.create('segment', [punt14,punt34],{strokeColor:'#006ae0',strokeWidth:3});
+s14[1] = board.create('segment', [punt34,punt54],{strokeColor:'red',strokeWidth:3});
+s14[2] = board.create('segment', [punt54,punt74],{strokeColor:'#006ae0',strokeWidth:3});
+s14[3] = board.create('segment', [punt74,punt14],{strokeColor:'red',strokeWidth:3});
+s14[4] = board.create('segment',[[0,0],punt14], {color:'gray'});
+s14[5] = board.create('segment',[[0,0],punt34], {color:'gray',dash:3});
+s14[6] = board.create('segment',[[0,0],punt54], {color:'gray',dash:3});
+s14[7] = board.create('segment',[[0,0],punt74], {color:'gray',dash:3});
+hoek14 = board.create('angle',[A,O,punt14], {radius:.2, color: '#ff8f00', 
+	label:{offset:[0,0], color:'#ff8f00'}});
+board.update();
+document.getElementById('waarden0').style.display = 'none';
+document.getElementById('waarden16').style.display = 'none';
+document.getElementById('waarden14').style.display = 'inline';
+document.getElementById('waarden13').style.display = 'none';
+document.getElementById('waarden12').style.display = 'none';
+}
+
+</script>
+<button type="button" onClick="teken14GooiRestWeg()" style="font-size: 1em;">\(\alpha = \frac{1}{4}\pi\)</button>
+<div style='height: 5em;'>
+<div id='waarden14' style='display: none;'>	
+	<table style="width:500px;">
+		<tr style="color:red;">
+			<td>\(\sin(\frac14\pi)=\sin(\frac34\pi)=\frac12\sqrt{2}\)</td>
+			<td>\(\sin(1\frac14\pi)=\sin(1\frac34\pi)=-\frac12\sqrt{2}\)</td>
+		</tr><tr style="color:#006ae0;">
+			<td>\(\cos(\frac14\pi)=\cos(1\frac34\pi)=\frac12\sqrt2\)</td>
+			<td>\(\cos(\frac34\pi)=\cos(1\frac14\pi)=-\frac12\sqrt2\)</td>
+		</tr>
+	</table>
+</div>
+</div>
+
+<script>
+var s13 = [];
+var hoek13;
+function teken13GooiRestWeg(){
+board.removeObject(s0);
+board.removeObject(s16);
+board.removeObject(hoek16);
+board.removeObject(s14);
+board.removeObject(hoek14);
+board.removeObject(s13);
+board.removeObject(hoek13);
+board.removeObject(s12);
+board.removeObject(hoek12);
+s13[0] = board.create('segment', [punt13,punt23],{strokeColor:'#006ae0',strokeWidth:3});
+s13[1] = board.create('segment', [punt23,punt43],{strokeColor:'red',strokeWidth:3});
+s13[2] = board.create('segment', [punt43,punt53],{strokeColor:'#006ae0',strokeWidth:3});
+s13[3] = board.create('segment', [punt53,punt13],{strokeColor:'red',strokeWidth:3});
+s13[4] = board.create('segment',[[0,0],punt13], {color:'gray'});
+s13[5] = board.create('segment',[[0,0],punt23], {color:'gray',dash:3});
+s13[6] = board.create('segment',[[0,0],punt43], {color:'gray',dash:3});
+s13[7] = board.create('segment',[[0,0],punt53], {color:'gray',dash:3});
+hoek13 = board.create('angle',[A,O,punt13], {radius:.2, color: '#ff8f00', 
+	label:{offset:[0,0], color:'#ff8f00'}});
+board.update();
+document.getElementById('waarden0').style.display = 'none';
+document.getElementById('waarden16').style.display = 'none';
+document.getElementById('waarden14').style.display = 'none';
+document.getElementById('waarden13').style.display = 'inline';
+document.getElementById('waarden12').style.display = 'none';
+}
+
+</script>
+<button type="button" onClick="teken13GooiRestWeg()" style="font-size: 1em;">\(\alpha = \frac{1}{3}\pi\)</button>
+<div style='height: 5em;'>
+<div id='waarden13' style='display: none;'>	
+	<table style="width:500px;">
+		<tr style="color:red;">
+			<td>\(\sin(\frac13\pi)=\sin(\frac23\pi)=\frac12\sqrt{3}\)</td>
+			<td>\(\sin(\frac43\pi)=\sin(\frac53\pi)=-\frac12\sqrt{3}\)</td>
+		</tr><tr style="color:#006ae0;">
+			<td>\(\cos(\frac13\pi)=\cos(\frac53\pi)=\frac12\)</td>
+			<td>\(\cos(\frac23\pi)=\cos(\frac43\pi)=-\frac12\)</td>
+		</tr>
+	</table>
+</div>
+</div>
+
+<script>
+var s12 = [];
+var hoek12;
+function teken12GooiRestWeg(){
+board.removeObject(s0);
+board.removeObject(s16);
+board.removeObject(hoek16);
+board.removeObject(s14);
+board.removeObject(hoek14);
+board.removeObject(s13);
+board.removeObject(hoek13);
+board.removeObject(s12);
+board.removeObject(hoek12);
+s12[0] = board.create('segment', [C,D],{strokeColor:'red',strokeWidth:3});
+s12[1] = board.create('point', [0,1], {name: '', color:'#006ae0'} );
+s12[2] = board.create('point', [0,-1], {name: '', color:'#006ae0'} );
+hoek12 = board.create('angle',[A,O,C], {radius:.1, color: '#ff8f00', 
+	label:{offset:[0,0], color:'#ff8f00'}});
+board.update();
+document.getElementById('waarden0').style.display = 'none';
+document.getElementById('waarden16').style.display = 'none';
+document.getElementById('waarden14').style.display = 'none';
+document.getElementById('waarden13').style.display = 'none';
+document.getElementById('waarden12').style.display = 'inline';
+}
+
+</script>
+<button type="button" onClick="teken12GooiRestWeg();" style="font-size: 1em;">\(\alpha = \frac{1}{2}\pi\)</button>
+<div style='height: 5em;'>
+<div  id="waarden12" style="display: none;">	
+	<table style="width:500px;">
+		<tr style="color:red;">
+			<td>\(\sin(\frac12\pi)=1\)</td>
+			<td>\(\sin(1\frac12\pi)=-1\)</td>
+		</tr><tr style="color:#006ae0;">
+			<td>\(\cos(\frac12\pi)=\cos(1\frac12\pi)=0\)</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+</div>
+</div>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>

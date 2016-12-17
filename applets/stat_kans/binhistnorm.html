@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 20px; 
+	margin-right: 20px;
+	color: #454545;
+	}
+		
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: portrait)
+{/* This block provides CSS that only applies to the iPad in portrait orientation */
+
+	body
+	{font-size: 130%;}
+
+}
+
+@media only screen and (max-device-width: 1024px) and (orientation: landscape)
+{/* This CSS kicks in only when an iPad is in landscape mode. It makes the font bigger, the table rows taller, etc */
+
+	body
+	{font-size: 100%;}
+
+}
+
+.jxgbox {
+    position:relative;
+    overflow:hidden;
+    background-color:#ffffff;
+    border-style:solid;
+    border-width:1px;
+    border-color:#C0C0C0;
+   	-moz-box-shadow:black 2px 2px 2px -2px, #151A10 4px 4px;
+    -webkit-box-shadow:4px 4px 3px #F0F0F0;
+}
+
+.JXGtext {
+    background-color: transparent;
+    font-family: Arial, Helvetica, Geneva;
+    padding: 0px;
+    margin: 0px;
+}
+	
+</style>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.97/jsxgraphcore.js"></script>
+
+<title>Titel</title>
+
+<script type="text/javascript">
+// A preprocessor to deal with implicit multiplication and mathematical constants
+function parseFunction(textFunction) {
+	var cF = textFunction.toLowerCase();
+	cF = cF.replace(/([0-9ie](?=[pe]))/g, "$1*");
+	cF = cF.replace(/pi/g, Math.PI.toString());
+	cF = cF.replace(/e(?!c\(|xp\()/g, Math.E.toString());
+	cF = cF.replace(/([x)](?=[0-9a-oq-z\(])|[0-9](?=[a-z\(]))/g, "$1*");
+	cF = cF.replace(/sec/g, "1/cos").replace(/csc/g, "1/sin").replace(/cot/g, "1/tan").replace(/ln/g, "log");
+	return cF;
+}
+
+// Get a string in a textbox and create a javascript math function
+function getFunction(elementID, board) {
+	return board.jc.snippet(parseFunction(document.getElementById(elementID).value), true, 'x', false);
+}
+
+// Get a numeric value from a textbox
+function getValue(elementID, board) {
+	return (getFunction(elementID, board))(0);
+}
+
+// Determine the upper bounds of a function to graph
+function getRange(f, a, b, includeAxis) {
+	var max;
+	var min;
+	var intervals = 10000;
+	var maxValue = 1000;
+	var overflow = false;
+	var proportion = 0.9;
+	var dx = (b-a)/intervals;
+	var values = new Array();
+	
+	// Find max and min of each subinterval
+	for (var i=0; i < intervals+1; i++) {
+		var temp = f(a+i*dx);
+		if (!isNaN(temp)) {
+			if (Math.abs(temp) < maxValue) {
+				values[values.length] = temp;
+			}
+			else {
+				overflow = true;
+			}
+		}
+	}
+
+	// sort the values
+	values.sort(function(a,b){return a-b;});
+
+	// If an asymptote was detected try to show most of the function. If not show the whole thing
+	if (overflow) {
+		max = values[Math.floor(proportion*(values.length))];
+		min = values[Math.floor((1-proportion)*(values.length))];
+	}
+	else {
+		max = values[values.length-1];
+		min = values[0];
+	}
+	
+	// code here to deal with various cases based on what the max and min are
+	if (max == min) {
+		if (!includeAxis || Math.abs(max) < 0.45*(b-a)) {
+			return new Array(max-(b-a)/2, max+(b-a)/2);
+		}
+		else if (max > 0) {
+			return new Array(-0.1*max, 1.1*max);
+		}
+		else {
+			return new Array(max*1.1, -max*0.1);
+		}
+	}
+	else {
+		if (!includeAxis) {
+			if (max-min < 0.9*(b-a)) {
+				return new Array((min+max-b+a)/2, (min+max+b-a)/2);
+			}
+			else {
+				return new Array(min-(max-min)*0.1, max+(max-min)*0.1);
+			}
+		}
+		else if (min >= 0) {
+			return new Array(-max*0.1, max*1.1);
+		}
+		else if (max <= 0) {
+			return new Array(min*1.1, -min*0.1);
+		}
+		else {
+			return new Array(min-(max-min)*0.1, max+(max-min)*0.1);
+		}
+	}
+}
+</script>
+
+
+</head>
+<body onLoad="graph();">
+<h2>Binomiale verdeling</h2>
+<p>X is binomiaal verdeeld met </p>
+
+<div id="box1" class="jxgbox" style="width:700px; height:90px; margin-bottom:1em;"></div>
+<div id="box2" class="jxgbox" style="width:700px; height:320px; margin-bottom:6em;"></div>
+
+
+<script type="text/javascript">
+JXG.Options = JXG.merge(JXG.Options, {
+    text: {
+    	fontSize: 16
+    },
+});
+
+var board1 = JXG.JSXGraph.initBoard('box1', {
+	boundingbox: [0, 2, 10, 0], 
+	axis: false,
+	showNavigation: false,
+	showCopyright: false
+
+	});
+	
+// create sliders voor n en p en grenzen
+var p = board1.create('slider',[[.3,.6],[3.3,.6],[0,.4,1]], {name: 'p'});
+var n = board1.create('slider',[[.3,1.4],[3.3,1.4],[3,20,120]], {snapWidth: 1, name: 'n', precision: 0});
+board1.create('text',[5.3,1.4,'X &ge; ']);
+var linkergrens = board1.create('slider',[[6,1.4],[9,1.4],[0,8,120]], {snapWidth: 1, precision: 0});
+board1.create('text',[5.3,.6,'X &le; ']);
+var rechtergrens = board1.create('slider',[[6,.6],[9,.6],[0,15,120]], {snapWidth: 1, precision: 0});
+
+var bound = function(x) { return n.Value()*x; }
+var max = function(x) { return x/(Math.sqrt(2*Math.PI*n.Value()*p.Value()*(1-p.Value()))); }
+n.on('drag', function(){ board2.setBoundingBox([bound(-0.2),max(1.1),bound(1.2),max(-0.2)], false, true ); });
+p.on('drag', function(){ board2.setBoundingBox([bound(-0.2),max(1.1),bound(1.2),max(-0.2)], false, true ); });
+
+</script>
+
+<script type="text/javascript">
+JXG.Options = JXG.merge(JXG.Options, {
+    text: {
+    	fontSize: 16
+    },
+});
+var board2 = JXG.JSXGraph.initBoard('box2', {
+	boundingbox: [
+	bound(-0.2),
+	max(1.1),
+	bound(1.2),
+	max(-0.2)], 
+	axis: {
+		ticks: { majorHeight : 10 }
+		},
+	showNavigation: false,
+	showCopyright: false,
+	ticks: {majorHeight: 10}
+	});
+
+// create functon to determine binomial histogram
+function binompdf(n, p, k) {  // binompdf met k succes
+    var pmf = JXG.Math.binomial(n,k)*Math.pow(p,k)*Math.pow((1-p),(n-k));
+    return pmf;
+}
+function binomcdf(n, p, k) {  // binomcdf met max k succes
+    if (k < 0) {
+        return 0.0;
+    } else if (k >= n) {
+        return 1.0;
+    } else {
+        var cdf = 0.0;
+        for (var i = 0; i <= k; i++) {
+            cdf += binompdf(n, p, i);
+        }
+        return cdf;
+    }
+}
+
+
+var f = function(x) {
+  return binompdf(n.Value(), p.Value(), Math.round(x)); }
+
+// create histogram, X>=linkergrens and X<=rechtergrens is colored
+var links = board2.create('riemannsum',[f, 
+    function() { return linkergrens.Value(); }, 
+    'middle',
+    -0.5, 
+    function() {return linkergrens.Value()-0.5; }
+    ], 
+    {strokeColor: 'black', fillColor:'#006ae0', fillOpacity:1.0, highlight: false});
+
+var midden = board2.create('riemannsum',[f, 
+    function() { return rechtergrens.Value()-linkergrens.Value()+1; }, 
+    'middle', 
+    function() {return linkergrens.Value()-0.5; },
+    function() {return rechtergrens.Value()+0.5; }
+    ], 
+    {strokeColor: 'black', fillColor:'#ff8f00', fillOpacity:1.0, highlight: false});
+
+var rechts = board2.create('riemannsum',[f, 
+    function() { return n.Value()-rechtergrens.Value(); }, 
+    'middle', 
+    function() {return rechtergrens.Value()+0.5; },
+    function() {return n.Value()+0.5; }
+    ], 
+    {strokeColor: 'black', strokeWidth: 1,fillColor:'#006ae0', fillOpacity:1.0, highlight: false});
+
+// test
+var tekst = board2.create('text',[
+	function() { return bound(0.7); },
+	function() { return max(0.9); },
+	function() { return 'P(' + linkergrens.Value() + ' &le; X &le; ' + 	rechtergrens.Value() + ') = ' + 
+		(binomcdf(n.Value(),p.Value(),rechtergrens.Value())-
+		binomcdf(n.Value(),p.Value(),linkergrens.Value()-1)).toFixed(6)
+	}]); 
+
+board1.addChild(board2);
+ 
+</script>
+
+
+<h2>De normale verdeling</h2>
+
+		<form onSubmit="graph(); return false;">
+			<table>
+				<tr align="right">
+					<td>gemiddelde:<td><input type="text" id="mean" value="0">
+					<td>linkergrens:<td><input type="text" id="min" value="-1">
+					<td>
+				<tr align="right">
+					<td>standaardafwijking:<td><input type="text" id="sigma" value="1">
+					<td>&nbsp;&nbsp;&nbsp;rechtergrens:<td><input type="max" id="max" value="1">
+					<td><input type="submit" value="Graph">
+			</table>
+		</form>
+		
+		<div id="box" class="jxgbox" style="width:700px; height:300px;"></div>
+		
+		<script type="text/javascript">
+			var board = JXG.JSXGraph.initBoard('box');
+			
+			function graph() {
+				var mean = getValue("mean", board);
+				var sigma = Math.abs(getValue("sigma", board));
+				var min;
+				var max;
+				
+				// detect for infinities
+				if ((document.getElementById("max").value).toLowerCase() == "infinity" || (document.getElementById("max").value).toLowerCase() == "infty") {
+					max = mean+sigma*50;
+				}
+				else {
+					max = getValue("max", board);
+				}
+				
+				if ((document.getElementById("min").value).toLowerCase() == "-infinity" || (document.getElementById("min").value).toLowerCase() == "-infty") {
+					min = mean-sigma*50;
+				}
+				else {
+					min = getValue("min", board);
+				}
+				
+				// Declare function for normal curve
+				var f = function(x) { return Math.exp(-(x-mean)*(x-mean)/(2*sigma*sigma))/(sigma*Math.sqrt(2*Math.PI));};
+				
+				// Courtesy Handbook of Mathematical Functions by Abramowitz and Stegun
+				// http://people.math.sfu.ca/~cbm/aands/frameindex.htm
+				// error < 1.5*10E-7
+				var erf = function(x) {
+					// store the sign of z and take the absolute value
+					var sign = ((x >= 0) ? 1 : -1);
+					var z = x*sign;
+					
+					// temporary variable
+					var t = 1/(1+0.3275911*z);
+					
+					// compute erf
+					return sign*(1-(((((1.061405429*t -1.453152027)*t) + 1.421413741)*t -0.284496736)*t + 0.254829592)*t*Math.exp(-z*z));
+				};
+				
+				// Convert erf to area under the given curve
+				var area = function(x) {
+					return 0.5*erf((x-mean)/(sigma*Math.SQRT2));
+				}
+				
+				JXG.JSXGraph.freeBoard(board);
+				board = JXG.JSXGraph.initBoard('box', {
+					axis: false, 
+					boundingbox: [mean-5*sigma, f(mean)*1.4, mean+5*sigma, -0.2*f(mean)], 
+					showNavigation: false,
+					showCopyright: false
+					});
+				
+				// Create axis
+				var xaxis = board.create("axis", [[0,0], [1,0]], {strokeColor: "black", ticks: {majorHeight: 10}});
+				//var yaxis = board.create("axis", [[mean, 0], [mean, 1]], {strokeColor: "black", ticks: {majorHeight: 0}});
+
+				// Plot normal distribution
+				var graph = board.create("functiongraph", [f, mean-5*sigma, mean+5*sigma], {strokeColor: "black", strokeWidth: 2, highlight: false});
+				
+				// Create gliders
+				var a = board.create("glider", [min, 0, xaxis], {name: "A", color: "black", size: 2, highlight: false});
+				var a2 = board.create("glider", [function(){return a.X();}, function(){return f(a.X());}, graph], {visible: false});
+				var b = board.create("glider", [max, 0, xaxis], {name: "B", color: "black", size: 2, highlight: false});
+				var b2 = board.create("glider", [function(){return b.X();}, function(){return f(b.X());}, graph], {visible: false});
+				
+				// bound region
+				var left = board.create("segment", [[function(){return a.X();}, 0], [function(){return a.X();}, function(){return a2.Y();}]], {strokeWidth: "1", highlight: false});
+				var right = board.create("segment", [[function(){return b.X();}, 0], [function(){return b.X();}, function(){return b2.Y();}]], {strokeWidth: "1", highlight: false});
+				var bottom = board.create("segment", [[function(){return a.X();}, 0], [function(){return b.X();}, 0]], {visible: false});
+				
+				// create a parametric function to enclose the region that maps from 0 to 4
+				var curveX = function(t) {
+					if (t <= 1) {
+						return a.X()
+					}
+					else if (t<= 2) {
+						return a.X()*(2-t)+b.X()*(t-1);
+					}
+					else if (t<= 3) {
+						return b.X();
+					}
+					else {
+						return b.X()*(4-t)+a.X()*(t-3);
+					}
+				};
+				
+				var curveY = function(t) {
+					if (t <= 1) {
+						return f(a.X())*t;
+					}
+					else if (t <= 2) {
+						return f(a.X()*(2-t)+b.X()*(t-1));
+					}
+					else if (t <= 3) {
+						return f(b.X())*(3-t);
+					}
+					else {
+						return 0;
+					}
+				};
+				
+				// construct the region
+				board.create("curve", [function(t){return curveX(t);}, function(t){return curveY(t);}, 0, 4], {strokeWidth: "2", strokeColor: "black", fillColor: "#ff8f00", highlight: false});
+				
+				// compute and display the area
+				board.create("text", [mean-4.85*sigma, f(mean)*1.3, function(){
+					if (a.X() <= b.X()) {
+						return "Oppervlakte: "+((area(b.X())-area(a.X()))).toFixed(4);
+					}
+					else {
+						return "A must be less than B";
+					}
+				}], {strokeColor: "black", fontSize: 16});
+				
+				// add in a hook for the min and max
+				board.addHook(function() {
+					document.getElementById("min").value = a.X();
+					document.getElementById("max").value = b.X();
+				});
+			}
+		</script>
+
+
+<footer>
+<div>Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

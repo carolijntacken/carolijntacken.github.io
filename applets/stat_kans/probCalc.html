@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kansen</title>
+<style>
+body 
+	{ 
+	font-family: Arial, Helvetica, sans-serif; 
+	margin-left: 40px; 
+	margin-right: 40px;
+	color: #454545;
+	}
+footer {
+	clear: both;
+	height: 90px;
+	margin-top: 60px;
+}
+
+footer div {
+	font-size: 0.7em;
+	text-align: right;
+	border-top: 1px solid #c0c0c0;
+	margin: 10px 0px;
+	padding: 10px 0px;
+}
+</style>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.97/jsxgraphcore.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script>
+// some functions taken from SticiGui.js by
+// James Eady <jeady@berkeley.edu>, Philip B. Stark <stark@stat.berkeley.edu>
+
+function binompdf(n, p, k) {  // binompdf met k succes
+    var pdf = JXG.Math.binomial(n,k)*Math.pow(p,k)*Math.pow((1-p),(n-k));
+    return pdf;
+}
+
+function binomcdf(n, p, k) {  // binomcdf met max k succes
+    if (k < 0) {
+        return 0.0;
+    } else if (k >= n) {
+        return 1.0;
+    } else {
+        var cdf = 0.0;
+        for (var i = 0; i <= k; i++) {
+            cdf += binompdf(n, p, i);
+        }
+        return cdf;
+    }
+}
+
+function hypergeometpdf( N,  M,  n,  m) {
+  // chance of drawing m of M objects in a sample of size n from
+  // N objects in all.  p = (M C m)*(N-M C n-m)/(N C n)
+  // EX = n*M/N; SD(X)= sqrt((N-n)/(N-1))*sqrt(np(1-p));
+    var p = 0.0;
+    if (N != Math.floor(N) || M != Math.floor(M) || n != Math.floor(n) || m != Math.floor(m)) {
+        p = Number.NaN;
+    } else if ( n < m || N < M || M < m  || m < 0 || N < 0) {
+        p = 0.0;
+    } else {
+        p = JXG.Math.binomial(M,m)*JXG.Math.binomial(N-M,n-m)/JXG.Math.binomial(N,n);
+    }
+    return p;
+}
+
+function hypergeometcdf( N,  M,  n,  m) {
+  // chance of drawing m or fewer of M objects in a sample of size n from
+  // N objects in all
+    var p=0.0;
+    if (N != Math.floor(N) || M != Math.floor(M) || n != Math.floor(n) || m != Math.floor(m)) {
+        p = Number.NaN;
+    } else {
+        var mMax = Math.min(m,M);
+        mMax = Math.min(mMax,n);
+        for (var i = 0; i <= mMax; i++) {
+            p += hypergeometpdf(N, M, n, i);
+        }
+    }
+    return p;
+}
+
+function factorial(n) { // computes n!
+  var fac = Number.NaN;
+    if (n != Math.floor(n)) {
+      fac = Number.NaN;
+    } else {
+      fac=1;
+      for (var i=n; i > 1; i--) {
+        fac *= i;
+      }
+    }
+    return Math.round(fac);
+}
+
+function LogGamma(Z) {
+	with (Math) {
+		var S=1+76.18009173/Z-86.50532033/(Z+1)+24.01409822/(Z+2)-1.231739516/(Z+3)+.00120858003/(Z+4)-.00000536382/(Z+5);
+		var LG= (Z-.5)*log(Z+4.5)-(Z+4.5)+log(S*2.50662827465);
+	}
+	return LG
+}
+
+function Gcf(X,A) {        // Good for X>A+1
+	with (Math) {
+		var A0=0;
+		var B0=1;
+		var A1=1;
+		var B1=X;
+		var AOLD=0;
+		var N=0;
+		while (abs((A1-AOLD)/A1)>.00001) {
+			AOLD=A1;
+			N=N+1;
+			A0=A1+(N-A)*A0;
+			B0=B1+(N-A)*B0;
+			A1=X*A0+N*A1;
+			B1=X*B0+N*B1;
+			A0=A0/B1;
+			B0=B0/B1;
+			A1=A1/B1;
+			B1=1;
+		}
+		var Prob=exp(A*log(X)-X-LogGamma(A))*A1;
+	}
+	return 1-Prob
+}
+
+function Gser(X,A) {        // Good for X<A+1.
+    with (Math) {
+		var T9=1/A;
+		var G=T9;
+		var I=1;
+		while (T9>G*.00001) {
+			T9=T9*X/(A+I);
+			G=G+T9;
+			I=I+1;
+		}
+		G=G*exp(A*log(X)-X-LogGamma(A));
+    }
+    return G
+}
+
+function Gammacdf(x,a) {
+	var GI;
+	if (x<=0) {
+		GI=0
+	} else if (x<a+1) {
+		GI=Gser(x,a)
+	} else {
+		GI=Gcf(x,a)
+	}
+	return GI
+}
+
+function normCdf(y) { // normal distribution cumulative distribution function
+   return 0.5*erfc(-y*0.7071067811865475);
+}
+
+function erfc(x) { // error function
+     var xbreak = 0.46875;     // for normal cdf
+// coefficients for |x| <= 0.46875
+    var a = [3.16112374387056560e00, 1.13864154151050156e02,
+             3.77485237685302021e02, 3.20937758913846947e03,
+             1.85777706184603153e-1];
+    var b = [2.36012909523441209e01, 2.44024637934444173e02,
+            1.28261652607737228e03, 2.84423683343917062e03];
+// coefficients for 0.46875 <= |x| <= 4.0
+    var c = [5.64188496988670089e-1, 8.88314979438837594e00,
+             6.61191906371416295e01, 2.98635138197400131e02,
+             8.81952221241769090e02, 1.71204761263407058e03,
+             2.05107837782607147e03, 1.23033935479799725e03,
+             2.15311535474403846e-8];
+    var d = [1.57449261107098347e01, 1.17693950891312499e02,
+             5.37181101862009858e02, 1.62138957456669019e03,
+             3.29079923573345963e03, 4.36261909014324716e03,
+             3.43936767414372164e03, 1.23033935480374942e03];
+// coefficients for |x| > 4.0
+    var p = [3.05326634961232344e-1, 3.60344899949804439e-1,
+             1.25781726111229246e-1, 1.60837851487422766e-2,
+             6.58749161529837803e-4, 1.63153871373020978e-2];
+    var q = [2.56852019228982242e00, 1.87295284992346047e00,
+             5.27905102951428412e-1, 6.05183413124413191e-2,
+             2.33520497626869185e-3];
+    var y, z, xnum, xden, result, del;
+
+/*
+Translation of a FORTRAN program by W. J. Cody,
+Argonne National Laboratory, NETLIB/SPECFUN, March 19, 1990.
+The main computation evaluates near-minimax approximations
+from "Rational Chebyshev approximations for the error function"
+by W. J. Cody, Math. Comp., 1969, PP. 631-638.
+*/
+
+//  evaluate  erf  for  |x| <= 0.46875
+
+    var i = 0;
+    if(Math.abs(x) <= xbreak) {
+        y = Math.abs(x);
+        z = y * y;
+        xnum = a[4]*z;
+        xden = z;
+        for (i = 0; i< 3; i++) {
+            xnum = (xnum + a[i]) * z;
+            xden = (xden + b[i]) * z;
+        }
+        result = 1.0 - x* (xnum + a[3])/ (xden + b[3]);
+    } else if (Math.abs(x) <= 4.0) {
+        y = Math.abs(x);
+        xnum = c[8]*y;
+        xden = y;
+        for (i = 0; i < 7; i++) {
+            xnum = (xnum + c[i])* y;
+            xden = (xden + d[i])* y;
+        }
+        result = (xnum + c[7])/(xden + d[7]);
+        if (y > 0.0) {
+            z = Math.floor(y*16)/16.0;
+        } else {
+            z = Math.ceil(y*16)/16.0;
+        }
+        del = (y-z)*(y+z);
+        result = Math.exp(-z*z) * Math.exp(-del)* result;
+    } else {
+        y = Math.abs(x);
+        z = 1.0 / (y*y);
+        xnum = p[5]*z;
+        xden = z;
+        for (i = 0; i < 4; i++) {
+            xnum = (xnum + p[i])* z;
+            xden = (xden + q[i])* z;
+        }
+        result = z * (xnum + p[4]) / (xden + q[4]);
+        result = (1.0/Math.sqrt(Math.PI) -  result)/y;
+        if (y > 0.0) {
+            z = Math.floor(y*16)/16.0;
+        } else {
+            z = Math.ceil(y*16)/16.0;
+        }
+        del = (y-z)*(y+z);
+        result = Math.exp(-z*z) * Math.exp(-del) * result;
+    }
+    if (x < -xbreak) {
+        result = 2.0 - result;
+    }
+    return result;
+}
+
+function normInv(p) {
+    if ( p === 0.0 ) {
+        return Number.NEGATIVE_INFINITY;
+    } else if ( p >= 1.0 ) {
+        return Number.POSITIVE_INFINITY;
+    } else {
+        return Math.sqrt(2.0) * erfInv(2*p - 1);
+    }
+}
+
+function erfInv(y) {
+    var a = [ 0.886226899, -1.645349621, 0.914624893, -0.140543331];
+    var b = [-2.118377725, 1.442710462, -0.329097515, 0.012229801];
+    var c = [-1.970840454, -1.624906493, 3.429567803, 1.641345311];
+    var d = [ 3.543889200, 1.637067800];
+    var y0 = 0.7;
+    var x = 0;
+    var z = 0;
+    if (Math.abs(y) <= y0) {
+        z = y*y;
+        x = y * (((a[3]*z+a[2])*z+a[1])*z+a[0])/
+         ((((b[3]*z+b[2])*z+b[1])*z+b[0])*z+1.0);
+    } else if (y > y0 && y < 1.0) {
+        z = Math.sqrt(-Math.log((1-y)/2));
+        x = (((c[3]*z+c[2])*z+c[1])*z+c[0]) / ((d[1]*z+d[0])*z+1);
+    } else if (y < -y0 && y > -1) {
+        z = Math.sqrt(-Math.log((1+y)/2));
+        x = -(((c[3]*z+c[2])*z+c[1])*z+c[0])/ ((d[1]*z+d[0])*z+1);
+    }
+    x = x - (1.0 - erfc(x) - y) / (2/Math.sqrt(Math.PI) * Math.exp(-x*x));
+    x = x - (1.0 - erfc(x) - y) / (2/Math.sqrt(Math.PI) * Math.exp(-x*x));
+
+    return x;
+} // ends erfInv
+
+function Betinc(X,A,B) {
+	var A0=0;
+	var B0=1;
+	var A1=1;
+	var B1=1;
+	var M9=0;
+	var A2=0;
+	var C9;
+	while (Math.abs((A1-A2)/A1)>.00001) {
+		A2=A1;
+		C9=-(A+M9)*(A+B+M9)*X/(A+2*M9)/(A+2*M9+1);
+		A0=A1+C9*A0;
+		B0=B1+C9*B0;
+		M9=M9+1;
+		C9=M9*(B-M9)*X/(A+2*M9-1)/(A+2*M9);
+		A1=A0+C9*A1;
+		B1=B0+C9*B1;
+		A0=A0/B1;
+		B0=B0/B1;
+		A1=A1/B1;
+		B1=1;
+	}
+	return A1/A
+}
+
+
+
+</script>
+</head>
+
+
+<body>
+<h3>Kansverdelingen</h3>
+
+<p>
+	<input type="button" value="binomiaal" onCLick="binomiaal()">
+	<input type="button" value="geometrisch" onCLick="geomet()">
+	<input type="button" value="hypergeometrisch" onCLick="hypergeomet()">
+	<input type="button" value="poisson" onCLick="poisson()">
+	<input type="button" value="normaal" onCLick="normaal()">
+	<input type="button" value="exponentieel" onCLick="exponentieel()">
+	<input type="button" value="student t" onCLick="studentt()">
+</p>
+
+<p>
+<div id="probleem" style="height: 10em;"></div>
+</p>
+<p>
+<div id="box2" class="jxgbox" style="width: 300px; height: 140px; margin-top: 2em;"></div>
+</p>
+
+<script>
+function berekenBinomiaal() {
+	var n = parseInt(document.getElementById("trials").value);
+	var p = document.getElementById("succeskans").value;
+	var k = parseInt(document.getElementById("successen").value);
+	document.getElementById("gelijk").value=binompdf(n,p,k).toFixed(6);
+	document.getElementById("kleinergelijk").value=binomcdf(n,p,k).toFixed(6);
+	document.getElementById("grotergelijk").value=1-binomcdf(n,p,k-1).toFixed(6);
+	
+	}
+
+function binomiaal() {
+	document.getElementById('box2').innerHTML = '';
+	document.getElementById('probleem').innerHTML =
+	'<p>X is binomaal verdeeld met n = <input type="text" id="trials" /> en p = <input type="text" id="succeskans" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>k = <input type="text" id="successen" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X = k) = <input type="text" id="gelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &le; k) = <input type="text" id="kleinergelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &ge; k) = <input type="text" id="grotergelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p><button type="button" onclick="berekenBinomiaal();">Bereken</button></p>';
+}
+
+
+function berekenGeomet() {
+	var p = document.getElementById("succeskans").value;
+	var k = parseInt(document.getElementById("successen").value);
+	document.getElementById("gelijk").value=(p*Math.pow(1-p,k-1)).toFixed(6);
+	document.getElementById("kleinergelijk").value=(1-Math.pow(1-p,k)).toFixed(6);
+	document.getElementById("grotergelijk").value=(Math.pow(1-p,k-1)).toFixed(6);
+	}
+
+function geomet() {
+	document.getElementById('box2').innerHTML = '';
+	document.getElementById('probleem').innerHTML = 
+	'<p>X is geometrisch verdeeld met p = <input type="text" id="succeskans" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>eerste succes: k = <input type="text" id="successen" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X = k) = <input type="text" id="gelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &le; k) = <input type="text" id="kleinergelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &ge; k) = <input type="text" id="grotergelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p><button type="button" onclick="berekenGeomet();">Bereken</button></p>';
+}
+
+function berekenHypergeomet() {
+	var N = parseInt(document.getElementById("totaal").value);
+	var R = parseInt(document.getElementById("rood").value);
+	var n = parseInt(document.getElementById("greep").value);
+	var k = parseInt(document.getElementById("successen").value);
+	document.getElementById("gelijk").value=hypergeometpdf(N,R,n,k).toFixed(6);
+	document.getElementById("kleinergelijk").value=hypergeometcdf(N,R,n,k).toFixed(6);
+	document.getElementById("grotergelijk").value=(1-hypergeometcdf(N,R,n,k-1)).toFixed(6);
+	}
+
+function hypergeomet() {
+	document.getElementById('box2').innerHTML = '';
+	document.getElementById('probleem').innerHTML = 
+	'<p>X is hypergeometrisch verdeeld met N = <input type="text" id="totaal" />, R = <input type="text" id="rood" /> en n = <input type="text" id="greep" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>k = <input type="text" id="successen" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X = k) = <input type="text" id="gelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &le; k) = <input type="text" id="kleinergelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &ge; k) = <input type="text" id="grotergelijk" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p><button type="button" onclick="berekenHypergeomet();">Bereken</button></p>';
+}
+/*
+function berekenPoisson() {
+	var l = document.getElementById("lambda").value;
+	var k = parseInt(document.getElementById("successen").value);
+	document.getElementById("gelijk").value=poissonpdf(l,k).toFixed(6);
+	document.getElementById("kleinergelijk").value=poissoncdf(l,k).toFixed(6);
+	document.getElementById("grotergelijk").value=1-poissoncdf(l,k-1).toFixed(6);
+	}
+*/
+function berekenPoisson() {
+	Z=parseInt(document.getElementById("argument").value);
+    Lam=parseInt(document.getElementById("lambda").value);
+	if (Lam<=0) {
+		alert("Lambda must be positive.");
+	} else if (Z<0) {
+		Poiscdf=0
+	} else {
+		Z=Math.floor(Z)
+		Poiscdf=1-Gammacdf(Lam,Z+1);
+	}
+	Poiscdf=Math.round(Poiscdf*100000)/100000;
+    document.getElementById("result").value = Poiscdf;
+}
+
+function poisson() {
+ 	document.getElementById('box2').innerHTML = '';
+	document.getElementById('probleem').innerHTML = 
+	'<p>X is poisson verdeeld met &lambda; = <input type="text" id="lambda" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>k = <input type="text" id="argument" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &le; k) = <input type="text" id="result" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p><button type="button" onclick="berekenPoisson();">Bereken</button></p>';
+}
+
+function berekenNormaal() {
+	document.getElementById('box2').innerHTML = '';
+	var mu = parseFloat(document.getElementById("mu").value);
+	var sigma = parseFloat(document.getElementById("sigma").value);
+	var lg = parseFloat(document.getElementById("lower").value);
+	var rg = parseFloat(document.getElementById("upper").value);
+	var z1 = (lg-mu)/sigma;
+	var z2 = (rg-mu)/sigma;	
+	document.getElementById("resultaat").value=(normCdf(z2)-normCdf(z1)).toFixed(6);
+	
+	var board2 = JXG.JSXGraph.initBoard('box2', {
+	boundingbox: [-5,.5,5,-.2], 
+	axis: false,
+	showNavigation: false,
+	showCopyright: false
+	});
+
+	// create functon to determine binomial histogram
+	var f = function(x) {
+		return 1/Math.sqrt(2*Math.PI)*Math.exp(-.5*x*x); }
+	var plot = board2.create('functiongraph',[f,-5,5], { strokeColor: 'black'});
+
+	// create gebied, X>=linkergrens and X<=rechtergrens is colored
+	var gebied = board2.create('integral',[[z1,z2], plot], {
+		withLabel: false,
+		curveLeft: {visible: false},
+		curveRight: {visible: false},
+		fillColor: '#ff8f00'
+		} );
+	board2.create('line',[[1,0],[2,0]], { strokeColor: 'black'});
+	board2.create('text',[z1,-.05,lg]);
+	board2.create('text',[z2,-.05,rg]);
+	}
+
+function normaal() {
+	document.getElementById('box2').innerHTML = '';
+	document.getElementById('probleem').innerHTML = 
+	'<p>X is normaal verdeeld met &mu; = <input type="text" id="mu" /> en &sigma; = <input type="text" id="sigma" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>linkergrens = <input type="text" id="lower" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>rechtergrens = <input type="text" id="upper" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(lg &le; X &le; rg) = <input type="text" id="resultaat" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p><button type="button" onclick="berekenNormaal();">Bereken</button></p>';
+}
+
+function berekenExponentieel() {
+	var l = document.getElementById("lambda").value;
+	var lg = document.getElementById("lower").value;
+	var rg = document.getElementById("upper").value;
+	document.getElementById("resultaat").value=(Math.exp(-l*lg)-Math.exp(-l*rg)).toFixed(6);
+	}
+
+function exponentieel() {
+	document.getElementById('box2').innerHTML = '';
+	document.getElementById('probleem').innerHTML = 
+	'<p>X is poisson verdeeld met &lambda; = <input type="text" id="lambda" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>linkergrens = <input type="text" id="lower" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>rechtergrens = <input type="text" id="upper" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(lg &le; X &le; rg) = <input type="text" id="resultaat" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p><button type="button" onclick="berekenExponentieel();">Bereken</button></p>';
+}
+
+
+function berekenStudentt() {
+	document.getElementById('box2').innerHTML = '';
+    X=parseFloat(document.getElementById("argument").value);
+    df=parseInt(document.getElementById("df").value);
+    with (Math) {
+		if (df<=0) {
+			alert("Degrees of freedom must be positive")
+		} else {
+			A=df/2;
+			S=A+.5;
+			Z=df/(df+X*X);
+			BT=exp(LogGamma(S)-LogGamma(.5)-LogGamma(A)+A*log(Z)+.5*log(1-Z));
+			if (Z<(A+1)/(S+2)) {
+				betacdf=BT*Betinc(Z,A,.5)
+			} else {
+				betacdf=1-BT*Betinc(1-Z,.5,A)
+			}
+			if (X<0) {
+				tcdf=betacdf/2
+			} else {
+				tcdf=1-betacdf/2
+			}
+		}
+		tcdf=round(tcdf*100000)/100000;
+	}
+    document.getElementById("result").value = tcdf;
+}
+
+function studentt() {
+	document.getElementById('probleem').innerHTML = 
+	'<p>X is Student t verdeeld met <input type="text" id="df" /> vrijheidsgraden</p>';
+	document.getElementById('probleem').innerHTML += '<p>t = <input type="text" id="argument" /></p>';
+	document.getElementById('probleem').innerHTML += '<p>P(X &le; t) = <input type="text" id="result" readonly /></p>';
+	document.getElementById('probleem').innerHTML += '<p><button type="button" onclick="berekenStudentt();">Bereken</button></p>';
+}
+</script>
+
+<h3>Statistiek</h3>
+<p>
+	X: <input id="inputs" /><input type="button" value="bereken" onCLick="eenvarstats();">
+</p>
+<p><table>
+	<tr>
+		<td>gemiddelde:</td>
+		<td><input type="text" id="gemiddelde" readonly /></td>
+	</tr>
+	<tr>
+		<td>sd:</td>
+		<td><input type="text" id="sd" readonly /></td>
+	</tr>
+	<tr>
+		<td>variantie:</td>
+		<td><input type="text" id="variantie" readonly /></td>
+	</tr>
+	<tr>
+		<td>min:</td>
+		<td><input type="text" id="min" readonly /></td>
+	</tr>
+	<tr>
+		<td>Q1:</td>
+		<td><input type="text" id="q1" readonly /></td>
+	</tr>
+	<tr>
+		<td>mediaan:</td>
+		<td><input type="text" id="mediaan" readonly /></td>
+	</tr>
+	<tr>
+		<td>Q3:</td>
+		<td><input type="text" id="q3" readonly /></td>
+	</tr>
+	<tr>
+		<td>max:</td>
+		<td><input type="text" id="max" readonly /></td>
+	</tr>
+	</table>
+</p>
+
+<script>
+function eenvarstats() {
+	var x = document.getElementById("inputs").value;
+	x=x.replace(' ','');
+	var arr=x.split(',');
+	for(var j=0;j<arr.length;j++){
+		arr[j]=parseFloat(arr[j]); }
+	var n = arr.length;
+	arr=arr.sort(function(a,b){return a-b});
+	var h = Math.floor(n/2);
+	var helft1 = arr.slice(0,h);
+	arr=arr.reverse();
+	var helft2 = arr.slice(0,h);
+	document.getElementById("gemiddelde").value=JXG.Math.Statistics.mean(arr);
+	document.getElementById("sd").value=(JXG.Math.Statistics.sd(arr)*Math.sqrt((n-1)/n)).toFixed(4);
+	document.getElementById("variantie").value=JXG.Math.Statistics.variance(arr)*(n-1)/n;
+	document.getElementById("min").value=JXG.Math.Statistics.min(arr);
+	document.getElementById("q1").value=JXG.Math.Statistics.median(helft1);
+	document.getElementById("mediaan").value=JXG.Math.Statistics.median(arr);
+	document.getElementById("q3").value=JXG.Math.Statistics.median(helft2);
+	document.getElementById("max").value=JXG.Math.Statistics.max(arr);
+	}
+</script>
+
+<p>
+	X: <input id="inputsx" /><br />	
+	frequenties: <input id="inputsfreq" /><input type="button" value="bereken" onCLick="eenvarstatsmetfreq();">
+</p>
+<p><table>
+	<tr>
+		<td>n:</td>
+		<td><input type="text" id="fxn" readonly /></td>
+	</tr>
+	<tr>
+		<td>gemiddelde:</td>
+		<td><input type="text" id="fxgemiddelde" readonly /></td>
+	</tr>
+	<tr>
+		<td>mediaan:</td>
+		<td><input type="text" id="fxmediaan" readonly /></td>
+	</tr>
+	<tr>
+		<td>sd:</td>
+		<td><input type="text" id="fxsd" readonly /></td>
+	</tr>
+	<tr>
+		<td>variantie:</td>
+		<td><input type="text" id="fxvariantie" readonly /></td>
+	</tr>
+	</table>
+</p>
+
+<script>
+function eenvarstatsmetfreq() {
+	var x = document.getElementById("inputsx").value;
+	x=x.replace(' ','');
+	var xarr=x.split(',');
+	for(var j=0;j<xarr.length;j++){
+		xarr[j]=parseFloat(xarr[j]); }
+	var freq = document.getElementById("inputsfreq").value;
+	freq=freq.replace(' ','');
+	var freqarr=freq.split(',');
+	for(var j=0;j<freqarr.length;j++){
+		freqarr[j]=parseFloat(freqarr[j]); }
+	var n = JXG.Math.Statistics.sum(freqarr);
+	var totaal = JXG.Math.Statistics.multiply(xarr,freqarr);
+	var gemiddelde = JXG.Math.Statistics.sum(totaal)/n;
+	var diffsq = [];
+	for (var j=0;j<xarr.length;j++){
+		diffsq[j] = (xarr[j]-gemiddelde)*(xarr[j]-gemiddelde); }
+	var diffsqtotaal = JXG.Math.Statistics.multiply(diffsq,freqarr);
+	var variantie = JXG.Math.Statistics.sum(diffsqtotaal)/n;
+	document.getElementById("fxn").value=n;
+	document.getElementById("fxgemiddelde").value=gemiddelde;
+	document.getElementById("fxsd").value=Math.sqrt(variantie);
+	document.getElementById("fxvariantie").value=variantie;
+	}
+</script>
+
+<p>
+	X: <input id="xinputs" /><br />	
+	Y: <input id="yinputs" /><input type="button" value="bereken" onCLick="tweevarstats();">
+</p>
+<p><table>
+	<tr>
+		<td>n:</td>
+		<td><input type="text" id="n" readonly /></td>
+	</tr>
+	<tr>
+		<td>gemiddelde X:</td>
+		<td><input type="text" id="xgemiddelde" readonly /></td>
+	</tr>
+	<tr>
+		<td>sd X:</td>
+		<td><input type="text" id="xsd" readonly /></td>
+	</tr>
+	<tr>
+		<td>gemiddelde Y:</td>
+		<td><input type="text" id="ygemiddelde" readonly /></td>
+	</tr>
+	<tr>
+		<td>sd Y:</td>
+		<td><input type="text" id="ysd" readonly /></td>
+	</tr>
+	<tr>
+		<td>r:</td>
+		<td><input type="text" id="pmcc" readonly /></td>
+	</tr>
+	</table>
+</p>
+
+<script>
+function tweevarstats() {
+	var x = document.getElementById("xinputs").value;
+	x=x.replace(' ','');
+	var xarr=x.split(',');
+	for(var j=0;j<xarr.length;j++){
+		xarr[j]=parseFloat(xarr[j]); }
+	var y = document.getElementById("yinputs").value;
+	y=y.replace(' ','');
+	var yarr=y.split(',');
+	for(var j=0;j<yarr.length;j++){
+		yarr[j]=parseFloat(yarr[j]); }
+	var n = xarr.length;
+	var xgemiddelde = JXG.Math.Statistics.mean(xarr);
+	var xsd = JXG.Math.Statistics.sd(xarr)*Math.sqrt((n-1)/n);
+	var ygemiddelde = JXG.Math.Statistics.mean(yarr);
+	var ysd = JXG.Math.Statistics.sd(yarr)*Math.sqrt((n-1)/n);
+	var xstdarr = [];
+	var ystdarr = [];
+	for (var j=0;j<n;j++){
+		xstdarr[j] = (xarr[j]-xgemiddelde)/xsd;
+		ystdarr[j] = (yarr[j]-ygemiddelde)/ysd; }
+	var mult = JXG.Math.Statistics.multiply(xstdarr,ystdarr);
+	var r = JXG.Math.Statistics.sum(mult)/n;
+	document.getElementById("n").value=n;
+	document.getElementById("xgemiddelde").value=xgemiddelde;
+	document.getElementById("xsd").value=xsd.toFixed(4);
+	document.getElementById("ygemiddelde").value=ygemiddelde;
+	document.getElementById("ysd").value=ysd.toFixed(4);
+	document.getElementById("pmcc").value=r;
+	}
+</script>
+
+<footer>
+<br />		
+<div>Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>
