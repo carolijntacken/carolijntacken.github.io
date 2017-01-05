@@ -84,8 +84,8 @@ board.on('update', function () {
 for (i=2; i<=30; ++i) {	board.removeObject(macht[i]);};	
 for (var m=2; m<= exponent.Value(); ++m) {
 	macht[m] = board.create('point',[
-	Math.pow(z.Dist(p1),m)*Math.cos(m*JXG.Math.Geometry.angle(p2,p1,z)),
-	Math.pow(z.Dist(p1),m)*Math.sin(m*JXG.Math.Geometry.angle(p2,p1,z))
+	Math.pow(z.Dist(p1),m)*Math.cos(m*JXG.Math.Geometry.rad(p2,p1,z)),
+	Math.pow(z.Dist(p1),m)*Math.sin(m*JXG.Math.Geometry.rad(p2,p1,z))
 	],
 	{strokeColor:'#009a0a', fillColor:'#009a0a', name: ''});
 	board.create('segment', [macht[m-1],macht[m]], {strokeColor: '#009a0a', strokeWidth:0.5});

@@ -4461,8 +4461,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #a2d1f0;
-  border-color: #85c3eb;
+  background-color: #8db4d0;
+  border-color: #bad2e2;
 }
 .navbar-default .navbar-brand {
   color: #777777;
@@ -4487,7 +4487,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #555555;
-  background-color: #85c3eb;
+  background-color: #bad2e2;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -4507,12 +4507,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
-  border-color: #85c3eb;
+  border-color: #bad2e2;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #85c3eb;
+  background-color: #bad2e2;
   color: #555555;
 }
 @media (max-width: 767px) {
@@ -4528,7 +4528,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #555555;
-    background-color: #85c3eb;
+    background-color: #bad2e2;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -6847,8 +6847,8 @@ button.close {
 }
 .navmenu-default,
 .navbar-default .navbar-offcanvas {
-  background-color: #a2d1f0;
-  border-color: #85c3eb;
+  background-color: #8db4d0;
+  border-color: #bad2e2;
 }
 .navmenu-default .navmenu-brand,
 .navbar-default .navbar-offcanvas .navmenu-brand {
@@ -6878,7 +6878,7 @@ button.close {
 .navbar-default .navbar-offcanvas .navmenu-nav > .open > a:hover,
 .navmenu-default .navmenu-nav > .open > a:focus,
 .navbar-default .navbar-offcanvas .navmenu-nav > .open > a:focus {
-  background-color: #85c3eb;
+  background-color: #bad2e2;
   color: #333333;
 }
 .navmenu-default .navmenu-nav > .open > a .caret,
@@ -6897,11 +6897,11 @@ button.close {
 }
 .navmenu-default .navmenu-nav.dropdown-menu,
 .navbar-default .navbar-offcanvas .navmenu-nav.dropdown-menu {
-  background-color: #85c3eb;
+  background-color: #bad2e2;
 }
 .navmenu-default .navmenu-nav.dropdown-menu > .divider,
 .navbar-default .navbar-offcanvas .navmenu-nav.dropdown-menu > .divider {
-  background-color: #a2d1f0;
+  background-color: #8db4d0;
 }
 .navmenu-default .navmenu-nav.dropdown-menu > .active > a,
 .navbar-default .navbar-offcanvas .navmenu-nav.dropdown-menu > .active > a,
@@ -6920,7 +6920,7 @@ button.close {
 .navmenu-default .navmenu-nav > li > a:focus,
 .navbar-default .navbar-offcanvas .navmenu-nav > li > a:focus {
   color: #333333;
-  background-color: #ccffcc;
+  background-color: #dddddd;
 }
 .navmenu-default .navmenu-nav > .active > a,
 .navbar-default .navbar-offcanvas .navmenu-nav > .active > a,
@@ -6929,7 +6929,7 @@ button.close {
 .navmenu-default .navmenu-nav > .active > a:focus,
 .navbar-default .navbar-offcanvas .navmenu-nav > .active > a:focus {
   color: #333333;
-  background-color: #85c3eb;
+  background-color: #bad2e2;
 }
 .navmenu-default .navmenu-nav > .disabled > a,
 .navbar-default .navbar-offcanvas .navmenu-nav > .disabled > a,
@@ -7285,7 +7285,7 @@ o\:* { behavior: url(#default#VML); }
 	padding: 2px 9px;
 }
 #everything thead th {
-	background-color: #a2d1f0;
+	background-color: #8db4d0;
 	text-align: center;
 }
 
@@ -7460,7 +7460,7 @@ input.jme {
 }
 
 .matrix-input .matrix-size {
-    background: #a2d1f0;
+    background: #8db4d0;
     padding: 0.2em;
     margin-bottom: 0.2em;
     border: 1px solid #999;
@@ -7665,7 +7665,9 @@ table {
 .statement {
 	margin: 1em 0;
 	padding-left: 1em;
-	background: #cfc;
+	padding-top: .5em;
+	padding-bottom: .1em;
+	background: #ccc;
 }
 .part {
 	margin: .5em 0;
@@ -7794,7 +7796,7 @@ table {
 }
 
 .part .partFeedback {
-	background: #A2D1F0;
+	background: #8db4d0;
 	border: 1px solid #999999;
 	padding: 0.2em 0.2em 0.2em 0.1em;
 	float: right;
@@ -7809,13 +7811,13 @@ table {
 	overflow-y: auto;
 	list-style-type: none;
 	background: none;
-	border-color: #a2d1f0;
+	border-color: #8db4d0;
 }
 
 .part .feedbackMessage:not(:last-child):after {
 	content: '';
 	display: block;
-	background: #a2d1f0;
+	background: #8db4d0;
 	height: 1px;
 	width: 90%;
 	margin: 0.5em auto;
