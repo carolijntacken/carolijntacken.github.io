@@ -1,0 +1,106 @@
+
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.processSectionDelay = 0;
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Exponentiële functie</title>
+
+<body>
+
+<h2>Exponentiële functie</h2>
+<p>Beweeg de sliders om te kijken wat de invloed van \(a\), \(b\), \(c\), en \(d\) is op de grafiek van \(f(x) = a\cdot 2^{b(x-c)}+d\).</p>
+
+<div id="box" class="jxgbox" style="float: left; width:860px; height:600px; margin-bottom:1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options.text.useMathJax = true;
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:true, 
+		boundingbox:[-7,7,13,-5] 
+		});
+	var a = board.create('slider',[[-6.5,6],[-4,6],[-6,1.00,6]], {style:6, name:'a', strokeColor:'red', baseline: {strokeColor: 'red'}, 
+	highline: {strokeColor: 'red'},withTicks:false});
+	var b = board.create('slider',[[-6.5,5],[-4,5],[-6,1,6]],{name:'b', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'}, 
+	highline: {strokeColor: '#006ae0'},withTicks:false}); 
+	var c = board.create('slider',[[-6.5,4],[-4,4],[-6,0,6]],{name:'c', snapWidth:0.1, strokeColor:'#009a0a', baseline: {strokeColor: '#009a0a'}, 
+	highline: {strokeColor: '#009a0a'},withTicks:false});
+	var d = board.create('slider',[[-6.5,3],[-4,3],[-6,0,6]],{name:'d', snapWidth:0.1, strokeColor:'#ff8f00', baseline: {strokeColor: '#ff8f00'}, 
+	highline: {strokeColor: '#ff8f00'},withTicks:false});
+	var A = board.create('point',[-1,0.5], {color:'red', size:3, name:''});
+	var B = board.create('point',[0,1], {color:'#006ae0', size:3, name:''});
+	var C = board.create('point',[1,2], {color:'#ff8f00', size:3, name:''});
+
+	var f = function(x) {return a.Value()*Math.pow(2,b.Value()*(x-c.Value()))+d.Value(); }
+
+	var fA = board.create('point',[
+		function() { return -1/b.Value()+c.Value(); }, 
+		function() { return f(-1/b.Value()+c.Value());} 
+		], {color:'red', size:3, name:''});
+	var fB = board.create('point',[
+		function() { return c.Value(); }, 
+		function() { return f(c.Value());} 
+		], {color:'#006ae0', size:3, name:''});
+	var fC = board.create('point',[
+		function() { return 1/b.Value()+c.Value(); }, 
+		function() { return f(1/b.Value()+c.Value());} 
+		], {color:'#ff8f00', size:3, name:''});
+	
+	var plot = board.create('functiongraph',[f,-7,13],{ strokeColor: 'black', strokeWidth:3 });
+	var forigineel = function(x) {return Math.pow(2,x); }
+	var plotorigineel = board.create('functiongraph',[forigineel,-7,13],{ strokeColor: 'black', strokeWidth:2, dash: 3 });
+	var evenwichtsstand = board.create('line',[
+		[-7,function() { return d.Value();}],
+		[13,function() { return d.Value();}]], { strokeWidth:3, strokeColor: '#ff8f00', dash:3});	
+				
+	
+	var algform = board.create('text',[3,5.3, function() {
+		return 'Algemene formule: \\(f(x) = a \\cdot 2^{b(x-c)}+d\\)';
+		}], { fontSize: 20, fixed: true});
+	var form = board.create('text',[3,4.3,
+		function() {
+			var teksta = '\\color{red}{' + a.Value().toFixed(2) + '} \\cdot';
+			if (a.Value().toFixed(2) == 1) { teksta = ''; }
+			var tekstb = '\\color{#006ae0}{' + b.Value().toFixed(2) + '}';
+			if (b.Value().toFixed(2) == 1) { tekstb = ''; }
+			var tekenc = ' + ';
+			if (c.Value()<0) { tekenc = ' \\color{#009a0a}{-} ';}
+			var tekstc = '(x' + tekenc + '\\color{#009a0a}{' + Math.abs(c.Value()).toFixed(2) + '})';
+			if (c.Value()==0) { tekstc = 'x';}
+			var tekstd = '\\color{#ff8f00}{' + Math.abs(-1*d.Value()).toFixed(2) + '}';
+			var tekend= ' \\color{#ff8f00}{ - }';
+			if (d.Value()>0) { tekend = ' \\color{#ff8f00}{+} ';}
+			if (d.Value()==0) { tekend = ''; tekstd = '';}
+			return '\\( f(x) = ' + teksta + '2^{' + tekstb + tekstc + '}' + tekend + tekstd + '\\)'
+			}], {fontSize: 24, fixed: true});
+		</script>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>
