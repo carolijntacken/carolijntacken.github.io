@@ -112,9 +112,9 @@ function incirkel(){
 var hoogA, hoogB, hoogC;
 function hoogtelijnen(){
 	if (document.getElementById("hoog").checked == true) {
-		hoogA = board.create('perpendicular',[A,lijnBC], {strokeColor: '#006ae0', highlight:false} );
-		hoogB = board.create('perpendicular',[B,lijnAC], {strokeColor: '#006ae0', highlight:false} );
-		hoogC = board.create('perpendicular',[C,lijnAB], {strokeColor: '#006ae0', highlight:false} );
+		hoogA = board.create('perpendicular',[A,lijnBC], {strokeColor: 'red', highlight:false} );
+		hoogB = board.create('perpendicular',[B,lijnAC], {strokeColor: 'red', highlight:false} );
+		hoogC = board.create('perpendicular',[C,lijnAB], {strokeColor: 'red', highlight:false} );
 		document.getElementById('tekst').innerHTML = '<p>Een hoogtelijn gaat door een hoekpunt van de driehoek en staat loodrecht op de zijde ertegenover.</p><p>De drie hoogtelijnen in een driehoek gaan door één punt, het hoogtepunt.</p>'
 	} else {
 		board.removeObject(hoogA);	   
@@ -132,9 +132,9 @@ function zwaartelijnen(){
 		middenAB = board.create('midpoint',[A,B], { name:''} );
 		middenBC = board.create('midpoint',[B,C], { name:''} );
 		middenAC = board.create('midpoint',[A,C], { name:''} );
-		zwaarA = board.create('line',[A,middenBC], {strokeColor: '#006ae0', highlight:false} );
-		zwaarB = board.create('line',[B,middenAC], {strokeColor: '#006ae0', highlight:false} );
-		zwaarC = board.create('line',[C,middenAB], {strokeColor: '#006ae0', highlight:false} );
+		zwaarA = board.create('line',[A,middenBC], {strokeColor: '#ff8f00', highlight:false} );
+		zwaarB = board.create('line',[B,middenAC], {strokeColor: '#ff8f00', highlight:false} );
+		zwaarC = board.create('line',[C,middenAB], {strokeColor: '#ff8f00', highlight:false} );
 		document.getElementById('tekst').innerHTML = 'Een zwaartelijn gaat door een hoekpunt van de driehoek en door het midden van de zijde ertegenover.</p><p>De drie zwaartelijnen in een driehoek gaan door één punt, het zwaartepunt.</p><p>De zwaartelijnen verdelen elkaar in stukken die zich verhouden als 2 : 1.</p>'
 	} else {
 		board.removeObject(zwaarA);	   
@@ -155,9 +155,9 @@ function middelloodlijnen(){
 		middenAB = board.create('midpoint',[A,B], { name:''} );
 		middenBC = board.create('midpoint',[B,C], { name:''} );
 		middenAC = board.create('midpoint',[A,C], { name:''} );
-		mllAB = board.create('perpendicular',[middenAB,lijnAB], {strokeColor: '#006ae0', highlight:false} );
-		mllBC = board.create('perpendicular',[middenBC,lijnBC], {strokeColor: '#006ae0', highlight:false} );
-		mllAC = board.create('perpendicular',[middenAC,lijnAC], {strokeColor: '#006ae0', highlight:false} );
+		mllAB = board.create('perpendicular',[middenAB,lijnAB], {strokeColor: '#009a0a', highlight:false} );
+		mllBC = board.create('perpendicular',[middenBC,lijnBC], {strokeColor: '#009a0a', highlight:false} );
+		mllAC = board.create('perpendicular',[middenAC,lijnAC], {strokeColor: '#009a0a', highlight:false} );
 		document.getElementById('tekst').innerHTML = '<p>Een middelloodlijn gaat door het midden van een zijde en staat er loodrecht op. </p><p>De drie middelloodlijnen van een driehoek gaan door één punt en dat punt is het middelpunt van de omgeschreven cirkel.</p><p>Voor elk punt op de middelloodlijn van AB geldt dat de afstand tot A en tot B hetzelfde is. En omgekeerd: elk punt met gelijke afstanden tot A en tot B ligt op de middelloodlijn van AB.';
 	} else {
 		board.removeObject(mllAB);	   
@@ -178,7 +178,7 @@ var omgeschrevencirkel;
 function omcirkel(){
 	if (document.getElementById("omcirkel").checked == true) {
 		if (document.getElementById("mll").checked == true) {
-		omgeschrevencirkel = board.create('circumcircle',[A,B,C], {strokeColor: '#006ae0', highlight:false} );
+		omgeschrevencirkel = board.create('circumcircle',[A,B,C], {strokeColor: '#009a0a', highlight:false} );
 		} else {}
 	} else {
 		board.removeObject(omgeschrevencirkel);

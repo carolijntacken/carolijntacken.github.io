@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script>
+	document.createElement('footer')
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+
+<title>Afstanden</title>
+
+<body>
+
+<h2>Afstanden</h2>
+
+<div id="box" class="jxgbox" style="float: left; width:500px; height:500px; margin-bottom:1em; margin-right: 1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	    point: {
+	    	fillColor: '#454545',
+	    	strokeWidth: 1,
+	    	strokeColor: '#000000',
+	    	size: 2,
+	    	showInfobox: false
+	    },
+	    segment: {
+	    	strokeColor: 'black',
+	    	highlight: false
+	    }
+	});
+	board = JXG.JSXGraph.initBoard('box', { 
+		showCopyright: false,
+		showNavigation: false,
+		axis:false, 
+		keepaspectratio:true,
+		boundingbox:[-5,5,5,-5] 
+		});
+	var P = board.create('point',[-3,-3], {name:'P', fixed: true});
+	var B = board.create('point',[4,-2], { visible:false } );
+	var C = board.create('point',[-2,3], { visible:false } );
+	var lijnBC = board.create('line',[B,C], { strokeColor: 'black', highlight:false } );
+	var Q = board.create('glider',[0,0,lijnBC], { color:'#009a0a', name: 'Q' } );
+	var lijnstukPQ = board.create('segment',[P,Q], { color:'#009a0a' } );
+	board.create('text',[
+	  function(){return 0.5*(P.X()+Q.X())+0.15},
+	  function(){return 0.5*(P.Y()+Q.Y())-0.05},
+	  function(){
+	    dist = Q.Dist(P);
+	    return dist.toFixed(3)}], {color: '#009a0a'} ); 
+</script>
+
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+
+</body>
+</html>
