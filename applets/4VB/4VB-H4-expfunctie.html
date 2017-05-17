@@ -9,7 +9,7 @@
 MathJax.Hub.processSectionDelay = 0;
 </script>
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+<script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/~michael/jsxgraph-nightly/archive/2017/2017-01-31.2100/jsxgraphcore.js"></script>
 	
 <script>
 	document.createElement('footer')
@@ -79,8 +79,8 @@ MathJax.Hub.processSectionDelay = 0;
 				
 	
 	var algform = board.create('text',[3,5.3, function() {
-		return 'Algemene formule: \\(f(x) = a \\cdot 2^{b(x-c)}+d\\)';
-		}], { fontSize: 20, fixed: true});
+		return 'Algemene formule: ' +'\\(f(x) = a \\cdot 2^{b(x-c)}+d\\)';
+		}], { fontSize: 20});
 	var form = board.create('text',[3,4.3,
 		function() {
 			var teksta = '\\color{red}{' + a.Value().toFixed(2) + '} \\cdot';
