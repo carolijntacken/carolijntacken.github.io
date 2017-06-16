@@ -1,0 +1,91 @@
+
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+	
+<script>
+	document.createElement('footer')
+</script>
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script src="https://www.desmos.com/api/v0.9/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
+<title>Sinusoiden</title>
+
+<body> 
+<h2>Sinusoïden</h2>
+<p>Hieronder zie je de grafiek van \(f(x)=\) <span id="valueA" style="color: #0000ff"></span> \(\sin(\)<span id="valueB" style="color: #ff8f00"></span><span id="haakjeopenen"></span>\(x\)<span id="valueC" style="color: #ff8f00"></span><span id="haakjesluiten"></span>\()\)<span id="valueD" style="color: #c74440"></span>.</p>
+
+<p>
+de evenwichtsstand is \(y={}\)<span id="valueD2"></span><br>
+de amplitude is <span id="valueA2"></span><br>
+de periode is \(2\pi / {}\)<span id="valueB2"></span><br>
+het beginpunt is \(x={}\) <span id="valueC2"></span>
+</p>
+<div id="calculator" style="width: 900px; height: 400px;"></div>
+  
+  
+<script>
+  var calculator;
+
+    var elt = document.getElementById('calculator');
+    var calculator = Desmos.GraphingCalculator(elt, {
+    	keypad: false,
+    	expressionsTopbar: false,
+    }); 
+    //Only show the first quadrant
+    calculator.setMathBounds({
+      left: -3.5,
+      right: 10,
+      bottom: -5,
+      top: 5
+    }); 
+    calculator.setGraphSettings({
+    	xAxisStep: 3.14,
+    });
+    calculator.setExpressions([
+    	{id: 'sinusoide', latex: 'y=a sin(b(x-c))+d', color: Desmos.Colors.BLACK},
+    	{id: 'slider1', latex:'a=2', sliderBounds: {min: -5, max: 5}},
+    	{id: 'slider2', latex:'b=1', sliderBounds: {min: 0, max: 10, step: 0.1}},
+    	{id: 'slider3', latex:'c=0', sliderBounds: {min: -5, max: 5}},
+    	{id: 'slider4', latex:'d=0', sliderBounds: {min: -5, max: 5}},    	
+    	{id: 'evenwichtstand', latex: 'y=d', secret: true, color: Desmos.Colors.RED, style: Desmos.Styles.DASHED},
+    ]);
+	
+	var a = calculator.HelperExpression({latex: 'a'});
+	a.observe('numericValue', function () {
+	  	$('#valueA').html(a.numericValue==1 ? '' : a.numericValue);	
+	  	$('#valueA2').html( Math.abs(a.numericValue) );
+	});
+	var b = calculator.HelperExpression({latex: 'b'});
+	b.observe('numericValue', function () {
+	  	$('#valueB').html( b.numericValue==1 ? '' : b.numericValue );
+		$('#haakjeopenen').html( c.numericValue==0 ? '' : b.numericValue==1 ? '' : '\(' );
+		$('#haakjesluiten').html( c.numericValue==0 ? '' : b.numericValue==1 ? '' : '\)' );
+		$('#valueB2').html( b.numericValue + ' &asymp; ' + (2*Math.PI/b.numericValue).toFixed(2));
+	});
+	var c = calculator.HelperExpression({latex: 'c'});
+	c.observe('numericValue', function () {
+	  	$('#valueC').html( c.numericValue==0 ? '' : c.numericValue > 0 ? ' &ndash; ' +c.numericValue : ' + '+ Math.abs(c.numericValue) );
+	  	$('#haakjeopenen').html( c.numericValue==0 ? '' : b.numericValue==1 ? '' : '\(' );
+	  	$('#haakjesluiten').html( c.numericValue==0 ? '' : b.numericValue==1 ? '' : '\)' );
+	  	$('#valueC2').html( c.numericValue);
+	});
+	var d = calculator.HelperExpression({latex: 'd'});
+	d.observe('numericValue', function () {
+	  $('#valueD').html( d.numericValue==0 ? '' : d.numericValue < 0 ? ' &ndash; '+Math.abs(d.numericValue) : ' + '+d.numericValue);
+	  $('#valueD2').html( d.numericValue);
+	});
+</script>
+
+<!--a.observe('numericValue.sign', function() {
+      $sign.text(a.numericValue < 0 ? 'negative' : 'non-negative');
+    });-->
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

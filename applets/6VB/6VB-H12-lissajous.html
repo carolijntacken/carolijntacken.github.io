@@ -6,7 +6,7 @@
 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
-	
+
 <script>
 	document.createElement('footer')
 </script>
@@ -42,19 +42,19 @@ Wat gebeurt er als we niet meer bij beide dezelfde amplitude kiezen? Of niet mee
 	    	fontSize: 16
 	    },
 	});
-	board = JXG.JSXGraph.initBoard('box', { 
+	board = JXG.JSXGraph.initBoard('box', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:true, 
-		boundingbox:[-10,10,10,-10] 
+		axis:true,
+		boundingbox:[-10,10,10,-10]
 		});
 	var t = board.create('slider',[[2,-7],[6,-7],[0,2*Math.PI,4*Math.PI]], {style:6, name:'t',withTicks:false});
-	var b = board.create('slider',[[-9,8],[-4,8],[0,3,6]],{name:'b', snapWidth:0.2,withTicks:false}); 
+	var b = board.create('slider',[[-9,8],[-4,8],[0,3,6]],{name:'b', snapWidth:0.2,withTicks:false});
 	var c = board.create('slider',[[-9,7],[-4,7],[0,1,12]],{name:'c', snapWidth:1,withTicks:false});
 	var B = board.create('slider',[[2,8],[7,8],[0,3,6]],{name:'B', snapWidth:0.2,withTicks:false});
 	var C = board.create('slider',[[2,7],[7,7],[0,1,12]],{name:'C',snapWidth:1,withTicks:false});
-	var d = board.create('slider',[[-9,6],[-4,6],[0,0,2*Math.PI]],{name:'d',withTicks:false}); 
-	
+	var d = board.create('slider',[[-9,6],[-4,6],[0,0,2*Math.PI]],{name:'d',withTicks:false});
+
 	xtekst = board.create('text',[-9.7,9,function() {
 		var fase = d.Value().toFixed(2);
 		var cwaarde = c.Value().toFixed(2);
@@ -73,7 +73,7 @@ Wat gebeurt er als we niet meer bij beide dezelfde amplitude kiezen? Of niet mee
 		tekst+= ')';
 		return tekst;
 		}], {fontSize:24, strokeColor:'#009a0a', fixed:true} );
-	
+
 	ytekst = board.create('text',[1,9,function() {
 		var Cwaarde = C.Value().toFixed(2);
 		var tekst = 'y(t) = ' + B.Value().toFixed(2) + ' sin(' ;
@@ -85,22 +85,22 @@ Wat gebeurt er als we niet meer bij beide dezelfde amplitude kiezen? Of niet mee
 		tekst+= ')';
 		return tekst;
 		}], {fontSize:24, strokeColor:'#006ae0', fixed:true} );
-		
+
 	function x(t) {return b.Value()*Math.cos(c.Value()*(t-d.Value()));};
 	function y(t) {return B.Value()*Math.sin(C.Value()*t);};
 	function plot(){
 	  graph = board.create('curve', [
-	            x,y, 
-	            0, 
+	            x,y,
+	            0,
 	            function(){return t.Value();}
-	            ], 
+	            ],
 	            {strokeColor:'red', strokeWidth:3}
 	          );
 	  point = board.create('point',[
 	  	function() { return x(t.Value()); }, function() { return y(t.Value());}], {size:3, strokeColor:'red',fillColor:'red',name:''});
 	  board.update();
-	} 
-	 
+	}
+
 	plot();
 </script>
 
@@ -108,8 +108,8 @@ Wat gebeurt er als we niet meer bij beide dezelfde amplitude kiezen? Of niet mee
 var board2 = JXG.JSXGraph.initBoard('box2', {
 		showCopyright: false,
 		showNavigation: false,
-		boundingbox: [-2,8,13,-8], 
-		axis: true, 
+		boundingbox: [-2,8,13,-8],
+		axis: true,
 		});
 tlabel = board2.create('text',[14,-1,'t']);
 xlabel = board2.create('text',[-1.2,7,'x(t)']);
@@ -117,11 +117,11 @@ xlabel = board2.create('text',[-1.2,7,'x(t)']);
 var p = board2.create('functiongraph', [
         x,
         0,
-        function() { return t.Value(); } ], { 
-            strokeColor:'#009a0a', 
+        function() { return t.Value(); } ], {
+            strokeColor:'#009a0a',
             strokeWidth:3
         });
-        
+
 board.addChild(board2);
 </script>
 
@@ -129,7 +129,7 @@ board.addChild(board2);
 var board3 = JXG.JSXGraph.initBoard('box3', {
 		showCopyright: false,
 		showNavigation: false,
-		boundingbox: [-2,8,13,-8], 
+		boundingbox: [-2,8,13,-8],
 		axis: true });
 tlabel = board3.create('text',[14,-1,'t']);
 ylabel = board3.create('text',[-1.2,7,'y(t)']);
@@ -137,11 +137,11 @@ ylabel = board3.create('text',[-1.2,7,'y(t)']);
 var p = board3.create('functiongraph', [
         y,
         0,
-        function() { return t.Value(); } ], { 
-            strokeColor:'#006ae0', 
+        function() { return t.Value(); } ], {
+            strokeColor:'#006ae0',
             strokeWidth:3
         });
-        
+
 board.addChild(board3);
 </script>
 
