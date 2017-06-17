@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://jsxgraph.uni-bayreuth.de/~michael/jsxgraph-nightly/archive/2017/2017-01-31.2100/jsxgraphcore.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Sinusoïden</title>
+
+<body>
+
+<h2>Sinusoïden</h2>
+<p>Beweeg de sliders om te kijken wat de invloed van \(a\), \(b\), \(c\), en \(d\) is op de grafiek van \(f(x) = a \sin b(x - c) + d\)</p>
+
+<p>Hieronder zie je de grafiek van \(f(x)=\) <span id="valueA" style="color: #006ae0"></span> \(\sin(\)<span id="valueB" style="color: #009a0a"></span><span id="haakjeopenen"></span>\(x\)<span id="valueC" style="color: #ff8f00"></span><span id="haakjesluiten"></span>\()\)<span id="valueD" style="color: red"></span>.</p>
+
+<p>
+de evenwichtsstand is \(y={}\)<span id="valueD2" style="color: red"></span><br>
+de amplitude is <span id="valueA2" style="color: #006ae0"></span><br>
+de periode is \(2\pi / {}\)<span id="valueB2" style="color: #009a0a"></span><span id="valueB3"></span><br>
+het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
+</p>
+
+<div id="box" class="jxgbox" style="float: left; width:940px; height:600px; margin-bottom:1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options.text.useMathJax = true;
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', {
+		showCopyright: false,
+		showNavigation: false,
+		axis:true,
+		boundingbox:[-7,6,13,-6]
+		});
+	var d = board.create('slider',[[-6.5,2],[-4,2],[-6,0,6]], {style:6, name:'d', strokeColor:'red', baseline: {strokeColor: 'red'},
+	highline: {strokeColor: 'red'},withTicks:false});
+	var a = board.create('slider',[[-6.5,5],[-4,5],[-6,1,6]],{name:'a', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'},
+	highline: {strokeColor: '#006ae0'},withTicks:false});
+	var b = board.create('slider',[[-6.5,4],[-4,4],[0,1,12]],{name:'b', snapWidth:0.1, strokeColor:'#009a0a', baseline: {strokeColor: '#009a0a'},
+	highline: {strokeColor: '#009a0a'},withTicks:false});
+	var c = board.create('slider',[[-6.5,3],[-4,3],[-6,0,6]],{name:'c', snapWidth:0.1, strokeColor:'#ff8f00', baseline: {strokeColor: '#ff8f00'},
+	highline: {strokeColor: '#ff8f00'},withTicks:false});
+
+	var f = function(x) {return d.Value()+a.Value()*Math.sin(b.Value()*(x-c.Value())); }
+	var plot = board.create('functiongraph',[f,-7,13],{ strokeColor: 'black', strokeWidth:3 });
+	var evenwichtsstand = board.create('line',[
+		[-7,function() { return d.Value();}],
+		[13,function() { return d.Value();}]], { strokeWidth:3, strokeColor: 'red', dash:3});
+	var periode = board.create('segment',[
+		[function() {return c.Value();}, function() { return d.Value();}],
+		[function() {return c.Value()+2*Math.PI/b.Value();}, function() { return d.Value();}]],
+		{ strokeWidth:4, strokeColor: '#009a0a'});
+	var amplitude = board.create('segment',[
+		[function() {return c.Value()+.5*Math.PI/b.Value();}, function() { return d.Value();}],
+		[function() {return c.Value()+.5*Math.PI/b.Value();}, function() { return a.Value()+d.Value();}]],
+		{ strokeWidth:4, strokeColor: '#006ae0'});
+
+		var algform = board.create('text',[2,5.3,
+			function () {
+				return 'Algemene formule: \\(\\quad f(x) = a \\sin b(x - c) + d\\)'
+		;}], { fontSize: 20, fixed: true});
+		var form = board.create('text',[2,4.3,
+		function() {
+			$('#valueA').html( a.Value()==1 ? '': a.Value().toFixed(2) );
+			$('#valueB').html( b.Value()==1 ? '' : Math.abs(b.Value().toFixed(2)) );
+			$('#haakjeopenen').html( c.Value()==2 ? '' : b.Value()==1 ? '' : '\(' );
+			$('#haakjesluiten').html( c.Value()==0 ? '' : b.Value()==1 ? '' : '\)' );
+			$('#valueC').html( c.Value()==0 ? '' : c.Value() > 0 ? ' &ndash; ' +c.Value().toFixed(2) : ' + ' + Math.abs(c.Value().toFixed(2)) );
+			$('#haakjeopenen').html( c.Value()==0 ? '' : b.Value()==1 ? '' : '\(' );
+			$('#haakjesluiten').html( c.Value()==0 ? '' : b.Value()==1 ? '' : '\)' );
+			$('#valueD').html( d.Value()==0 ? '' : d.Value() < 0 ? ' &ndash; '+Math.abs(d.Value().toFixed(2)) : ' + '+d.Value().toFixed(2));
+			$('#valueA2').html( Math.abs(a.Value().toFixed(2)) );
+			$('#valueB2').html( Math.abs(b.Value().toFixed(2)) );
+			$('#valueB3').html( ' &asymp; ' + (2*Math.PI/b.Value()).toFixed(2) );
+			$('#valueC2').html( Math.abs(c.Value().toFixed(2)) );
+			$('#valueD2').html( Math.abs(d.Value().toFixed(2)) );
+			return ''
+			}]);
+
+
+		</script>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>
