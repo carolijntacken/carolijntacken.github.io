@@ -113,7 +113,7 @@ var kritiekegebied = board.create('integral',[[
 var significantieniveau = board.create('text',[-2,.7,function(){ return 'opp kritieke gebied = <span style="width: 70px">'+ kritiekegebied.Value().toFixed(3) + '</span> (significantieniveau)';}], {fixed: true});
 board.create('text',[function() { return -0.2+grens.Value();}, -0.05, function() { return '' + grens.Value().toFixed(2);}]);
 board.create('text',[0, 0.42, 'H<sub>0</sub>'], {fixed: true});
-board.create('text',[function() { return realmean.Value();}, 0.42, 'H<sub>1</sub>'], {fixed: 6true});
+board.create('text',[function() { return realmean.Value();}, 0.42, 'H<sub>1</sub>'], {fixed: true});
 		</script>
 		
 <footer style="clear: both; padding-top: 30px;">
