@@ -9,7 +9,7 @@
 </script>
 
 <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML'></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.3/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 
 <title>Kritieke gebied en power</title>
 
@@ -42,8 +42,8 @@ Je ziet hieronder bij beide hypotheses een plaatje van de normale verdeling die 
 	    },
 	});
 	board = JXG.JSXGraph.initBoard('box', {
-		axis: false, 
-		boundingbox: [-3, 1, 8, -0.2], 
+		axis: false,
+		boundingbox: [-3, 1, 8, -0.2],
 		showNavigation: false,
 		showCopyright: false
 		});
@@ -51,23 +51,23 @@ Je ziet hieronder bij beide hypotheses een plaatje van de normale verdeling die 
 	var sigma = 1;
 	// Declare function for normal curve bij H0
 	var f = function(x) { return Math.exp(-(x-mean)*(x-mean)/(2*sigma*sigma))/(sigma*Math.sqrt(2*Math.PI));};
-	
+
 	var realmean = board.create('slider',[[-2,.8],[0,.8],[0,2,5]],{name:'werkelijke &mu;', withTicks:false, size:3});
 	// Declare function for normal curve bij H1
 	var g = function(x) { return Math.exp(-(x-realmean.Value())*(x-realmean.Value())/(2*sigma*sigma))/(sigma*Math.sqrt(2*Math.PI));};
 	var grens = board.create('slider',[[-2,.9],[0,.9],[0,1.645,5]],{name:'grens', withTicks:false, size:3});
 
 
-				
+
 				// Create axis
 				var xaxis = board.create("axis", [[0,0], [1,0]], {strokeColor: "black", ticks: {majorHeight: 10}});
-				
-				
+
+
 				// Plot normal distribution
 				var plotf = board.create("functiongraph", [f, -3, 8], {strokeColor: "black", strokeWidth: 2, highlight: false});
 				// Plot normal distribution
 				var plotg = board.create("functiongraph", [g, -3, 8], {strokeColor: "black", strokeWidth: 2, highlight: false});
-				
+
 var power = board.create('integral',[[
 		function() {return grens.Value();},
 		7.8],
@@ -115,7 +115,7 @@ board.create('text',[function() { return -0.2+grens.Value();}, -0.05, function()
 board.create('text',[0, 0.42, 'H<sub>0</sub>'], {fixed: true});
 board.create('text',[function() { return realmean.Value();}, 0.42, 'H<sub>1</sub>'], {fixed: true});
 		</script>
-		
+
 <footer style="clear: both; padding-top: 30px;">
 <div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
 </footer>

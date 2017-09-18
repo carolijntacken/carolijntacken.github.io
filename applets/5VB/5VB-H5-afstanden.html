@@ -9,7 +9,7 @@
 </script>
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 
 <title>Afstanden</title>
 
@@ -40,12 +40,12 @@
 	    	highlight: false
 	    }
 	});
-	board = JXG.JSXGraph.initBoard('box', { 
+	board = JXG.JSXGraph.initBoard('box', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:false, 
+		axis:false,
 		keepaspectratio:true,
-		boundingbox:[-5,5,5,-5] 
+		boundingbox:[-5,5,5,-5]
 		});
 	var P = board.create('point',[-3,-3], {name:'P', fixed: true});
 	var B = board.create('point',[4,-2], { visible:false } );
@@ -58,7 +58,7 @@
 	  function(){return 0.5*(P.Y()+Q.Y())-0.05},
 	  function(){
 	    dist = Q.Dist(P);
-	    return dist.toFixed(3)}], {color: '#009a0a'} ); 
+	    return dist.toFixed(3)}], {color: '#009a0a'} );
 </script>
 
 

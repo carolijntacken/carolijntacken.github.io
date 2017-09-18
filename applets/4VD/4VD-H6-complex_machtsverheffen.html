@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../main.css">
 
 
-	
+
 <script>
 	document.createElement('footer')
 </script>
@@ -35,15 +35,15 @@ JXG.Options = JXG.merge(JXG.Options, {
 board = JXG.JSXGraph.initBoard('jxgbox1', {
 		showNavigation: false,
 		showCopyright: false,
-		axis: false, 
+		axis: false,
 		boundingbox:[-7.5,7.5,7.5,-7.5],
 		keepaspectratio:true
 		});
 var xaxis = board.create('axis', [[0,0], [1,0]], {ticks: { needsRegularUpdate: false, scaleSymbol: '', majorHeight : 10, ticksDistance:.4 }});
 var yaxis = board.create('axis', [[0,0], [0,1]], {ticks: { needsRegularUpdate: false, scaleSymbol: 'i', majorHeight : 10, ticksDistance:.4 }});
 var c = [];
-for (var n=1; n<=10; ++n) {	
-	c[n] = board.create('circle',[[0,0],n],{strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});	
+for (var n=1; n<=10; ++n) {
+	c[n] = board.create('circle',[[0,0],n],{strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});
 	}
 
 line2 = board.create('segment',[
@@ -57,7 +57,7 @@ line3 = board.create('segment',[
 line4 = board.create('segment',[
             [-10*Math.cos(-Math.PI/6),-10*Math.sin(-Math.PI/6)],
             [10*Math.cos(-Math.PI/6),10*Math.sin(-Math.PI/6)]],
-            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});                        
+            {strokeColor:'#bfbfbf', strokeWidth:1, highlight: false, fixed:true});
 line5 = board.create('segment',[
             [-10*Math.cos(-Math.PI/3),-10*Math.sin(-Math.PI/3)],
             [10*Math.cos(-Math.PI/3),10*Math.sin(-Math.PI/3)]],
@@ -69,19 +69,19 @@ line6 = board.create('segment',[
 line7 = board.create('segment',[
             [-12*Math.cos(-Math.PI/4),-12*Math.sin(-Math.PI/4)],
             [12*Math.cos(-Math.PI/4),12*Math.sin(-Math.PI/4)]],
-            {strokeColor:'#bfbfbf', strokeWidth:0.5, highlight: false, fixed: true});                        
+            {strokeColor:'#bfbfbf', strokeWidth:0.5, highlight: false, fixed: true});
 
 var p1 = board.create('point', [0,0], {visible:false});
 var p2 = board.create('point', [10,0], {visible:false});
 var z = board.create('point', [1,.4], {strokeColor: '#009a0a', fillColor: '#009a0a', labelColor: '#009a0a', name: 'z', label: {strokeColor:'#009a0a'}});
-board.create('segment', [[0,0],z], {strokeColor: '#009a0a'}); 
+board.create('segment', [[0,0],z], {strokeColor: '#009a0a'});
 
 var exponent = board.create('slider', [[-6,6],[-2,6],[1,1,30]], {snapWidth:1, precision: 0});
-	
+
 var macht = [];
 macht[1] = z;
 board.on('update', function () {
-for (i=2; i<=30; ++i) {	board.removeObject(macht[i]);};	
+for (i=2; i<=30; ++i) {	board.removeObject(macht[i]);};
 for (var m=2; m<= exponent.Value(); ++m) {
 	macht[m] = board.create('point',[
 	Math.pow(z.Dist(p1),m)*Math.cos(m*JXG.Math.Geometry.rad(p2,p1,z)),
@@ -91,7 +91,7 @@ for (var m=2; m<= exponent.Value(); ++m) {
 	board.create('segment', [macht[m-1],macht[m]], {strokeColor: '#009a0a', strokeWidth:0.5});
 	}
 	board.update();
-});	
+});
 
 </script>
 

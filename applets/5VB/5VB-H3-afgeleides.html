@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../main.css">
 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 
 <title>Functie met eerste en tweede afgeleide</title>
 </head>
@@ -50,7 +50,7 @@
 <script type="text/javascript">
 
 var board1 = JXG.JSXGraph.initBoard('box1', {
-        boundingbox: [-3,15,5,-30], 
+        boundingbox: [-3,15,5,-30],
         axis: { ticks: { majorHeight: 10 } },
         grid: false,
         showCopyright: false,
@@ -60,8 +60,8 @@ var board1 = JXG.JSXGraph.initBoard('box1', {
 var f = function(x) { return Math.pow(x,4)-4*Math.pow(x,3)+5; };
 var g = JXG.Math.Numerics.D(f);
 var h = JXG.Math.Numerics.D(g);
-var fgr = board1.create('functiongraph', 
-	[f, -6, 6], 
+var fgr = board1.create('functiongraph',
+	[f, -6, 6],
 	{ strokeColor:'#006ae0', strokeWidth:3 }
 	);
 
@@ -74,23 +74,23 @@ var P = board1.create('point', [
 	function() {return f(xcoo.Value());}
 	], {name: 'P'});
 
-var lijn1 = board1.create('line', 
-	[[function() {return P.X();},-30],[function() {return P.X();},15]], 
+var lijn1 = board1.create('line',
+	[[function() {return P.X();},-30],[function() {return P.X();},15]],
 	{ strokeColor:'#006ae0', dash:2}
 	);
 
 var P2 = board1.create('point', [function() { return P.X()+1;}, function() {return P.Y()+g(P.X());}], {visible: false, name:''});
-raaklijn = board1.create('line', [P,P2],{strokeColor:'red'}); 
+raaklijn = board1.create('line', [P,P2],{strokeColor:'red'});
 
 board1.create('text',
-	[-2.5,12,function(){ return '\\(f\\)'; }], 
+	[-2.5,12,function(){ return '\\(f\\)'; }],
 	{ strokeColor:'red', fontSize: 28}
 	);
 </script>
 
 <script type="text/javascript">
 var board2 = JXG.JSXGraph.initBoard('box2', {
-        boundingbox: [-3,15,5,-30], 
+        boundingbox: [-3,15,5,-30],
         axis: { ticks: { majorHeight: 10 } },
         showCopyright: false,
         showNavigation: false
@@ -100,16 +100,16 @@ var d1 = board2.create('functiongraph',
 	[g,-3,5],
 	{ strokeColor:'#006ae0', strokeWidth:3 }
 	);
-var P1 = board2.create('point', 
-	[function() { return P.X();}, function() {return g(P.X());}], 
-	{ name:'' } 
+var P1 = board2.create('point',
+	[function() { return P.X();}, function() {return g(P.X());}],
+	{ name:'' }
 	);
-var lijn2 = board2.create('line', 
-	[[function() {return P.X();},-30],[function() {return P.X();},15]], 
+var lijn2 = board2.create('line',
+	[[function() {return P.X();},-30],[function() {return P.X();},15]],
 	{ strokeColor:'#006ae0', dash:2 }
 	);
 board2.create('text',
-	[-2.5,12,function(){ return '\\(f\'\\)'; }], 
+	[-2.5,12,function(){ return '\\(f\'\\)'; }],
 	{ strokeColor:'red', fontSize: 28}
 	);
 board1.addChild(board2);
@@ -117,7 +117,7 @@ board1.addChild(board2);
 
 <script type="text/javascript">
 var board3 = JXG.JSXGraph.initBoard('box3', {
-        boundingbox: [-3,15,5,-30], 
+        boundingbox: [-3,15,5,-30],
         axis: { ticks: { majorHeight: 10 } },
         showCopyright: false,
         showNavigation: false
@@ -127,16 +127,16 @@ var d2 = board3.create('functiongraph',
 	[h,-3,5],
 	{ strokeColor:'#006ae0', strokeWidth:3 }
 	);
-var P2 = board3.create('point', 
-	[function() {return P.X();}, function() {return h(P.X());}], 
-	{ name:'' } 
+var P2 = board3.create('point',
+	[function() {return P.X();}, function() {return h(P.X());}],
+	{ name:'' }
 	);
-var lijn3 = board3.create('line', 
-	[[function() {return P.X();},-30],[function() {return P.X();},15]], 
+var lijn3 = board3.create('line',
+	[[function() {return P.X();},-30],[function() {return P.X();},15]],
 	{ strokeColor:'#006ae0', dash:2}
 	);
 board3.create('text',
-	[-2.5,12,function(){ return '\\(f\'\'\\)'; }], 
+	[-2.5,12,function(){ return '\\(f\'\'\\)'; }],
 	{ strokeColor:'red', fontSize: 28}
 	);
 board1.addChild(board3);

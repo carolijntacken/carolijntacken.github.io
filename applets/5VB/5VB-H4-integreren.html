@@ -9,7 +9,7 @@
 </script>
 
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 
 <title>Riemannsommen</title>
 
@@ -31,7 +31,7 @@
 var board = JXG.JSXGraph.initBoard('box', {
 	showCopyright: false,
 	showNavigation: false,
-	boundingbox: [-2, 5, 4, -1], 
+	boundingbox: [-2, 5, 4, -1],
 	axis: true
 	});
 var lower,textlower,upper, textupper,integraal,textintegraal,diff;
@@ -45,7 +45,7 @@ lijn = board.create('segment',[[
 	function() {return puntA.X();},
 	0
 	],[
-	function() {return puntA.X();}, 
+	function() {return puntA.X();},
 	function() { return f(puntA.X()); }
 	]],
 	{dash:2,strokeColor:'gray', highlight:false});
@@ -53,7 +53,7 @@ lijn = board.create('segment',[[
 	function() {return puntB.X();},
 	0
 	],[
-	function() {return puntB.X();}, 
+	function() {return puntB.X();},
 	function() { return f(puntB.X()); }
 	]],
 	{dash:2,strokeColor:'gray', highlight:false});
@@ -74,91 +74,91 @@ opp = board.create('integral',[[
 	});
 
 	function onderSom() {
-	  
+
 	  // Redraw the points, color the excluded one
 	  if (document.getElementById("onderSom").checked == true) {
 	  	lower = board.create('riemannsum',[
-	  		f, 
-	  		function(){ return n.Value();}, 
-	  		'lower', 
-	  		function() {return puntA.X();}, 
+	  		f,
+	  		function(){ return n.Value();},
+	  		'lower',
+	  		function() {return puntA.X();},
 	  		function() {return puntB.X();}
 	  		], {color:'#ff8f00', fillOpacity:0.3, highlight:false});
 	  	textlower = board.create('text',[2,-0.5,function(){ return 'ondersom = '+lower.Value().toFixed(5); }]);
 	  	if (document.getElementById("bovenSom").checked == true) {
 	  		diff = board.create('text',[0.5,-0.8,
-	  		  function(){ 
-	  				return 'verschil = '+(upper.Value()-lower.Value()).toFixed(5); 
+	  		  function(){
+	  				return 'verschil = '+(upper.Value()-lower.Value()).toFixed(5);
 	  			}
-	  			]);  		
-	  	 
+	  			]);
+
 	  	} else {}
-	   	board.removeObject(opp);	   
+	   	board.removeObject(opp);
 	  }
-	  
+
 	  // Redraw all of the points
 	  else {
 	  	board.removeObject(textlower);
 	  	board.removeObject(lower);
-	  	board.removeObject(diff);  	
+	  	board.removeObject(diff);
 	    	  }
-	
+
 	}
-	
+
 	function bovenSom() {
-	  
+
 	  // Redraw the points, color the excluded one
 	  if (document.getElementById("bovenSom").checked == true) {
 	  	upper = board.create('riemannsum',[
-	  		f, 
-	  		function(){ return n.Value();}, 
-	  		'upper', 
-	  		function() {return puntA.X();}, 
+	  		f,
+	  		function(){ return n.Value();},
+	  		'upper',
+	  		function() {return puntA.X();},
 	  		function() {return puntB.X();}
 	  		], {color:'#006ae0', fillOpacity:0.3,highlight:false});
 	  	textupper = board.create('text',[0.5,-0.5,function(){ return 'bovensom = '+upper.Value().toFixed(5); }]);
 	  	if (document.getElementById("onderSom").checked == true) {
 	  		diff = board.create('text',[0.5,-0.8,
-	  		  function(){ 
-	  				return 'verschil = '+(upper.Value()-lower.Value()).toFixed(5); 
+	  		  function(){
+	  				return 'verschil = '+(upper.Value()-lower.Value()).toFixed(5);
 	  			}
-	  			]);  		
-	  	 
+	  			]);
+
 	  	} else {}
 	   	board.removeObject(opp);
-	   	
+
 	  }
-	  
+
 	  // Redraw all of the points
 	  else {
 	  	board.removeObject(textupper);
 	  	board.removeObject(upper);
-	  	board.removeObject(diff);  	
+	  	board.removeObject(diff);
 	    	  }
-	
+
 	}
 
 	function middenSom() {
-	  
+
 	  // Redraw the points, color the excluded one
 	  if (document.getElementById("middenSom").checked == true) {
 	  	middle = board.create('riemannsum',[
-	  		f, 
-	  		function(){ return n.Value();}, 
-	  		'middle', 
-	  		function() {return puntA.X();}, 
+	  		f,
+	  		function(){ return n.Value();},
+	  		'middle',
+	  		function() {return puntA.X();},
 	  		function() {return puntB.X();}
 	  		], {color:'#009a0a', fillOpacity:0.3,highlight:false});
 	  	textmiddle = board.create('text',[2,-0.8,function(){ return 'middensom = '+middle.Value().toFixed(5); }]);
 	  	board.removeObject(opp);
 	  }
-	  
+
 	  // Redraw all of the points
 	  else {
 	  	board.removeObject(middle);
 	  	board.removeObject(textmiddle);
 	    	  }
-	
+
 	}
 
 </script>

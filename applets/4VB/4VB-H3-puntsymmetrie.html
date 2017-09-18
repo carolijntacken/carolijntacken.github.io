@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="../main.css">
 
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
-	
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+
 <script>
 	document.createElement('footer')
 </script>
@@ -38,40 +38,40 @@ Je kunt de punten verslepen met behulp van punt A.
 	board = JXG.JSXGraph.initBoard('box', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:true, 
+		axis:true,
 		grid: true,
 		boundingbox: [-5, 5, 5, -5]
 		});
 	var xas = board.create('line', [[0,0], [1,0]], { visible:false });
-	var projectiePopx = board.create('glider',[2,0,xas], {color:'#888', size:1} ); 
+	var projectiePopx = board.create('glider',[2,0,xas], {color:'#888', size:1} );
 	var f = function(x){ return 0.25*Math.pow(x,3)-2.5*x; }
 	var plot = board.create('functiongraph',[f], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
 	var P = board.create('point', [
-		function() { return projectiePopx.X(); }, 
+		function() { return projectiePopx.X(); },
 		function() { return f(projectiePopx.X()); }
 		]
 		, { name:'' });
 	var Q = board.create('point', [
-		function() { return -1*projectiePopx.X(); }, 
+		function() { return -1*projectiePopx.X(); },
 		function() { return f(-1*projectiePopx.X()); }
 		]
 		, { name:'', color:'#009a0a' });
 	var projectieQopx = board.create('point', [
-		function() { return -1*projectiePopx.X(); }, 
+		function() { return -1*projectiePopx.X(); },
 		0
 		]
 		, { name:'', color:'#888', size:1 });
-	board.create('segment',[projectiePopx,P], { strokeWidth:2, color: 'red', dash:2 });	
-	board.create('segment',[projectieQopx,Q], { strokeWidth:2, color: 'red', dash:2 });	
-	board.create('segment',[projectiePopx,[0,0]], { strokeWidth:2, color: 'red', dash:2 });	
-	board.create('segment',[projectieQopx,[0,0]], { strokeWidth:2, color: 'red', dash:2 });	
+	board.create('segment',[projectiePopx,P], { strokeWidth:2, color: 'red', dash:2 });
+	board.create('segment',[projectieQopx,Q], { strokeWidth:2, color: 'red', dash:2 });
+	board.create('segment',[projectiePopx,[0,0]], { strokeWidth:2, color: 'red', dash:2 });
+	board.create('segment',[projectieQopx,[0,0]], { strokeWidth:2, color: 'red', dash:2 });
 	board.create('text',[
-		function() { return 0.5*projectiePopx.X(); }, 
+		function() { return 0.5*projectiePopx.X(); },
 		0,
 		'II'
 		], { color:'red', fontSize:18 } );
 	board.create('text',[
-		function() { return -0.5*projectiePopx.X(); }, 
+		function() { return -0.5*projectiePopx.X(); },
 		0,
 		'II'
 		], { color:'red', fontSize:18 } );
@@ -101,22 +101,22 @@ Stel dat de \(x\)-coördinaat van het rode punt gelijk is aan \(p+a\). Het groen
 	board1 = JXG.JSXGraph.initBoard('box1', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:true, 
+		axis:true,
 		grid: true,
 		boundingbox: [-1, 5, 9, -1]
 		});
 	var xas1 = board1.create('line', [[0,0], [1,0]], { visible:false });
-	var projectieAopx = board1.create('glider',[5,0,xas1], { color:'gray'} ); 
+	var projectieAopx = board1.create('glider',[5,0,xas1], { color:'gray'} );
 	var g = function(x){ return Math.sin(x)+2; }
 	var puntab = board1.create('point',[Math.PI,2], { color:'#006ae0', name: '(p, q)', label:{ color:'#006ae0', fontSize:20, offset:[5,20] } });
 	var plot1 = board1.create('functiongraph',[g], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
 	var A = board1.create('point', [
-		function() { return projectieAopx.X(); }, 
+		function() { return projectieAopx.X(); },
 		function() { return g(projectieAopx.X()); }
 		]
 		, { name:'' });
 	var B = board1.create('point', [
-		function() { return 2*Math.PI-A.X(); }, 
+		function() { return 2*Math.PI-A.X(); },
 		function() { return g(2*Math.PI-A.X()); }
 		]
 		, { name:'', color:'#009a0a' });
@@ -126,25 +126,25 @@ Stel dat de \(x\)-coördinaat van het rode punt gelijk is aan \(p+a\). Het groen
 		]
 		, { name:'', color:'#888', size:1 });
 	var projectieB = board1.create('point', [
-		function() { return 2*Math.PI-A.X(); }, 
+		function() { return 2*Math.PI-A.X(); },
 		2
 		]
 		, { name:'', color:'#888', size:1 });
-	board1.create('segment',[puntab,A], { strokeWidth:2, color: 'gray', dash:2 });	
-	board1.create('segment',[puntab,B], { strokeWidth:2, color: 'gray', dash:2 });	
-	board1.create('segment',[[ function() { return A.X(); }, 0],A], { strokeWidth:2, color: 'gray', dash:2 });	
-	board1.create('segment',[[ function() { return B.X(); },0],B], { strokeWidth:2, color: 'gray', dash:2 });	
-	board1.create('segment',[puntab,projectieA], { strokeWidth:2, color: 'red', dash:2 });	
-	board1.create('segment',[puntab,projectieB], { strokeWidth:2, color: 'red', dash:2 });	
-	board1.create('segment',[projectieA,A], { strokeWidth:2, color: 'red', dash:2 });	
-	board1.create('segment',[projectieB,B], { strokeWidth:2, color: 'red', dash:2 });	
+	board1.create('segment',[puntab,A], { strokeWidth:2, color: 'gray', dash:2 });
+	board1.create('segment',[puntab,B], { strokeWidth:2, color: 'gray', dash:2 });
+	board1.create('segment',[[ function() { return A.X(); }, 0],A], { strokeWidth:2, color: 'gray', dash:2 });
+	board1.create('segment',[[ function() { return B.X(); },0],B], { strokeWidth:2, color: 'gray', dash:2 });
+	board1.create('segment',[puntab,projectieA], { strokeWidth:2, color: 'red', dash:2 });
+	board1.create('segment',[puntab,projectieB], { strokeWidth:2, color: 'red', dash:2 });
+	board1.create('segment',[projectieA,A], { strokeWidth:2, color: 'red', dash:2 });
+	board1.create('segment',[projectieB,B], { strokeWidth:2, color: 'red', dash:2 });
 	board1.create('text',[
-		function() { return 0.5*Math.PI+0.5*A.X()-0.1; }, 
+		function() { return 0.5*Math.PI+0.5*A.X()-0.1; },
 		2,
 		'II'
 		], { color:'red', fontSize:18 } );
 	board1.create('text',[
-		function() { return 1.5*Math.PI-0.5*A.X()-0.1; }, 
+		function() { return 1.5*Math.PI-0.5*A.X()-0.1; },
 		2,
 		'II'
 		], { color:'red', fontSize:18 } );

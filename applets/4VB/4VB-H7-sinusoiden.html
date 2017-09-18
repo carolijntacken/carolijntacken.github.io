@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://jsxgraph.uni-bayreuth.de/~michael/jsxgraph-nightly/archive/2017/2017-01-31.2100/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 <script>
 	document.createElement('footer')
@@ -30,7 +30,7 @@ het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
 <div id="box" class="jxgbox" style="float: left; width:940px; height:600px; margin-bottom:1em;"></div>
 
 <script type="text/javascript">
-	JXG.Options.text.useMathJax = true;
+	// JXG.Options.text.useMathJax = true;
 	JXG.Options = JXG.merge(JXG.Options, {
 		axis: {
 			ticks: { majorHeight : 10 }
@@ -71,10 +71,10 @@ het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
 		[function() {return c.Value()+.5*Math.PI/b.Value();}, function() { return a.Value()+d.Value();}]],
 		{ strokeWidth:4, strokeColor: '#006ae0'});
 
-		var algform = board.create('text',[2,5.3,
-			function () {
-				return 'Algemene formule: \\(\\quad f(x) = a \\sin b(x - c) + d\\)'
-		;}], { fontSize: 20, fixed: true});
+		// var algform = board.create('text',[2,5.3,
+		// 	function () {
+		// 		return 'Algemene formule: \\(\\quad f(x) = a \\sin b(x - c) + d\\)'
+		// ;}], { fontSize: 20, fixed: true});
 		var form = board.create('text',[2,4.3,
 		function() {
 			$('#valueA').html( a.Value()==1 ? '': a.Value().toFixed(2) );

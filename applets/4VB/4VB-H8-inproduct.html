@@ -8,10 +8,6 @@
 	document.createElement('footer')
 </script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.processSectionDelay = 0;
-</script>
-        
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
 <script type="text/javascript" src="https://jsxgraph.uni-bayreuth.de/~michael/jsxgraph-nightly/archive/2017/2017-01-31.2100/jsxgraphcore.js"></script>
 
@@ -31,14 +27,14 @@ JXG.Options.text.useMathJax = true;
 JXG.Options = JXG.merge(JXG.Options, {
     axis: {
     	ticks: { majorHeight : 10, ticksDistance:.4 },
-    	
+
     },
-    
+
 });
 board = JXG.JSXGraph.initBoard('jxgbox1', {
-	axis: true, 
-	grid: true, 
-	ticksDistance:2, 
+	axis: true,
+	grid: true,
+	ticksDistance:2,
 	boundingbox:[-9.5,9.5,16,-7],
 	showNavigation: false,
 	showCopyright: false,
@@ -55,17 +51,17 @@ B.setProperty({
 var vecA = board.create('arrow', [[0,0], A], {strokeColor: '#ff0000',fixed:true} );
 var vecB = board.create('arrow', [[0,0], B], {strokeColor: '#006ae0',fixed:true} );
 
-board.create('text',[-1.5,8.9, function() { 
+board.create('text',[-1.5,8.9, function() {
 	var inprod = A.X()*B.X()+A.Y()*B.Y();
 	return 'inproduct \\( {} = \\vec{a}\\!\\!\\cdot\\vec{b}= a_1\\cdot b_1 + a_2\\cdot b_2 = ' + inprod + '\\)';
 	}
 	], {anchorY:'top', fontSize: 20,fixed:true});
 
-board.create('text',[-8,8.6, function() { 
+board.create('text',[-8,8.6, function() {
 	return '\\( \\vec{a} = \\left(\\begin{array}{c}' + A.X() + '\\\\' + A.Y() + '\\end{array}\\right) \\)';
 	}
 	], {anchorY:'top', fontSize: 20, color: '#ff0000',fixed:true});
-board.create('text',[-8,6.3, function() { 
+board.create('text',[-8,6.3, function() {
 	return '\\( \\vec{b} = \\left(\\begin{array}{c}' + B.X() + '\\\\' + B.Y() + '\\end{array}\\right) \\)';
 	}
 	], {anchorY:'top', fontSize: 20, color: '#006ae0',fixed:true});

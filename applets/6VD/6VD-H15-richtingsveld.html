@@ -2,13 +2,13 @@
 <head>
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
-	
+
 <script>
 	document.createElement('footer')
 </script>
 
 <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML'></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 
 <title>Richtingsveld</title>
 </head>
@@ -33,14 +33,14 @@
 <input type=button value="Plot" onclick="doIt()" />
 <br />
 <br />
-(x<sub>0</sub>,y<sub>0</sub>) = 
-( <input id="Xinit" value="-3" type="text" size="5" onchange="doIt()" />, 
+(x<sub>0</sub>,y<sub>0</sub>) =
+( <input id="Xinit" value="-3" type="text" size="5" onchange="doIt()" />,
   <input id="Yinit" value="0" type="text" size="5" onchange="doIt()" /> )
 <br />
 <br />
-<input id="Xmin" value="-4" type="text" size="10" onchange="doIt()" /> &le; x &le; 
+<input id="Xmin" value="-4" type="text" size="10" onchange="doIt()" /> &le; x &le;
 <input id="Xmax" value="4" type="text" size="10" onchange="doIt()" /><br />
-<input id="Ymin" value="-4" type="text" size="10" onchange="doIt()" /> &le; y &le; 
+<input id="Ymin" value="-4" type="text" size="10" onchange="doIt()" /> &le; y &le;
 <input id="Ymax" value="4" type="text" size="10" onchange="doIt()" />
 <br />
 <br />
@@ -66,7 +66,7 @@ Lengte lijnelementen = <input id="SegmentLength" value="0.2" type="text" size="9
 var brd = JXG.JSXGraph.initBoard('jxgbox', {
 	showCopyright: false,
 	showNavigation: false,
-	axis:true, 
+	axis:true,
 	boundingbox:[-4,4,4,-4]
 	});
 var N = 10;
@@ -75,7 +75,7 @@ var P;
 function doIt() {
   JXG.JSXGraph.freeBoard(brd);
 
-  // get values from the form  
+  // get values from the form
   xinit = parseFloat(document.getElementById('Xinit').value);
   yinit = parseFloat(document.getElementById('Yinit').value);
   xmin = parseFloat(document.getElementById('Xmin').value);
@@ -89,7 +89,7 @@ function doIt() {
   brd = JXG.JSXGraph.initBoard('jxgbox', {
   	showCopyright: false,
   	showNavigation: false,
-  	axis:true, 
+  	axis:true,
   	boundingbox:[xmin,ymax,xmax,ymin]
   	});
   var txt = JXG.GeonextParser.geonext2JS(document.getElementById("odeinput").value);
@@ -107,7 +107,7 @@ function solutiondata() {
 }
 
 // we built this into slopefield(…)
-//function slope(f,x,y) { 
+//function slope(f,x,y) {
 // return f(x,[y])[0];
 //}
 
@@ -117,18 +117,18 @@ function slopefield(f,xmin,xmax,xsep,ymin,ymax,ysep,seglength) {
    var xnum = Math.ceil((xmax-xmin)/xsep);
    var ynum = Math.ceil((ymax-ymin)/ysep);
 
-   for (var i=0;i<=xnum;i++) { 
+   for (var i=0;i<=xnum;i++) {
      xval = xmin + i*xsep;
-     for (var j=0;j<=ynum;j++) { 
+     for (var j=0;j<=ynum;j++) {
        yval = ymin + j*ysep;
 
        brd.create('segment',[
-// [xval-0.5*seglength*Math.cos(Math.atan( slope(f,xval,yval) )), yval-0.5*seglength*Math.sin(Math.atan( slope(f,xval,yval) ))], 
+// [xval-0.5*seglength*Math.cos(Math.atan( slope(f,xval,yval) )), yval-0.5*seglength*Math.sin(Math.atan( slope(f,xval,yval) ))],
 // [xval+0.5*seglength*Math.cos(Math.atan( slope(f,xval,yval) )), yval+0.5*seglength*Math.sin(Math.atan( slope(f,xval,yval) ))]
-       [xval-0.5*seglength*Math.cos(Math.atan( f(xval,[yval])[0] )), yval-0.5*seglength*Math.sin(Math.atan( f(xval,[yval])[0] ))], 
+       [xval-0.5*seglength*Math.cos(Math.atan( f(xval,[yval])[0] )), yval-0.5*seglength*Math.sin(Math.atan( f(xval,[yval])[0] ))],
        [xval+0.5*seglength*Math.cos(Math.atan( f(xval,[yval])[0] )), yval+0.5*seglength*Math.sin(Math.atan( f(xval,[yval])[0] ))]
-       ], 
-       {strokeWidth:2, dash:0, color:'#006ae0'});    
+       ],
+       {strokeWidth:2, dash:0, color:'#006ae0'});
      }
    }
 }
