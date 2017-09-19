@@ -5,7 +5,16 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<style>.MathJax_Display{display:inline !important;}
+.mathjax-wrapper{font-size:100%;}</style>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.processSectionDelay = 0;
+</script>
+
+<script type='text/x-mathjax-config'>MathJax.Hub.Config({displayAlign:'left',tex2jax:{displayMath:[['[math]','[/math]']]}})</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML'></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 
@@ -23,7 +32,7 @@
 <div id="box" class="jxgbox" style="float: left; width:860px; height:600px; margin-bottom:1em;"></div>
 
 <script type="text/javascript">
-	//JXG.Options.text.useMathJax = true;
+	JXG.Options.text.useMathJax = true;
 	JXG.Options = JXG.merge(JXG.Options, {
 		axis: {
 			ticks: { majorHeight : 10 }
@@ -76,26 +85,26 @@
 		[13,function() { return d.Value();}]], { strokeWidth:3, strokeColor: '#ff8f00', dash:3});
 
 
-	// var algform = board.create('text',[3,5.3, function() {
-	// 	return 'Algemene formule: ' +'\\(f(x) = a \\cdot 2^{b(x-c)}+d\\)';
-	// 	}], { fontSize: 20});
-	// var form = board.create('text',[3,4.3,
-	// 	function() {
-	// 		var teksta = '\\color{red}{' + a.Value().toFixed(2) + '} \\cdot';
-	// 		if (a.Value().toFixed(2) == 1) { teksta = ''; }
-	// 		var tekstb = '\\color{#006ae0}{' + b.Value().toFixed(2) + '}';
-	// 		if (b.Value().toFixed(2) == 1) { tekstb = ''; }
-	// 		var tekenc = ' + ';
-	// 		if (c.Value()<0) { tekenc = ' \\color{#009a0a}{-} ';}
-	// 		var tekstc = '(x' + tekenc + '\\color{#009a0a}{' + Math.abs(c.Value()).toFixed(2) + '})';
-	// 		if (c.Value()==0) { tekstc = 'x';}
-	// 		var tekstd = '\\color{#ff8f00}{' + Math.abs(-1*d.Value()).toFixed(2) + '}';
-	// 		var tekend= ' \\color{#ff8f00}{ - }';
-	// 		if (d.Value()>0) { tekend = ' \\color{#ff8f00}{+} ';}
-	// 		if (d.Value()==0) { tekend = ''; tekstd = '';}
-	// 		return '\\( f(x) = ' + teksta + '2^{' + tekstb + tekstc + '}' + tekend + tekstd + '\\)'
-	// 		}], {fontSize: 24, fixed: true});
-	// 	</script>
+	var algform = board.create('text',[3,5.3, function() {
+		return 'Algemene formule: ' +'\\(f(x) = a \\cdot 2^{b(x-c)}+d\\)';
+		}], { fontSize: 20});
+	var form = board.create('text',[3,4.3,
+		function() {
+			var teksta = '\\color{red}{' + a.Value().toFixed(2) + '} \\cdot';
+			if (a.Value().toFixed(2) == 1) { teksta = ''; }
+			var tekstb = '\\color{#006ae0}{' + b.Value().toFixed(2) + '}';
+			if (b.Value().toFixed(2) == 1) { tekstb = ''; }
+			var tekenc = ' + ';
+			if (c.Value()<0) { tekenc = ' \\color{#009a0a}{-} ';}
+			var tekstc = '(x' + tekenc + '\\color{#009a0a}{' + Math.abs(c.Value()).toFixed(2) + '})';
+			if (c.Value()==0) { tekstc = 'x';}
+			var tekstd = '\\color{#ff8f00}{' + Math.abs(-1*d.Value()).toFixed(2) + '}';
+			var tekend= ' \\color{#ff8f00}{ - }';
+			if (d.Value()>0) { tekend = ' \\color{#ff8f00}{+} ';}
+			if (d.Value()==0) { tekend = ''; tekstd = '';}
+			return '\\( f(x) = ' + teksta + '2^{' + tekstb + tekstc + '}' + tekend + tekstd + '\\)'
+			}], {fontSize: 24, fixed: true});
+		</script>
 
 <footer>
 <div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
