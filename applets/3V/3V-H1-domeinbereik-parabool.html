@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
-	
+
 <script>
 	document.createElement('footer')
 </script>
@@ -13,8 +13,9 @@
 MathJax.Hub.processSectionDelay = 0;
 </script>
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://jsxgraph.uni-bayreuth.de/~michael/jsxgraph-nightly/archive/2017/2017-01-31.2100/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 
 <title>Domein en bereik</title>
 
@@ -30,7 +31,7 @@ MathJax.Hub.processSectionDelay = 0;
 <p style="clear: left;">Het domein van \(f\) is \(\mathbb{R}\) (alle waarden van \(x\)) en het bereik is \(y\geq 0\).</p>
 
 <script type="text/javascript">
-	JXG.Options.text.useMathJax = true;
+//	JXG.Options.text.useMathJax = true;
 	JXG.Options = JXG.merge(JXG.Options, {
 		axis: {
 			ticks: { majorHeight : 10 }
@@ -46,16 +47,16 @@ MathJax.Hub.processSectionDelay = 0;
 	board0 = JXG.JSXGraph.initBoard('box0', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:false, 
+		axis:false,
 		boundingbox: [0, 5, 10, 0]
 		});
-	var functietekst = board0.create('text', [0.1,5, function() { return '\\[ f(x)=x^2 \\]'; } ], { fixed:true, anchorY:'top', fontSize:18 } );
+	var functietekst = board0.create('text', [0.1,5, function() { return 'f(x) = x^2'; } ], { fixed:true, anchorY:'top', fontSize:18 } );
 	var xcoord = board0.create('slider',[[2,3],[8,3],[-5,1,5]],{name:'x',snapWidth:0.05, withTicks:false, precision:2});
 	var f = function(x){ return Math.pow(x,2); }
-	var tekst = board0.create('text', [2,3,
-		function() { 
+	var tekst = board0.create('text', [2,2.5,
+		function() {
 		var ycoord = f(xcoord.Value()).toFixed(2);
-		return '\\[f(\\color\{blue\}\{' + xcoord.Value().toFixed(2) + '\}) = (\\color\{blue\}\{' + xcoord.Value().toFixed(2) + '\})^2 = \\color\{green\}\{' + ycoord + '\}\\]';
+		return 'f(<span style="color: #006ae0">' + xcoord.Value().toFixed(2) + '</span>) = (<span style="color: #006ae0">' + xcoord.Value().toFixed(2) + '</span>)^2 = <span style="color: #009a0a">' + ycoord + '</span>';
 		}
 		], { fixed:true, anchorY:'top', fontSize:18, highlight: false });
 </script>
@@ -73,13 +74,13 @@ MathJax.Hub.processSectionDelay = 0;
 	board = JXG.JSXGraph.initBoard('box', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:true, 
+		axis:true,
 		grid: true,
 		boundingbox: [-5, 7, 5, -2]
 		});
 	var plot = board.create('functiongraph',[f], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
 	var punt = board.create('point', [
-		function() { return xcoord.Value(); }, 
+		function() { return xcoord.Value(); },
 		function() { return f(xcoord.Value()); }
 		]
 		, { name:'' });
@@ -87,7 +88,7 @@ MathJax.Hub.processSectionDelay = 0;
 	var bereikpijl = board.create('segment', [punt, bereikpunt], {color: 'green', strokeWidth:1, lastArrow: true });
 	var domeinpunt = board.create('point', [function() { return xcoord.Value(); }, 0], {color:'blue', trace: true, size: 1, name:''});
 	var domeinpijl = board.create('segment', [punt, domeinpunt], { strokeWidth:1, color: 'blue', lastArrow: true});
-	
+
 	board.update();
 	board0.addChild(board);
 </script>
@@ -98,14 +99,14 @@ MathJax.Hub.processSectionDelay = 0;
 <p>De parabool kan ook ergens anders liggen, bijvoorbeeld \(g(x)=x^2+6x+11\):
 </p>
 
-<div id="box1" class="jxgbox" style="width:600px; height:150px; margin-bottom:1em;"></div>
+<div id="box1" class="jxgbox" style="width:600px; height:100px; margin-bottom:1em;"></div>
 <div id="box2" class="jxgbox" style="width:600px; height:540px; margin-bottom:1em;"></div>
 
 <p style="clear: left;">Het domein van \(g\) is \(\mathbb{R}\) (alle waarden van \(x\)) en het bereik is \(y\geq 2\).</p>
 
 
 <script type="text/javascript">
-	JXG.Options.text.useMathJax = true;
+//	JXG.Options.text.useMathJax = true;
 	JXG.Options = JXG.merge(JXG.Options, {
 		axis: {
 			ticks: { majorHeight : 10 }
@@ -121,16 +122,16 @@ MathJax.Hub.processSectionDelay = 0;
 	board1 = JXG.JSXGraph.initBoard('box1', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:false, 
+		axis:false,
 		boundingbox: [0, 5, 10, 0]
 		});
-	var functietekst1 = board1.create('text', [0.1,5, function() { return '\\[ g(x)=x^2+6x+11 \\]'; } ], { fixed:true, anchorY:'top', fontSize:18 } );
-	var xcoord1 = board1.create('slider',[[2.5,2.5],[7.5,2.5],[-5,-1,5]],{name:'x',snapWidth:0.01, withTicks:false, precision:2});
+	 var functietekst1 = board1.create('text', [0.1,5, function() { return 'g(x) = x^2 + 6x + 11'; } ], { fixed:true, anchorY:'top', fontSize:18 } );
+	var xcoord1 = board1.create('slider',[[2.5,3],[7.5,3],[-5,-1,5]],{name:'x',snapWidth:0.01, withTicks:false, precision:2});
 	var g = function(x){ return Math.pow(x,2)+6*x+11; }
-	var tekst1 = board1.create('text', [2.5,2,
-		function() { 
+	var tekst1 = board1.create('text', [2.5,2.5,
+		function() {
 		var ycoord1 = g(xcoord1.Value()).toFixed(2);
-		return '\\[g(\\color\{blue\}\{' + xcoord1.Value().toFixed(2) + '\}) = (\\color\{blue\}\{' + xcoord1.Value().toFixed(2) + '\})^2 + 6\\cdot \\color\{blue\}\{' + xcoord1.Value().toFixed(2) + '\} + 11 = \\color\{green\}\{' + ycoord1 + '\}\\]';
+		return 'g(<span style="color: #006ae0">' + xcoord1.Value().toFixed(2) + '</span>) = (<span style="color: #006ae0">' + xcoord1.Value().toFixed(2) + '</span>)^2 + 6&middot;<span style="color: #006ae0">' + xcoord1.Value().toFixed(2) + '</span> + 11 = <span style="color: #009a0a">' + ycoord1 + '</span>';
 		}
 		], { fixed:true, anchorY:'top', fontSize:18, highlight: false });
 </script>
@@ -148,13 +149,13 @@ MathJax.Hub.processSectionDelay = 0;
 	board2 = JXG.JSXGraph.initBoard('box2', {
 		showCopyright: false,
 		showNavigation: false,
-		axis:true, 
+		axis:true,
 		grid: true,
 		boundingbox: [-5, 7, 5, -2]
 		});
 	var plot2 = board2.create('functiongraph',[g], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
 	var punt2 = board2.create('point', [
-		function() { return xcoord1.Value(); }, 
+		function() { return xcoord1.Value(); },
 		function() { return g(xcoord1.Value()); }
 		]
 		, { name:'' });
@@ -162,7 +163,7 @@ MathJax.Hub.processSectionDelay = 0;
 	var bereikpijl2 = board2.create('segment', [punt2, bereikpunt2], {color: 'green', strokeWidth:1, lastArrow: true });
 	var domeinpunt2 = board2.create('point', [function() { return xcoord1.Value(); }, 0], {color:'blue', trace: true, size: 1, name:''});
 	var domeinpijl2 = board2.create('segment', [punt2, domeinpunt2], { strokeWidth:1, color: 'blue', lastArrow: true});
-	
+
 	board2.update();
 	board1.addChild(board2);
 </script>
