@@ -6,14 +6,14 @@
 
 <script>document.createElement('footer')</script>
 
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
 <script src="https://www.desmos.com/api/v0.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 
 
 <title>Functie met afgeleide</title>
 
-<body> 
+<body>
 <h2>Functie met afgeleide</h2>
 
 <div>
@@ -21,13 +21,13 @@
 	Hoe hangt het stijgen en dalen van \(f\) samen met de grafiek van de afgeleide?</p>
 </div>
 
-<p>De grafiek van \(f\):</p>      
+<p>De grafiek van \(f\):</p>
 <div id="calculator" style="width: 500px; height: 300px;"></div>
 
 <p>De grafiek van \(f'\):</p>
 <div id="calculator2" style="width: 500px; height: 300px;"></div>
-  
-  
+
+
 <script >
     var elt = document.getElementById('calculator');
     var elt2 = document.getElementById('calculator2');
@@ -45,7 +45,7 @@
       	bottom: -25,
       	top: 15
     	});
-    
+
     var calculator2 = Desmos.GraphingCalculator(elt2, {
     	expressions: false,
     	lockViewport: true,
@@ -58,53 +58,53 @@
       	bottom: -25,
       	top: 15
     	});
-    
+
     calculator.setExpression({id: 1, latex: 'a=1'});
     var a = calculator.HelperExpression({latex: 'a'});
-    
+
     calculator.setExpression({
-    	id: 'functie', 
+    	id: 'functie',
     	latex: 'f(x)=x^4-4x^3+5',
     	color: '#006ae0'
     	});
     calculator.setExpression({
-    	id: 'puntA', 
-    	latex: '(a, f(a))', 
+    	id: 'puntA',
+    	latex: '(a, f(a))',
     	color: 'red'
     	});
     calculator.setExpression({
-    	id: 'vlijn1', 
-    	latex: 'x=a', 
-    	style: 'dashed', 
-    	color: '#006ae0' 
+    	id: 'vlijn1',
+    	latex: 'x=a',
+    	style: 'dashed',
+    	color: '#006ae0'
     	});
     calculator.setExpression({
-    	id: 'raaklijn', 
-    	latex: "y=f'(a)(x-a)+f(a)", 
+    	id: 'raaklijn',
+    	latex: "y=f'(a)(x-a)+f(a)",
     	color: 'red'
     	});
-    
+
     calculator2.setExpression({
-    	id: 'afgeleide', 
-    	latex: 'g(x)=4x^3-12x^2', 
+    	id: 'afgeleide',
+    	latex: 'g(x)=4x^3-12x^2',
     	color: '#006ae0'
     	});
 
     a.observe('numericValue', function () {
       	$(valueElt).text(a.numericValue);
       	calculator2.setExpression({
-      		id: 'vlijn2', 
-      		latex: 'x='+a.numericValue, 
+      		id: 'vlijn2',
+      		latex: 'x='+a.numericValue,
       		style: 'dashed',
       		color: '#006ae0'
       		});
       	calculator2.setExpression({
       		id: 'punt2', //zonder id wordt het punt niet geupdatet maar getracet
-      		latex: '('+a.numericValue+', g('+a.numericValue+'))', 
+      		latex: '('+a.numericValue+', g('+a.numericValue+'))',
       		color: 'red'
       		});
     	});
-    
+
   </script>
 
 
