@@ -4,21 +4,25 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
 <script>
 	document.createElement('footer')
 </script>
 
-<style>.MathJax_Display{display:inline !important;}
-.mathjax-wrapper{font-size:100%;}</style>
+<style>
+.kolom {
+	display: inline-table;
+	margin: 0 2px;
+}
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.processSectionDelay = 0;
-</script>
-
-<script type='text/x-mathjax-config'>MathJax.Hub.Config({displayAlign:'left',tex2jax:{displayMath:[['[math]','[/math]']]}})</script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+.cmid .kolom {
+	vertical-align: middle;
+}
+</style>
 
 <title>Inproduct</title>
 
@@ -29,6 +33,43 @@ MathJax.Hub.processSectionDelay = 0;
 1. Versleep de punten A en B zodat de vectoren loodrecht op elkaar komen te staan. Hoe groot is nu het inproduct?<br/>
 2. Wat kun je zeggen over de hoek tussen de vectoren als het inproduct groter is dan 0?<br/>
 3. En als het inproduct kleiner is dan 0?</p>
+
+<div class="cmid">Hieronder zie je de vectoren <br>
+	\( \vec{a} = \left(\begin{array}{c}
+	a_1\\
+	a_2
+	\end{array}\right)
+	=\bigg(\)
+	<div class="kolom">
+		<span id='valueA1' style='color: red'></span><br>
+		<span id='valueA2' style='color: red'></span><br>
+	</div>
+	\(\bigg)
+	\) en
+	\( \vec{b} = \left(\begin{array}{c}
+	b_1\\
+	b_2
+	\end{array}\right)
+	=\bigg(\)
+	<div class="kolom">
+		<span id='valueB1' style='color: #006ae0'></span><br>
+		<span id='valueB2' style='color: #006ae0'></span><br>
+	</div>
+	\(\bigg)
+	\)
+</div>
+
+
+<p>Het inproduct van vector \(\vec{a}\) en \(\vec{b}\) is \(\vec{a}\cdot\vec{b}=a_1\cdot b_1+a_2\cdot b_2={}\)
+	<span id='valueA1a' style='color: red'></span>
+	\({}\cdot{}\)
+	<span id='valueB1a' style='color: #006ae0'></span>
+	\({}+{}\)
+	<span id='valueA2a' style='color: red'></span>
+	\({}\cdot{}\)
+	<span id='valueB2a' style='color: #006ae0'></span>
+	\({}={}\)
+	<span id='uitkomst'></span>
 
 <div id="jxgbox1" class="jxgbox" style="width:650px; height:450px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
 <script type='text/javascript'>
@@ -62,19 +103,18 @@ var vecB = board.create('arrow', [[0,0], B], {strokeColor: '#006ae0',fixed:true}
 
 board.create('text',[-1.5,8.9, function() {
 	var inprod = A.X()*B.X()+A.Y()*B.Y();
-	return 'inproduct \\( {} = \\vec{a}\\!\\!\\cdot\\vec{b}= a_1\\cdot b_1 + a_2\\cdot b_2 = ' + inprod + '\\)';
+	$('#valueA1').html(A.X());
+	$('#valueB1').html(B.X());
+	$('#valueA2').html(A.Y());
+	$('#valueB2').html(B.Y());
+	$('#valueA1a').html(A.X());
+	$('#valueB1a').html(B.X());
+	$('#valueA2a').html(A.Y());
+	$('#valueB2a').html(B.Y());
+	$('#uitkomst').html(inprod);
+	return '';
 	}
 	], {anchorY:'top', fontSize: 20,fixed:true});
-
-board.create('text',[-8,8.6, function() {
-	return '\\( \\vec{a} = \\left(\\begin{array}{c}' + A.X() + '\\\\' + A.Y() + '\\end{array}\\right) \\)';
-	}
-	], {anchorY:'top', fontSize: 20, color: '#ff0000',fixed:true});
-board.create('text',[-8,6.3, function() {
-	return '\\( \\vec{b} = \\left(\\begin{array}{c}' + B.X() + '\\\\' + B.Y() + '\\end{array}\\right) \\)';
-	}
-	], {anchorY:'top', fontSize: 20, color: '#006ae0',fixed:true});
-
 
 </script>
 

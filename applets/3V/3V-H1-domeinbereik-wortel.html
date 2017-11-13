@@ -4,65 +4,31 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
-
-<script>
-	document.createElement('footer')
-</script>
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.processSectionDelay = 0;
-</script>
-
-<script type='text/x-mathjax-config'>MathJax.Hub.Config({displayAlign:'left',tex2jax:{displayMath:[['[math]','[/math]']]}})</script>
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
+<script>
+	document.createElement('footer')
+</script>
 
 <title>Domein en bereik</title>
 
 <body>
 
 <h2>Domein en bereik</h2>
+<p>Hieronder is de grafiek van \(f(x)=\sqrt{x}\) getekend.</p>
+
 <p>Met de slider kun je de x-co&ouml;rdinaat van het rode punt op de grafiek wijzigen. Op de x-as en de y-as wordt bijgehouden welke x- en y-co&ouml;rdinaten voorkomen, dus wat het domein en het bereik van de functie f is.
 </p>
 
-<div id="box0" class="jxgbox" style="width:600px; height:100px; margin-bottom:1em;"></div>
+<p>\(f(\) <span id="xcoo1" style="color:#006ae0"></span> \()	{}=\sqrt{}(\)<span id="xcoo2" style="color:#006ae0"></span>\()={}\)<span id="ycoo" style="color:#009a0a"></span>
+</p>
+
 <div id="box" class="jxgbox" style="width:600px; height:350px; margin-bottom:1em;"></div>
 
 <p style="clear: left;">Het domein van \(f\) is \(x\geq 0\) en ook het bereik is \(y\geq 0\).</p>
-
-<script type="text/javascript">
-	JXG.Options.text.useMathJax = true;
-	JXG.Options = JXG.merge(JXG.Options, {
-		axis: {
-			ticks: { majorHeight : 10 }
-		},
-		elements: {
-			highlight:false
-		},
-	    text: {
-	    	fontSize: 16,
-	    },
-	});
-	board0 = JXG.JSXGraph.initBoard('box0', {
-		showCopyright: false,
-		showNavigation: false,
-		axis:false,
-		boundingbox: [0, 7, 10, -2]
-		});
-	var functietekst = board0.create('text', [0.1,5, function() { return '\\( f(x)=\\sqrt{x} \\)'; } ], { fontSize:18 } );
-	var xcoord = board0.create('slider',[[2,4],[8,4],[-2,1,16]],{name:'x',snapWidth:0.05, withTicks:false, precision:2});
-	var f = function(x){ return Math.sqrt(x); }
-	var tekst = board0.create('text', [2,2.5,
-		function() {
-		var ycoord = f(xcoord.Value()).toFixed(2);
-		var uitkomst;
-		if (xcoord.Value() < 0) { uitkomst = ' \\text{ bestaat niet}' } else { uitkomst = '= \\color\{green\}\{' + ycoord + '\}'};
-		return '\\( f(\\color\{blue\}\{ ' + xcoord.Value().toFixed(2) + '\}) = \\sqrt\{\\color\{blue\}\{ ' + xcoord.Value().toFixed(2) + '\}\} ' + uitkomst + '\\)';
-		}
-		], { fixed:true, anchorY:'top', fontSize:18, highlight: false });
-</script>
 
 <script type="text/javascript">
 	JXG.Options = JXG.merge(JXG.Options, {
@@ -81,6 +47,8 @@ MathJax.Hub.processSectionDelay = 0;
 		grid: true,
 		boundingbox: [-2, 4, 10, -3]
 		});
+	var xcoord = board.create('slider',[[2,-2],[8,-2],[-2,1,16]],{name:'x',snapWidth:0.05, withTicks:false, precision:2});
+	var f = function(x){ return Math.sqrt(x); }
 	var plot = board.create('functiongraph',[f], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
 	var punt = board.create('point', [
 		function() { return xcoord.Value(); },
@@ -92,54 +60,30 @@ MathJax.Hub.processSectionDelay = 0;
 	var domeinpunt = board.create('point', [function() { return Math.max(xcoord.Value(),0); }, 0], {color:'blue', trace: true, size: 1, name:''});
 	var domeinpijl = board.create('segment', [punt, domeinpunt], { strokeWidth:1, color: 'blue', lastArrow: true});
 
-	board.update();
-	board0.addChild(board);
-</script>
+	var form = board.create('text',[2,-1,
+		function() {
+			$('#xcoo1').html( xcoord.Value().toFixed(2) );
+			$('#xcoo2').html( xcoord.Value().toFixed(2) );
+			$('#ycoo').html( xcoord.Value() < 0 ? 'bestaat niet' : Math.sqrt(xcoord.Value()).toFixed(2) );
+			return ''
+		}
+	]);
+
+	</script>
 
 
 
 <div style="clear: left; height: 3em;"></div>
-<p>Een wortelfunctie kan natuurlijk een ander randpunt hebben. Bijvoorbeeld de functie \(g(x)=-2+\sqrt{x+1}\) heeft \( (-1, -2) \) als randpunt:
+<p>Een wortelfunctie kan natuurlijk een ander randpunt hebben.<br>
+Bijvoorbeeld de functie \(g(x)=-2+\sqrt{x+1}\) heeft \( (-1, -2) \) als randpunt.
 </p>
 
-<div id="box1" class="jxgbox" style="width:600px; height:100px; margin-bottom:1em;"></div>
+<p>\(g(\) <span id="xcoo1B" style="color:#006ae0"></span> \()	{}=-2+\sqrt{}(\)<span id="xcoo2B" style="color:#006ae0"></span>\({}+1)={}\)<span id="ycooB" style="color:#009a0a"></span>
+</p>
+
 <div id="box2" class="jxgbox" style="width:600px; height:300px; margin-bottom:1em;"></div>
 
 <p style="clear: left;">Het domein van \(g\) is \(x\geq -1\) en het bereik is \(y\geq -2\).</p>
-
-
-<script type="text/javascript">
-	JXG.Options.text.useMathJax = true;
-	JXG.Options = JXG.merge(JXG.Options, {
-		axis: {
-			ticks: { majorHeight : 10 }
-		},
-		elements: {
-			highlightStrokeColor: 'black',
-			highlightStrokeOpacity: 0.666666
-		},
-	    text: {
-	    	fontSize: 16,
-	    },
-	});
-	board1 = JXG.JSXGraph.initBoard('box1', {
-		showCopyright: false,
-		showNavigation: false,
-		axis:false,
-		boundingbox: [0, 7, 10, -2]
-		});
-	var functietekst1 = board1.create('text', [0.1,5, function() { return '\\( g(x)=-2+\\sqrt{x+1} \\)'; } ], { fontSize:18 } );
-	var xcoord1 = board1.create('slider',[[3.5,4],[8.5,4],[-2,1,17]],{name:'x',snapWidth:0.1, withTicks:false, precision:2});
-	var g = function(x){ return -2+Math.sqrt(x+1); }
-	var tekst1 = board1.create('text', [3.5,2.5,
-		function() {
-		var ycoord1 = g(xcoord1.Value()).toFixed(2);
-		var uitkomst1;
-		if (xcoord1.Value() < -1) { uitkomst1 = ' \\text{ bestaat niet}' } else { uitkomst1 = '= \\color\{green\}\{' + ycoord1 + '\}'};
-		return '\\( g(\\color\{blue\}\{ ' + xcoord1.Value().toFixed(2) + '\}) = -2+\\sqrt\{\\color\{blue\}\{ ' + xcoord1.Value().toFixed(2) + '\}+1\} ' + uitkomst1 + '\\)';
-		}
-		], { fixed:true, anchorY:'top', fontSize:18, highlight: false });
-</script>
 
 <script type="text/javascript">
 	JXG.Options = JXG.merge(JXG.Options, {
@@ -158,6 +102,8 @@ MathJax.Hub.processSectionDelay = 0;
 		grid: true,
 		boundingbox: [-2, 2, 10, -4]
 		});
+	var xcoord1 = board2.create('slider',[[3.5,-3],[8.5,-3],[-2,1,17]],{name:'x',snapWidth:0.1, withTicks:false, precision:2});
+	var g = function(x){ return -2+Math.sqrt(x+1); }
 	var plot2 = board2.create('functiongraph',[g], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
 	var punt2 = board2.create('point', [
 		function() { return xcoord1.Value(); },
@@ -169,8 +115,14 @@ MathJax.Hub.processSectionDelay = 0;
 	var domeinpunt2 = board2.create('point', [function() { return Math.max(xcoord1.Value(),-1); }, 0], {color:'blue', trace: true, size: 1, name:''});
 	var domeinpijl2 = board2.create('segment', [punt2, domeinpunt2], { strokeWidth:1, color: 'blue', lastArrow: true});
 
-	board2.update();
-	board1.addChild(board2);
+	var form2 = board2.create('text',[2,-1,
+		function() {
+			$('#xcoo1B').html( xcoord1.Value().toFixed(2) );
+			$('#xcoo2B').html( xcoord1.Value().toFixed(2) );
+			$('#ycooB').html( xcoord1.Value() < -1 ? 'bestaat niet' : g(xcoord1.Value()).toFixed(2) );
+			return ''
+		}
+	]);
 </script>
 
 <footer style="clear: both; padding-top: 30px;">

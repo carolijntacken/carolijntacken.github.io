@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <style>
-body 
-	{ 
-	font-family: Arial, Helvetica, sans-serif; 
-	margin-left: 20px; 
+body
+	{
+	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 20px;
 	margin-right: 20px;
 	color: #454545;
 	}
-		
+
 footer {
 	clear: both;
 	height: 90px;
@@ -57,9 +57,9 @@ footer div {
     padding: 0px;
     margin: 0px;
 }
-	
+
 </style>
-	
+
 <script>
 	document.createElement('footer')
 </script>
@@ -72,9 +72,7 @@ MathJax.Hub.Config({
 </script>
 
 
-<script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 <script type="text/javascript">
 var GVSpecificNumInSeq = 157;
@@ -110,7 +108,7 @@ function smartList(event) {
 <table id="newProbButtonsTable">
 <tr>
 <td>
-<!-- initial content is in variable "clickOnNewProblem" in "auxiliary.js"; 
+<!-- initial content is in variable "clickOnNewProblem" in "auxiliary.js";
      loaded at beginning of JavaScript section below -->
 <div id="clickOnNewProb">
 </div>
@@ -136,7 +134,7 @@ function smartList(event) {
 
 </table>
 
-<!-- initial content is in variable "probInstructionsUntimed" in "auxiliary.js"; 
+<!-- initial content is in variable "probInstructionsUntimed" in "auxiliary.js";
      loaded at beginning of JavaScript section below -->
 <div id="newProbDiv" style="height: 80px;">
 </div>
@@ -187,7 +185,7 @@ var answer3 = "";
 
 function rand(a,b) {
 // randomly selects an integer between integers  a  and  b
-var c = Math.floor((b+1-a)*Math.random() + a); 
+var c = Math.floor((b+1-a)*Math.random() + a);
 return c;
 }
 
@@ -196,7 +194,7 @@ function randn(a,b) {
 // returns the nonzero integer
 var c;
 do { c = Math.floor((b+1-a)*Math.random() + a); }
-while ( c==0 ); 
+while ( c==0 );
 return c;
 }
 
@@ -277,7 +275,7 @@ var lesser;
 if (x <= y) { lesser = x; }
 else { lesser = y;  }
 for (i=lesser; i>=1; i--) {
-if ( (x%i==0) && (y%i==0) ) { return i; } 
+if ( (x%i==0) && (y%i==0) ) { return i; }
 } // end of for
 } // end of function
 
@@ -294,7 +292,7 @@ if  ( num == num2 ) {
 isint = 1; // say it IS an integer
 denom = "";
 }
-else { 
+else {
 isint = 0; // say it is NOT an integer
 parts = str.split("/");
 num = parts[0]*1; // turn it into a number
@@ -320,9 +318,9 @@ var n,slope,xpt,ypt,ques,bans,xpt1,xpt2,slm,slum,slmd,pieces,numersl,denomsl,yin
 setflag = 0;
 chs = Math.random();
 if (arguments.length == 1) {
-  n = probTypeVar; 
+  n = probTypeVar;
   flagGV = 1;
-} else { 
+} else {
   n = rand(1,2);
   flagGV = 0;
 }
@@ -374,15 +372,15 @@ if (piecesy[0]==1 && numer==0) {
 yintd = ""; start = 0} // if b=0, don't append anything!
 if (setflag==999) {
 answer1 = preview + "<p>eerst hellingsgetal berekenen: <br/> $a=\\dfrac{" + ypt2 + "-" + ypt1 + "}{" + xpt2 	+ "-" + xpt1 + "}=0$</p>";
-answer2 = "<p>dus de lijn loopt horizontaal</p>" 
+answer2 = "<p>dus de lijn loopt horizontaal</p>"
 answer3 = "<p>de formule is dan $" + "y = " + ypt2 + "$</p>"; }
 else {
 ax = simpformTeX((ypt2 - ypt1)*xpt1,xpt2 - xpt1);
 startgetal = simpformTeX(numer,denom);
 answer1 = preview + "<p>eerst hellingsgetal berekenen: <br/> $a=\\dfrac{" + ypt2 + "-" + ypt1 + "}{" + xpt2 + "-" + xpt1 + "}=" + helling + "$</p>";
-answer2 = "<p>dan weet je dat $" + "y = " + slmd + "x+b $</p>"; 
+answer2 = "<p>dan weet je dat $" + "y = " + slmd + "x+b $</p>";
 answer3 = "<p>de lijn gaat door $(" + xpt1 + ",\\," + ypt1 + ")$<br/>"
-+ "punt invullen: $\\begin{array}[t]{l}" + ypt1  + "=" + helling + "\\cdot " + xpt1 + "+b\\\\ " 
++ "punt invullen: $\\begin{array}[t]{l}" + ypt1  + "=" + helling + "\\cdot " + xpt1 + "+b\\\\ "
 + ypt1  + "=" + ax + "+b\\\\"
 + "b = " + start + "\\\\"
 + "\\end{array}$</p>"
@@ -399,9 +397,9 @@ return ques;
 
 function newprobs(probTypeVar) {
 if (arguments.length == 1) {
-  operation(probTypeVar); 
-} else { 
-  operation(); 
+  operation(probTypeVar);
+} else {
+  operation();
 }
 }
 
@@ -431,10 +429,3 @@ MathJax.Hub.Typeset('stap3'); // process the math
 
 </body>
 </html>
-
-
-
-
-
-
-

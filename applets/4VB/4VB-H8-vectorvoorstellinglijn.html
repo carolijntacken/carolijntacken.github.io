@@ -4,23 +4,25 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
 
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 
 <script>
 	document.createElement('footer')
 </script>
 
-<style>.MathJax_Display{display:inline !important;}
-.mathjax-wrapper{font-size:100%;}</style>
+<style>
+.kolom {
+	display: inline-table;
+	margin: 0 2px;
+}
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.processSectionDelay = 0;
-</script>
-
-<script type='text/x-mathjax-config'>MathJax.Hub.Config({displayAlign:'left',tex2jax:{displayMath:[['[math]','[/math]']]}})</script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+.cmid .kolom {
+	vertical-align: middle;
+}
+</style>
 
 <title>Lijn</title>
 
@@ -28,11 +30,32 @@ MathJax.Hub.processSectionDelay = 0;
 
 <h2>Vectorvoorstelling van een lijn</h2>
 <p>
-1. Beweeg de slider &lambda;. Zie je dat je door &lambda; te vari&#235;ren, op elk punt van lijn AB uit kunt komen?<br/>
+1. Beweeg de slider &lambda;. Zie je dat je door &lambda; te vari&#235;ren, op elk punt van de lijn AB uit kunt komen?<br/>
 2. Zet &lambda; terug op 1, beweeg nu punt A. Welke invloed heeft dat op de vectorvoorstelling?<br/>
 3. Beweeg nu punt B. Hoe verandert de vectorvoorstelling?</p>
 
-<div id="jxgbox1" class="jxgbox" style="width:650px; height:570px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
+<p><div class="cmid">Vectorvoorstelling van de lijn:  <br>
+	\( \left(\begin{array}{c}
+	x\\
+	y
+	\end{array}\right)
+	=\bigg(\)
+	<div class="kolom">
+		<span id='sv1' style='color: red'></span><br>
+		<span id='sv2' style='color: red'></span><br>
+	</div>
+	\(\bigg)
+	+ \lambda\bigg(\)
+	<div class="kolom">
+		<span id='rv1' style='color: #006ae0'></span><br>
+		<span id='rv2' style='color: #006ae0'></span><br>
+	</div>
+	\(\bigg)
+	\)
+</div>
+</p>
+
+<div id="jxgbox1" class="jxgbox" style="width:650px; height:450px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
 <script type='text/javascript'>
 JXG.Options.text.useMathJax = true;
 JXG.Options = JXG.merge(JXG.Options, {
@@ -51,21 +74,21 @@ board = JXG.JSXGraph.initBoard('jxgbox1', {
 		axis: true,
 		grid: true,
 		ticksDistance:2,
-		boundingbox:[-12,13,14,-7],
+		boundingbox:[-12,10,14,-5],
 		keepaspectratio:true
 		});
 		board.suspendUpdate();
-var A = board.create('point', [4,2], {size: 2, strokeColor: '#ff0000', fillColor: '#ff0000', name: 'A'} );
+var A = board.create('point', [4,2], {size: 2, strokeColor: '#ff0000', fillColor: '#ff0000', name: ''} );
 var B = board.create('point', [-2,2], {size: 2, strokeColor: '#006ae0', fillColor: '#006ae0', name: 'B'} );
 var A1 = board.create('point', [
 	function() { return B.X()+A.X(); },
 	function() { return B.Y()+A.Y(); }
-	], {size: 2, strokeColor: '#ff0000', fillColor: '#ff0000', name: ''} );
+], {size: 2, strokeColor: '#ff0000', fillColor: '#ff0000', name: 'A'} );
 var lijn = board.create('line', [B, A1], { strokeColor: '#ff8f00', strokeWidth: 2, dash: 3 } );
 var vecA = board.create('arrow', [B, A1], {strokeColor: '#ff0000'} );
 var vecB = board.create('arrow', [[0,0], B], {strokeColor: '#006ae0',fixed:true} );
 var vecrichting = board.create('arrow', [[0,0], A], {strokeColor: '#ff0000',fixed:true} );
-var lambda = board.create('slider', [ [-11,12], [-7,12], [-5,1,5] ], {
+var lambda = board.create('slider', [ [-11,9], [-7,9], [-5,1,5] ], {
 	name: '&lambda;',
 	strokeColor: '#ff0000',
 	baseline: {strokeColor: '#ff0000'},
@@ -89,21 +112,15 @@ var punt = board.create('point', [
 var veclijn = board.create('arrow', [B, punt], {strokeColor: '#ff0000'} );
 var vec = board.create('arrow', [[0,0], punt], {strokeColor: '#ff8f00'} );
 
-	board.create('text',[1.7,-6.5, 'vectorvoorstelling van de lijn:'],{fixed:true} );
 board.create('text',[2.2,-7, function() {
-	return '\\( \\left(\\begin{array}{c}x\\\\ y \\end{array}\\right) = \\left(\\begin{array}{c}' + B.X().toFixed(2) + '\\\\' + B.Y().toFixed(2) + '\\end{array}\\right) + \\lambda\\cdot \\left(\\begin{array}{c}' + A.X().toFixed(2) + '\\\\' + A.Y().toFixed(2) +'\\end{array}\\right) \\)';
+	$('#sv1').html(A.X().toFixed(2));
+	$('#rv1').html(B.X().toFixed(2));
+	$('#sv2').html(A.Y().toFixed(2));
+	$('#rv2').html(B.Y().toFixed(2));
+	return '';
 	}
-	], {anchorY:'top', color: 'black',fixed:true});
+	]);
 
-board.create('text',[-11.5,11, function() {
-	var sign = '+';
-	if ( lambda.Value() < 0)
-		sign = '-';
-	var xoutput = B.X()+ lambda.Value()*A.X();
-	var youtput = B.Y()+ lambda.Value()*A.Y();
-	return '<span style="background-color: white; padding-top: 12px; padding-bottom: 12px;">\\( \\left(\\begin{array}{c}' + B.X().toFixed(2) + '\\\\' + B.Y().toFixed(2) + '\\end{array}\\right)' + sign + Math.abs(lambda.Value()).toFixed(2) + '\\cdot \\left(\\begin{array}{c}' + A.X().toFixed(2) + '\\\\' + A.Y().toFixed(2) +'\\end{array}\\right) = \\left(\\begin{array}{c}' + xoutput.toFixed(2) + '\\\\' + youtput.toFixed(2) + '\\end{array}\\right) \\)</span>';
-	}
-	], {anchorY:'top', color: 'black',fixed:true});
 	board.unsuspendUpdate();
 </script>
 

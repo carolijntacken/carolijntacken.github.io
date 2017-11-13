@@ -5,8 +5,10 @@
 <link rel="stylesheet" href="../main.css">
 
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
 <script>
 	document.createElement('footer')
 </script>
@@ -18,19 +20,31 @@
 <h2>Sinusoïden</h2>
 <p>Beweeg de sliders om te kijken wat de invloed van \(a\), \(b\), \(c\), en \(d\) is op de grafiek van \(f(x) = a \sin b(x - c) + d\)</p>
 
-<p>Hieronder zie je de grafiek van \(f(x)=\) <span id="valueA" style="color: #006ae0"></span> \(\sin(\)<span id="valueB" style="color: #009a0a"></span><span id="haakjeopenen"></span>\(x\)<span id="valueC" style="color: #ff8f00"></span><span id="haakjesluiten"></span>\()\)<span id="valueD" style="color: red"></span>.</p>
+<p>Hieronder zie je de grafiek van
+	<span style="font-size: 20px">
+		\(f(x)=\)
+		<span id="valueA" style="color: #006ae0"></span>
+		\(\sin(\)
+			<span id="valueB" style="color: #009a0a"></span>
+			<span id="haakjeopenen"></span>
+			\(x\)
+			<span id="valueC" style="color: #ff8f00"></span>
+			<span id="haakjesluiten"></span>
+			\()\)
+			<span id="valueD" style="color: red"></span>
+		</span>.
+	</p>
 
 <p>
 de evenwichtsstand is \(y={}\)<span id="valueD2" style="color: red"></span><br>
 de amplitude is <span id="valueA2" style="color: #006ae0"></span><br>
-de periode is \(2\pi / {}\)<span id="valueB2" style="color: #009a0a"></span><span id="valueB3"></span><br>
+de periode is \(2\pi / {}\)<span id="valueB2" style="color: #009a0a"></span> \(\approx\) <span id="valueB3"></span><br>
 het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
 </p>
 
 <div id="box" class="jxgbox" style="float: left; width:940px; height:600px; margin-bottom:1em;"></div>
 
 <script type="text/javascript">
-	// JXG.Options.text.useMathJax = true;
 	JXG.Options = JXG.merge(JXG.Options, {
 		axis: {
 			ticks: { majorHeight : 10 }
@@ -71,10 +85,6 @@ het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
 		[function() {return c.Value()+.5*Math.PI/b.Value();}, function() { return a.Value()+d.Value();}]],
 		{ strokeWidth:4, strokeColor: '#006ae0'});
 
-		// var algform = board.create('text',[2,5.3,
-		// 	function () {
-		// 		return 'Algemene formule: \\(\\quad f(x) = a \\sin b(x - c) + d\\)'
-		// ;}], { fontSize: 20, fixed: true});
 		var form = board.create('text',[2,4.3,
 		function() {
 			$('#valueA').html( a.Value()==1 ? '': a.Value().toFixed(2) );
@@ -87,7 +97,7 @@ het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
 			$('#valueD').html( d.Value()==0 ? '' : d.Value() < 0 ? ' &ndash; '+Math.abs(d.Value().toFixed(2)) : ' + '+d.Value().toFixed(2));
 			$('#valueA2').html( Math.abs(a.Value().toFixed(2)) );
 			$('#valueB2').html( Math.abs(b.Value().toFixed(2)) );
-			$('#valueB3').html( ' &asymp; ' + (2*Math.PI/b.Value()).toFixed(2) );
+			$('#valueB3').html( (2*Math.PI/b.Value()).toFixed(2) );
 			$('#valueC2').html( Math.abs(c.Value().toFixed(2)) );
 			$('#valueD2').html( Math.abs(d.Value().toFixed(2)) );
 			return ''
