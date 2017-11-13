@@ -32,9 +32,9 @@
 <p>
 1. Versleep de punten A en B zodat de vectoren loodrecht op elkaar komen te staan. Hoe groot is nu het inproduct?<br/>
 2. Wat kun je zeggen over de hoek tussen de vectoren als het inproduct groter is dan 0?<br/>
-3. En als het inproduct kleiner is dan 0???</p>
+3. En als het inproduct kleiner is dan 0?</p>
 
-<div class="cmid">Hieronder zie je de vectoren <br>
+<p><div class="cmid">Hieronder zie je de vectoren <br>
 	\( \vec{a} = \left(\begin{array}{c}
 	a_1\\
 	a_2
@@ -58,7 +58,7 @@
 	\(\bigg)
 	\)
 </div>
-
+</p>
 
 <p>Het inproduct van vector \(\vec{a}\) en \(\vec{b}\) is \(\vec{a}\cdot\vec{b}=a_1\cdot b_1+a_2\cdot b_2={}\)
 	<span id='valueA1a' style='color: red'></span>
@@ -73,7 +73,6 @@
 
 <div id="jxgbox1" class="jxgbox" style="width:650px; height:450px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
 <script type='text/javascript'>
-JXG.Options.text.useMathJax = true;
 JXG.Options = JXG.merge(JXG.Options, {
     axis: {
     	ticks: { majorHeight : 10, ticksDistance:.4 },
@@ -114,7 +113,8 @@ board.create('text',[-1.5,8.9, function() {
 	$('#uitkomst').html(inprod);
 	return '';
 	}
-	], {anchorY:'top', fontSize: 20,fixed:true});
+	]);
+	board.unsuspendUpdate();
 
 </script>
 
