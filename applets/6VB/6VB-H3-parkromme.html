@@ -16,8 +16,10 @@
 <body>
 
 <h2>Bewegingsvergelijkingen, snelheid en versnelling</h2>
+
 <p>
-	....
+<button type="button" onClick="toggleV()" style="font-size: 1em; margin-right: 2em;">snelheidsvector</button>
+<button type="button" onClick="toggleA()" style="font-size: 1em; ">versnellingsvector</button>
 </p>
 
 <div id="box" class="jxgbox" style="float: left; width:590px; height:590px; margin-bottom:1em;"></div>
@@ -44,12 +46,12 @@
 		axis:true,
 		boundingbox:[-10,10,10,-10]
 		});
-	var t = board.create('slider',[[2,-7],[6,-7],[0,2*Math.PI,4*Math.PI]], {style:6, name:'t',withTicks:false});
+	var t = board.create('slider',[[2,-7],[6,-7],[0,0,4*Math.PI]], {style:6, name:'t',withTicks:false});
 	var b = board.create('slider',[[-9,8],[-4,8],[0,3,6]],{name:'b', snapWidth:0.2,withTicks:false});
 	var c = board.create('slider',[[-9,7],[-4,7],[0,1,12]],{name:'c', snapWidth:1,withTicks:false});
 	var B = board.create('slider',[[2,8],[7,8],[0,3,6]],{name:'B', snapWidth:0.2,withTicks:false});
 	var C = board.create('slider',[[2,7],[7,7],[0,1,12]],{name:'C',snapWidth:1,withTicks:false});
-	
+
 	xtekst = board.create('text',[-9.7,9,function() {
 		var fase = 0;
 		var cwaarde = c.Value().toFixed(2);
@@ -60,7 +62,7 @@
 			}
 		tekst+= ')';
 		return tekst;
-		}], {fontSize:24, strokeColor:'#009a0a', fixed:true} );
+		}], {fontSize:24, fixed:true} );
 
 	ytekst = board.create('text',[1,9,function() {
 		var Cwaarde = C.Value().toFixed(2);
@@ -72,7 +74,7 @@
 			}
 		tekst+= ')';
 		return tekst;
-		}], {fontSize:24, strokeColor:'#006ae0', fixed:true} );
+		}], {fontSize:24, fixed:true} );
 
 	function f(t) {return b.Value()*Math.cos(c.Value()*t);};
 	function g(t) {return B.Value()*Math.sin(C.Value()*t);};
@@ -90,27 +92,45 @@
 	          );
 	  point = board.create('point',[
 	  	function() { return f(t.Value()); }, function() { return g(t.Value());}], {size:3, strokeColor:'red',fillColor:'red',name:''});
-	  snelheidsvector = board.create('segment',[
-		 	[function() { return f(t.Value()); }, function() { return g(t.Value());}],
-		 	[function() { return f(t.Value())+u(t.Value()); }, function() { return g(t.Value())+v(t.Value());}]
-		 ],
-		 {strokeColor:'#006ae0',fillColor:'#006ae0',lastArrow: true}
-	 );
-	 versnellingsvector = board.create('segment',[
-		 [function() { return f(t.Value()); }, function() { return g(t.Value());}],
-		 [function() { return f(t.Value())+p(t.Value()); }, function() { return g(t.Value())+q(t.Value());}]
-		],
-		{strokeColor:'#009a0a',fillColor:'#009a0a',lastArrow: true}
-	);
 		board.update();
 	}
-
-//	var vector = board.create('arrow',[a,b]);
-//alternative version of the last line:
-//var vector = board.create('segment',[a,b], {lastArrow: true});
-
 	plot();
 </script>
+
+<script>
+	var v_is_visible = true;
+	function toggleV(){
+		if (v_is_visible) {
+			snelheidsvector = board.create('segment',[
+		 		[function() { return f(t.Value()); }, function() { return g(t.Value());}],
+		 		[function() { return f(t.Value())+u(t.Value()); }, function() { return g(t.Value())+v(t.Value());}]
+		 	],
+		 	{strokeColor:'#006ae0',fillColor:'#006ae0',lastArrow: true}
+	 		);
+ 			} else {
+				board.removeObject(snelheidsvector);
+			}
+			v_is_visible = !v_is_visible
+	}
+</script>
+
+<script>
+	var a_is_visible = true;
+	function toggleA(){
+		if (a_is_visible) {
+			versnellingsvector = board.create('segment',[
+	 		 	[function() { return f(t.Value()); }, function() { return g(t.Value());}],
+	 		 	[function() { return f(t.Value())+p(t.Value()); }, function() { return g(t.Value())+q(t.Value());}]
+	 			],
+	 			{strokeColor:'#009a0a',fillColor:'#009a0a',lastArrow: true}
+	 		);
+ 			} else {
+				board.removeObject(versnellingsvector);
+			}
+			a_is_visible = !a_is_visible
+	}
+</script>
+
 
 
 <footer>
