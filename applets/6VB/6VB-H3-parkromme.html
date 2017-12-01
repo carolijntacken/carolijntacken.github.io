@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.5/jsxgraphcore.js"></script>
+
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Bewegingsvergelijkingen, snelheid en versnelling</title>
+
+<body>
+
+<h2>Bewegingsvergelijkingen, snelheid en versnelling</h2>
+<p>
+	....
+</p>
+
+<div id="box" class="jxgbox" style="float: left; width:590px; height:590px; margin-bottom:1em;"></div>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+		elements: {
+			highlightStrokeColor: 'black',
+			highlightStrokeOpacity: 0.666666
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+	});
+	board = JXG.JSXGraph.initBoard('box', {
+		showCopyright: false,
+		showNavigation: false,
+		axis:true,
+		boundingbox:[-10,10,10,-10]
+		});
+	var t = board.create('slider',[[2,-7],[6,-7],[0,2*Math.PI,4*Math.PI]], {style:6, name:'t',withTicks:false});
+	var b = board.create('slider',[[-9,8],[-4,8],[0,3,6]],{name:'b', snapWidth:0.2,withTicks:false});
+	var c = board.create('slider',[[-9,7],[-4,7],[0,1,12]],{name:'c', snapWidth:1,withTicks:false});
+	var B = board.create('slider',[[2,8],[7,8],[0,3,6]],{name:'B', snapWidth:0.2,withTicks:false});
+	var C = board.create('slider',[[2,7],[7,7],[0,1,12]],{name:'C',snapWidth:1,withTicks:false});
+	
+	xtekst = board.create('text',[-9.7,9,function() {
+		var fase = 0;
+		var cwaarde = c.Value().toFixed(2);
+		var tekst = 'x(t) = ' + b.Value().toFixed(2) + ' cos(' ;
+		if (cwaarde == '1.00')
+			tekst+= 't';
+			else { tekst+= c.Value() + 't';
+			}
+		tekst+= ')';
+		return tekst;
+		}], {fontSize:24, strokeColor:'#009a0a', fixed:true} );
+
+	ytekst = board.create('text',[1,9,function() {
+		var Cwaarde = C.Value().toFixed(2);
+		var tekst = 'y(t) = ' + B.Value().toFixed(2) + ' sin(' ;
+		if ( Cwaarde == '1.00')
+			tekst+= 't';
+		else {
+			tekst+= C.Value() + 't';
+			}
+		tekst+= ')';
+		return tekst;
+		}], {fontSize:24, strokeColor:'#006ae0', fixed:true} );
+
+	function f(t) {return b.Value()*Math.cos(c.Value()*t);};
+	function g(t) {return B.Value()*Math.sin(C.Value()*t);};
+	u = JXG.Math.Numerics.D(f);
+	v = JXG.Math.Numerics.D(g);
+	p = JXG.Math.Numerics.D(u);
+	q = JXG.Math.Numerics.D(v);
+	function plot(){
+	  graph = board.create('curve', [
+	            f,g,
+	            0,
+	            2*Math.PI
+	            ],
+	            {strokeColor:'red', strokeWidth:3}
+	          );
+	  point = board.create('point',[
+	  	function() { return f(t.Value()); }, function() { return g(t.Value());}], {size:3, strokeColor:'red',fillColor:'red',name:''});
+	  snelheidsvector = board.create('segment',[
+		 	[function() { return f(t.Value()); }, function() { return g(t.Value());}],
+		 	[function() { return f(t.Value())+u(t.Value()); }, function() { return g(t.Value())+v(t.Value());}]
+		 ],
+		 {strokeColor:'#006ae0',fillColor:'#006ae0',lastArrow: true}
+	 );
+	 versnellingsvector = board.create('segment',[
+		 [function() { return f(t.Value()); }, function() { return g(t.Value());}],
+		 [function() { return f(t.Value())+p(t.Value()); }, function() { return g(t.Value())+q(t.Value());}]
+		],
+		{strokeColor:'#009a0a',fillColor:'#009a0a',lastArrow: true}
+	);
+		board.update();
+	}
+
+//	var vector = board.create('arrow',[a,b]);
+//alternative version of the last line:
+//var vector = board.create('segment',[a,b], {lastArrow: true});
+
+	plot();
+</script>
+
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>
