@@ -39,7 +39,7 @@
 de evenwichtsstand is \(y={}\)<span id="valueD2" style="color: red"></span><br>
 de amplitude is <span id="valueA2" style="color: #006ae0"></span><br>
 de periode is \(2\pi / {}\)<span id="valueB2" style="color: #009a0a"></span> \(\approx\) <span id="valueB3"></span><br>
-het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
+<span id="valueC2"></span><span id="valueC3"></span>
 </p>
 
 <div id="box" class="jxgbox" style="float: left; width:940px; height:600px; margin-bottom:1em;"></div>
@@ -98,8 +98,11 @@ het beginpunt is \(x={}\) <span id="valueC2" style="color: #ff8f00"></span>
 			$('#valueA2').html( Math.abs(a.Value().toFixed(2)) );
 			$('#valueB2').html( Math.abs(b.Value().toFixed(2)) );
 			$('#valueB3').html( (2*Math.PI/b.Value()).toFixed(2) );
-			$('#valueC2').html( Math.abs(c.Value().toFixed(2)) );
-			$('#valueD2').html( Math.abs(d.Value().toFixed(2)) );
+			$('#valueC2').html( c.Value()==0 ? 'er is geen horizontale verschuiving' : '' );
+			$('#valueC3').html( c.Value()==0 ? '' : c.Value()<0 ? 
+				'de horizontale verschuiving is <span style="color: #ff8f00">' + Math.abs(c.Value().toFixed(2)) + '</span> naar <span style="color: #ff8f00">links</span>' : 
+				'de horizontale verschuiving is <span style="color: #ff8f00">' + Math.abs(c.Value().toFixed(2)) + '</span> naar <span style="color: #ff8f00">rechts</span>' );
+			$('#valueD2').html( d.Value()==0 ? '0' : d.Value() < 0 ? ' &ndash; '+Math.abs(d.Value().toFixed(2)) : d.Value().toFixed(2));
 			return ''
 			}]);
 
