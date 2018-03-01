@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script>document.createElement('footer')</script>
+
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+<script src="https://www.desmos.com/api/v1.0/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+
+<title>Eenheidscirkel en sinus/cosinus/tangens</title>
+
+<body>
+<h2>Grafieken van sinus, cosinus en tangens met de eenheidscirkel</h2>
+
+
+<p>De grafiek van \(y=\sin(x)\):</p>
+
+<div id="left" style="width: 300px; height: 300px; float: left; margin-right: 5px"></div>
+<div id="right" style="width: 550px; height: 300px; float: left;"></div>
+
+
+<script >
+    var elt = document.getElementById('left');
+    var elt2 = document.getElementById('right');
+
+	var calculator = Desmos.GraphingCalculator(elt, {
+		expressions: false,
+		lockViewport: true,
+		zoomButtons: false,
+		settingsMenu: false,
+		border: true,
+		});
+    calculator.setMathBounds({
+      	left: -2.5,
+      	right: 2.5,
+      	bottom: -2.5,
+      	top: 2.5
+    	});
+
+    var calculator2 = Desmos.GraphingCalculator(elt2, {
+    	expressions: false,
+    	lockViewport: true,
+    	zoomButtons: false,
+    	settingsMenu: false,
+    	});
+    calculator2.setMathBounds({
+      	left: -6.5,
+      	right: 13,
+      	bottom: -2.5,
+      	top: 2.5
+    	});
+
+    calculator.setExpressions([
+    	{id: 'puntA',
+    	latex: '(a,2)',
+    	showLabel: true,
+    	color: 'red'
+    	},
+    	{latex:'a=0', sliderBounds: {min: -1, max: 2}},
+  		{latex: 'x^2+y^2=1',color: '#DDDDDD'},
+    	{latex: 'y=2', color: 'red'},
+    	{latex: 'x=\\cos(2*\\pi*a)\\{0<y<\\sin(2*\\pi*a),\\sin(2*\\pi*a)<y<0\\}', color: 'red'},
+    	{latex: '(t*\\cos(2*\\pi*a),t*\\sin(2*\\pi*a))', color: 'gray'},
+    	{latex: '(\\cos(2*\\pi*a),\\sin(2*\\pi*a))', color: 'red'},
+    	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*a\\},\\sin(20t))', color: 'red'},
+    	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*a\\},\\sin(-20t))', color: 'red'},
+    	]);
+
+    var a = calculator.HelperExpression({latex: 'a'});
+
+    calculator2.setExpressions([
+    	{latex: 'f(x)=\\sin(x)', color: '#DDDDDD'},
+    	]);
+
+    function computeLabel(x) {
+      	return (2*x*Math.PI).toFixed(2)
+    	}
+
+	a.observe('numericValue', 
+		function() {    
+    		calculator.setExpression({id: 'puntA', label: computeLabel(a.numericValue)});
+    		});
+
+    a.observe('numericValue', function () {
+       	calculator2.setExpressions([
+       	{id: 'vlijn2', 
+       	latex: 'x=2*\\pi*' + a.numericValue + '\\{0<y<\\sin(2*\\pi*' + a.numericValue + '),\\sin(2*\\pi*' + a.numericValue + ')<y<0\\}',
+      	color: 'red'
+      	},
+    	{
+    	id: 'sinus2',
+    	latex: 'y=\\sin(x)\\{0<x<2*\\pi*'+a.numericValue+',2*\\pi*'+a.numericValue+'<x<0\\}',
+    	color: 'red'
+    	},
+		{
+		id: 'punt2', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: '(2*\\pi*'+a.numericValue+', f(2*\\pi*'+a.numericValue+'))',
+      	color: 'red'
+      	},
+     	]);
+		});
+  </script>
+
+<p style="clear: both;  padding-top: 30px;">De grafiek van \(y=\cos(x)\):</p>
+
+<div id="left2" style="width: 300px; height: 300px; float: left; margin-right: 5px"></div>
+<div id="right2" style="width: 550px; height: 300px; float: left; margin-right: 5px"></div>
+
+<script >
+    var elt3 = document.getElementById('left2');
+    var elt4 = document.getElementById('right2');
+
+	var calculator3 = Desmos.GraphingCalculator(elt3, {
+		expressions: false,
+		lockViewport: true,
+		zoomButtons: false,
+		settingsMenu: false,
+		border: true,
+		});
+    calculator3.setMathBounds({
+      	left: -2.5,
+      	right: 2.5,
+      	bottom: -2.5,
+      	top: 2.5
+    	});
+
+    var calculator4 = Desmos.GraphingCalculator(elt4, {
+    	expressions: false,
+    	lockViewport: true,
+    	zoomButtons: false,
+    	settingsMenu: false,
+    	});
+    calculator4.setMathBounds({
+      	left: -6.5,
+      	right: 13,
+      	bottom: -2.5,
+      	top: 2.5
+    	});
+
+    calculator3.setExpressions([
+    	{id: 'puntB',
+    	latex: '(b,2)',
+    	showLabel: true,
+    	color: '#006ae0'
+    	},
+    	{latex:'b=0', sliderBounds: {min: -1, max: 2}},
+  		{latex: 'x^2+y^2=1', color: '#DDDDDD'},
+    	{latex: 'y=2', color: '#006ae0'},
+    	{latex: 'y=\\sin(2*\\pi*b)\\{0<x<\\cos(2*\\pi*b),\\cos(2*\\pi*b)<x<0\\}', color: '#006ae0'},
+    	{latex: '(t*\\cos(2*\\pi*b),t*\\sin(2*\\pi*b))', color: 'gray'},
+    	{latex: '(\\cos(2*\\pi*b),\\sin(2*\\pi*b))', color: '#006ae0'},
+    	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*b\\},\\sin(20t))', color: '#006ae0'},
+    	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*b\\},\\sin(-20t))', color: '#006ae0'},
+    	]);
+
+    var b = calculator3.HelperExpression({latex: 'b'});
+
+    calculator4.setExpressions([
+    	{latex: 'g(x)=\\cos(x)', color: '#DDDDDD'},
+    	]);
+
+	b.observe('numericValue', function() {    
+    	calculator3.setExpression({id: 'puntB', label: computeLabel(b.numericValue)});
+    		});
+
+    b.observe('numericValue', function () {
+       	calculator4.setExpressions([
+       	{
+      	id: 'vlijn4',
+      	latex: 'x=2*\\pi*' + b.numericValue + '\\{0<y<\\cos(2*\\pi*' + b.numericValue + '),\\cos(2*\\pi*' + b.numericValue + ')<y<0\\}',
+      	color: '#006ae0'
+      	},
+    	{
+    	id: 'cosinus2',
+    	latex: 'y=\\cos(x)\\{0<x<2*\\pi*'+b.numericValue+',2*\\pi*'+b.numericValue+'<x<0\\}',
+    	color: '#006ae0'
+    	},
+		{
+		id: 'punt4', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: '(2*\\pi*'+b.numericValue+', g(2*\\pi*'+b.numericValue+'))',
+      	color: '#006ae0'
+      	}
+     	]);
+		});
+  </script>
+
+
+<p style="clear: both;  padding-top: 30px;">De grafiek van \(y=\tan(x)\):</p>
+
+<div id="left3" style="width: 300px; height: 300px; float: left; margin-right: 5px"></div>
+<div id="right3" style="width: 550px; height: 300px; float: left; margin-right: 5px"></div>
+
+<script >
+    var elt5 = document.getElementById('left3');
+    var elt6 = document.getElementById('right3');
+
+	var calculator5 = Desmos.GraphingCalculator(elt5, {
+		expressions: false,
+		lockViewport: true,
+		zoomButtons: false,
+		settingsMenu: false,
+		border: true,
+		});
+    calculator5.setMathBounds({
+      	left: -2.5,
+      	right: 2.5,
+      	bottom: -2.5,
+      	top: 2.5
+    	});
+
+    var calculator6 = Desmos.GraphingCalculator(elt6, {
+    	expressions: false,
+    	lockViewport: true,
+    	zoomButtons: false,
+    	settingsMenu: false,
+    	});
+    calculator6.setMathBounds({
+      	left: -6.5,
+      	right: 13,
+      	bottom: -2.5,
+      	top: 2.5
+    	});
+
+    calculator5.setExpressions([
+    	{id: 'puntC',
+    	latex: '(c,2)',
+    	showLabel: true,
+    	color: '#009a0a'
+    	},
+    	{latex:'c=0', sliderBounds: {min: -1, max: 2}},
+  		{latex: 'x^2+y^2=1', color: '#DDDDDD'},
+    	{latex: 'y=2', color: '#009a0a'},
+    	{latex: 'x=1', color: '#DDDDDD'},
+    	{latex: 'x=1\\{0<y<\\tan(2*\\pi*c),\\tan(2*\\pi*c)<y<0\\}', color: '#009a0a'},
+    	{latex: '(t,t*\\tan(2*\\pi*c))', color: 'gray'},
+    	{latex: '(t*\\cos(2*\\pi*c),t*\\sin(2*\\pi*c))', color: 'gray'},
+    	{latex: '(\\cos(2*\\pi*c),\\sin(2*\\pi*c))', color: '#009a0a'},
+    	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*c\\},\\sin(20t))', color: '#009a0a'},
+    	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*c\\},\\sin(-20t))', color: '#009a0a'},
+    	]);
+
+    var c = calculator5.HelperExpression({latex: 'c'});
+
+    calculator6.setExpressions([
+    	{latex: 'h(x)=\\tan(x)', color: '#DDDDDD'},
+    	{latex: 'x=[.5,1.5,2.5,3.5,-.5,-1.5]*\\pi', color: '#DDDDDD', style: Desmos.Styles.DASHED},
+    	]);
+    	
+	c.observe('numericValue', function() {    
+    	calculator5.setExpression({id: 'puntC', label: computeLabel(c.numericValue)});
+    		});
+
+    c.observe('numericValue', function () {
+       	calculator6.setExpressions([
+       	{
+      	id: 'vlijn6',
+      	latex: 'x=2*\\pi*' + c.numericValue + '\\{0<y<\\tan(2*\\pi*' + c.numericValue + '),\\tan(2*\\pi*' + c.numericValue + ')<y<0\\}',
+      	color: '#009a0a'
+      	},
+    	{
+    	id: 'tangens2',
+    	latex: 'h(x)=\\tan(x)\\{0<x<2*\\pi*'+c.numericValue+',2*\\pi*'+c.numericValue+'<x<0\\}',
+    	color: '#009a0a'
+    	},
+		{
+		id: 'punt6', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: '(2*\\pi*'+c.numericValue+', \\tan(2*\\pi*'+c.numericValue+'))',
+      	color: '#009a0a'
+      	},
+      	{id: 'asympt1', latex: 'x=.5*\\pi\\{'+c.numericValue+'>=.25\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
+      	{id: 'asympt2', latex: 'x=1.5*\\pi\\{'+c.numericValue+'>=.75\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
+      	{id: 'asympt3', latex: 'x=2.5*\\pi\\{'+c.numericValue+'>=1.25\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
+      	{id: 'asympt4', latex: 'x=3.5*\\pi\\{'+c.numericValue+'>=1.75\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
+      	{id: 'asympt5', latex: 'x=-.5*\\pi\\{'+c.numericValue+'<=-.25\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
+      	{id: 'asympt6', latex: 'x=-1.5*\\pi\\{'+c.numericValue+'<=-.75\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
+     	]);
+		});
+  </script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>
