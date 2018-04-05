@@ -57,16 +57,16 @@
     	{id: 'puntA',
     	latex: '(a,2)',
     	showLabel: true,
-    	color: 'red'
+    	color: '#009a0a'
     	},
     	{latex:'a=0', sliderBounds: {min: -1, max: 2}},
   		{latex: 'x^2+y^2=1',color: '#DDDDDD'},
-    	{latex: 'y=2', color: 'red'},
+    	{latex: 'y=2', color: '#009a0a'},
     	{latex: 'x=\\cos(2*\\pi*a)\\{0<y<\\sin(2*\\pi*a),\\sin(2*\\pi*a)<y<0\\}', color: 'red'},
     	{latex: '(t*\\cos(2*\\pi*a),t*\\sin(2*\\pi*a))', color: 'gray'},
+    	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*a\\},\\sin(20t))', color: '#009a0a'},
+    	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*a\\},\\sin(-20t))', color: '#009a0a'},
     	{latex: '(\\cos(2*\\pi*a),\\sin(2*\\pi*a))', color: 'red'},
-    	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*a\\},\\sin(20t))', color: 'red'},
-    	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*a\\},\\sin(-20t))', color: 'red'},
     	]);
 
     var a = calculator.HelperExpression({latex: 'a'});
@@ -95,6 +95,16 @@
     	latex: 'y=\\sin(x)\\{0<x<2*\\pi*'+a.numericValue+',2*\\pi*'+a.numericValue+'<x<0\\}',
     	color: 'red'
     	},
+		{
+		id: 'hlijn1', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: 'y=0\\{0<x<2*\\pi* '+a.numericValue+'\\}',
+      	color: '#009a0a'
+      	},
+		{
+		id: 'hlijn2', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: 'y=0\\{0>x>2*\\pi* '+a.numericValue+'\\}',
+      	color: '#009a0a'
+      	},
 		{
 		id: 'punt2', //zonder id wordt het punt niet geupdatet maar getracet
       	latex: '(2*\\pi*'+a.numericValue+', f(2*\\pi*'+a.numericValue+'))',
@@ -144,16 +154,16 @@
     	{id: 'puntB',
     	latex: '(b,2)',
     	showLabel: true,
-    	color: '#006ae0'
+    	color: '#009a0a'
     	},
     	{latex:'b=0', sliderBounds: {min: -1, max: 2}},
   		{latex: 'x^2+y^2=1', color: '#DDDDDD'},
-    	{latex: 'y=2', color: '#006ae0'},
+    	{latex: 'y=2', color: '#009a0a'},
     	{latex: 'y=\\sin(2*\\pi*b)\\{0<x<\\cos(2*\\pi*b),\\cos(2*\\pi*b)<x<0\\}', color: '#006ae0'},
     	{latex: '(t*\\cos(2*\\pi*b),t*\\sin(2*\\pi*b))', color: 'gray'},
+    	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*b\\},\\sin(20t))', color: '#009a0a'},
+    	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*b\\},\\sin(-20t))', color: '#009a0a'},
     	{latex: '(\\cos(2*\\pi*b),\\sin(2*\\pi*b))', color: '#006ae0'},
-    	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*b\\},\\sin(20t))', color: '#006ae0'},
-    	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*b\\},\\sin(-20t))', color: '#006ae0'},
     	]);
 
     var b = calculator3.HelperExpression({latex: 'b'});
@@ -172,6 +182,16 @@
       	id: 'vlijn4',
       	latex: 'x=2*\\pi*' + b.numericValue + '\\{0<y<\\cos(2*\\pi*' + b.numericValue + '),\\cos(2*\\pi*' + b.numericValue + ')<y<0\\}',
       	color: '#006ae0'
+      	},
+		{
+		id: 'hlijn3', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: 'y=0\\{0<x<2*\\pi* '+b.numericValue+'\\}',
+      	color: '#009a0a'
+      	},
+		{
+		id: 'hlijn4', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: 'y=0\\{0>x>2*\\pi* '+b.numericValue+'\\}',
+      	color: '#009a0a'
       	},
     	{
     	id: 'cosinus2',
@@ -234,12 +254,12 @@
   		{latex: 'x^2+y^2=1', color: '#DDDDDD'},
     	{latex: 'y=2', color: '#009a0a'},
     	{latex: 'x=1', color: '#DDDDDD'},
-    	{latex: 'x=1\\{0<y<\\tan(2*\\pi*c),\\tan(2*\\pi*c)<y<0\\}', color: '#009a0a'},
+    	{latex: 'x=1\\{0<y<\\tan(2*\\pi*c),\\tan(2*\\pi*c)<y<0\\}', color: '#ff8f00'},
     	{latex: '(t,t*\\tan(2*\\pi*c))', color: 'gray'},
     	{latex: '(t*\\cos(2*\\pi*c),t*\\sin(2*\\pi*c))', color: 'gray'},
-    	{latex: '(\\cos(2*\\pi*c),\\sin(2*\\pi*c))', color: '#009a0a'},
     	{latex: '(\\cos(20t)\\{0<t<.1*\\pi*c\\},\\sin(20t))', color: '#009a0a'},
     	{latex: '(\\cos(-20t)\\{0<t<-.1*\\pi*c\\},\\sin(-20t))', color: '#009a0a'},
+    	{latex: '(\\cos(2*\\pi*c),\\sin(2*\\pi*c))', color: '#ff8f00'},
     	]);
 
     var c = calculator5.HelperExpression({latex: 'c'});
@@ -258,24 +278,34 @@
        	{
       	id: 'vlijn6',
       	latex: 'x=2*\\pi*' + c.numericValue + '\\{0<y<\\tan(2*\\pi*' + c.numericValue + '),\\tan(2*\\pi*' + c.numericValue + ')<y<0\\}',
-      	color: '#009a0a'
+      	color: '#ff8f00'
       	},
     	{
     	id: 'tangens2',
     	latex: 'h(x)=\\tan(x)\\{0<x<2*\\pi*'+c.numericValue+',2*\\pi*'+c.numericValue+'<x<0\\}',
-    	color: '#009a0a'
+    	color: '#ff8f00'
     	},
+		{
+		id: 'hlijn5', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: 'y=0\\{0<x<2*\\pi* '+c.numericValue+'\\}',
+      	color: '#009a0a'
+      	},
+		{
+		id: 'hlijn6', //zonder id wordt het punt niet geupdatet maar getracet
+      	latex: 'y=0\\{0>x>2*\\pi* '+c.numericValue+'\\}',
+      	color: '#009a0a'
+      	},
 		{
 		id: 'punt6', //zonder id wordt het punt niet geupdatet maar getracet
       	latex: '(2*\\pi*'+c.numericValue+', \\tan(2*\\pi*'+c.numericValue+'))',
-      	color: '#009a0a'
+      	color: '#ff8f00'
       	},
-      	{id: 'asympt1', latex: 'x=.5*\\pi\\{'+c.numericValue+'>=.25\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
-      	{id: 'asympt2', latex: 'x=1.5*\\pi\\{'+c.numericValue+'>=.75\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
-      	{id: 'asympt3', latex: 'x=2.5*\\pi\\{'+c.numericValue+'>=1.25\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
-      	{id: 'asympt4', latex: 'x=3.5*\\pi\\{'+c.numericValue+'>=1.75\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
-      	{id: 'asympt5', latex: 'x=-.5*\\pi\\{'+c.numericValue+'<=-.25\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
-      	{id: 'asympt6', latex: 'x=-1.5*\\pi\\{'+c.numericValue+'<=-.75\\}', color: '#009a0a', style: Desmos.Styles.DASHED},
+      	{id: 'asympt1', latex: 'x=.5*\\pi\\{'+c.numericValue+'>=.25\\}', color: '#ff8f00', style: Desmos.Styles.DASHED},
+      	{id: 'asympt2', latex: 'x=1.5*\\pi\\{'+c.numericValue+'>=.75\\}', color: '#ff8f00', style: Desmos.Styles.DASHED},
+      	{id: 'asympt3', latex: 'x=2.5*\\pi\\{'+c.numericValue+'>=1.25\\}', color: '#ff8f00', style: Desmos.Styles.DASHED},
+      	{id: 'asympt4', latex: 'x=3.5*\\pi\\{'+c.numericValue+'>=1.75\\}', color: '#ff8f00', style: Desmos.Styles.DASHED},
+      	{id: 'asympt5', latex: 'x=-.5*\\pi\\{'+c.numericValue+'<=-.25\\}', color: '#ff8f00', style: Desmos.Styles.DASHED},
+      	{id: 'asympt6', latex: 'x=-1.5*\\pi\\{'+c.numericValue+'<=-.75\\}', color: '#ff8f00', style: Desmos.Styles.DASHED},
      	]);
 		});
   </script>
