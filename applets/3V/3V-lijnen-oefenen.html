@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <link rel="stylesheet" href="../main.css">
-	
+
 <script>
 	document.createElement('footer')
 </script>
@@ -12,20 +12,20 @@
 
 <title>Formules van lijnen</title>
 
-<body> 
+<body>
 <h2>Formules van lijnen</h2>
 <p>Bereken de formule van de lijn door de twee punten. Vul de formule in op de derde regel om te controleren.</p>
 
 <p><button id="btnNext">Opnieuw</button></p>
-    
+
 <div id="calculator" style="width: 900px; height: 600px;"></div>
-  
-  
-<script src="https://www.desmos.com/api/v0.7/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+
+<script src="https://www.desmos.com/api/v1.1/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
 <script>
 (function () {
   "use strict";
-  
+
   var calculator;
 
   function between (a, b) {
@@ -44,7 +44,7 @@
       { x: x2, y: between(-10, 10) }
     ];
   }
-  
+
   function pointString (point) {
     return '(' + point.x + ', ' + point.y + ')';
   }
@@ -59,18 +59,18 @@
   function next () {
     showLine(getPoints());
     calculator.setExpression({id: 'line', latex: 'y=', color: Desmos.Colors.ORANGE});
-    
+
   }
 
   function init () {
     var elt = document.getElementById('calculator');
     calculator = Desmos.Calculator(elt, {keypad: false});
-  
+
     document.getElementById("btnNext").addEventListener('click', next);
     showLine(getPoints());
     calculator.setExpression({id: 'line', latex: 'y=', color: Desmos.Colors.ORANGE});
   }
-  
+
   init();
 })();
 </script>
