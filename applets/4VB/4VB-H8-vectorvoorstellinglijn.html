@@ -30,25 +30,23 @@
 
 <h2>Vectorvoorstelling van een lijn</h2>
 <p>
-1. Beweeg de slider &lambda;. Zie je dat je door &lambda; te vari&#235;ren, op elk punt van de lijn AB uit kunt komen?<br/>
-2. Zet &lambda; terug op 1, beweeg nu punt A. Welke invloed heeft dat op de vectorvoorstelling?<br/>
-3. Beweeg nu punt B. Hoe verandert de vectorvoorstelling?</p>
+	Beweeg de slider &lambda;. Zie je dat je door &lambda; te vari&#235;ren, op elk punt van lijn <i>AB</i> uit kunt komen?<br/>
 
-<p><div class="cmid">Vectorvoorstelling van de lijn:  <br>
+<p><div class="cmid">Een vectorvoorstelling van <i>AB</i>:  <br>
 	\( \left(\begin{array}{c}
 	x\\
 	y
 	\end{array}\right)
 	=\bigg(\)
 	<div class="kolom">
-		<span id='sv1' style='color: red'></span><br>
-		<span id='sv2' style='color: red'></span><br>
+		<span id='sv1' style='color: #006ae0'></span><br>
+		<span id='sv2' style='color: #006ae0'></span><br>
 	</div>
 	\(\bigg)
 	+ \lambda\bigg(\)
 	<div class="kolom">
-		<span id='rv1' style='color: #006ae0'></span><br>
-		<span id='rv2' style='color: #006ae0'></span><br>
+		<span id='rv1' style='color: red'></span><br>
+		<span id='rv2' style='color: red'></span><br>
 	</div>
 	\(\bigg)
 	\)
@@ -77,16 +75,16 @@ board = JXG.JSXGraph.initBoard('jxgbox1', {
 		keepaspectratio:true
 		});
 		board.suspendUpdate();
-var A = board.create('point', [4,2], {size: 2, strokeColor: '#ff0000', fillColor: '#ff0000', name: ''} );
-var B = board.create('point', [-2,2], {size: 2, strokeColor: '#006ae0', fillColor: '#006ae0', name: 'B'} );
+var A = board.create('point', [-2,2], {size: 0, strokeColor: '#ff0000', fillColor: '#ff0000', name: 'A'} );
+var B = board.create('point', [3,4], {size: 0, strokeColor: '#006ae0', fillColor: '#006ae0', name: 'B'} );
 var A1 = board.create('point', [
-	function() { return B.X()+A.X(); },
-	function() { return B.Y()+A.Y(); }
-], {size: 2, strokeColor: '#ff0000', fillColor: '#ff0000', name: 'A'} );
-var lijn = board.create('line', [B, A1], { strokeColor: '#ff8f00', strokeWidth: 2, dash: 3 } );
-var vecA = board.create('arrow', [B, A1], {strokeColor: '#ff0000'} );
-var vecB = board.create('arrow', [[0,0], B], {strokeColor: '#006ae0',fixed:true} );
-var vecrichting = board.create('arrow', [[0,0], A], {strokeColor: '#ff0000',fixed:true} );
+	function() { return B.X()-A.X(); },
+	function() { return B.Y()-A.Y(); }
+], {size: 0, strokeColor: '#ff0000', fillColor: '#ff0000', name: ''} );
+var lijn = board.create('line', [B, A], { strokeColor: '#ff8f00', strokeWidth: 2, dash: 3 } );
+var vecAB = board.create('arrow', [A, B], {strokeWidth: 3, strokeColor: '#ff0000'} );
+var vecA = board.create('arrow', [[0,0], A], {strokeWidth: 3, strokeColor: '#006ae0',fixed:false} );
+//var vecrichting = board.create('arrow', [[0,0], A1], {strokeColor: '#ff0000',fixed:true} );
 var lambda = board.create('slider', [ [-11,9], [-7,9], [-5,1,5] ], {
 	name: '&lambda;',
 	strokeColor: '#ff0000',
@@ -97,10 +95,10 @@ var lambda = board.create('slider', [ [-11,9], [-7,9], [-5,1,5] ], {
 	}
 	);
 var punt = board.create('point', [
-	function() { return B.X()+ lambda.Value()*A.X(); },
-	function() { return B.Y()+ lambda.Value()*A.Y(); }
+	function() { return A.X()+ lambda.Value()*A1.X(); },
+	function() { return A.Y()+ lambda.Value()*A1.Y(); }
 	],
-	{ name: '', size: 1, strokeColor: '#ff8f00', fillColor: '#ff8f00', trace: true }
+	{ name: '', size: 0.5, strokeColor: '#ff8f00', fillColor: '#ff8f00' }
 	);
 		function clearTrace() {
 			punt.clearTrace();
@@ -108,14 +106,13 @@ var punt = board.create('point', [
 		A.on('drag', function() { clearTrace(); } );
 		B.on('drag', function() { clearTrace(); } );
 
-var veclijn = board.create('arrow', [B, punt], {strokeColor: '#ff0000'} );
-//var vec = board.create('arrow', [[0,0], punt], {strokeColor: '#ff8f00'} );
+var veclijn = board.create('arrow', [A, punt], {strokeColor: '#ff0000'} );
 
 board.create('text',[2.2,-7, function() {
 	$('#sv1').html(A.X().toFixed(2));
-	$('#rv1').html(B.X().toFixed(2));
+	$('#rv1').html(A1.X().toFixed(2));
 	$('#sv2').html(A.Y().toFixed(2));
-	$('#rv2').html(B.Y().toFixed(2));
+	$('#rv2').html(A1.Y().toFixed(2));
 	return '';
 	}
 	]);
