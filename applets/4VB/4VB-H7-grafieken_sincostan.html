@@ -19,7 +19,7 @@
 <p>De grafiek van \(y=\sin(x)\):</p>
 
 <div id="left" style="width: 300px; height: 300px; float: left; margin-right: 5px"></div>
-<div id="right" style="width: 550px; height: 300px; float: left;"></div>
+<div id="right" style="width: 650px; height: 300px; float: left;"></div>
 
 
 <script >
@@ -33,6 +33,7 @@
 		settingsMenu: false,
 		border: true,
 		});
+
     calculator.setMathBounds({
       	left: -2.5,
       	right: 2.5,
@@ -46,11 +47,16 @@
     	zoomButtons: false,
     	settingsMenu: false,
     	});
+
+    calculator2.updateSettings({
+        xAxisStep: 3.14,
+      });
+
     calculator2.setMathBounds({
       	left: -6.5,
       	right: 13,
       	bottom: -2.5,
-      	top: 2.5
+      	top: 2.5,
     	});
 
     calculator.setExpressions([
@@ -79,14 +85,14 @@
       	return (2*x*Math.PI).toFixed(2)
     	}
 
-	a.observe('numericValue', 
-		function() {    
+	a.observe('numericValue',
+		function() {
     		calculator.setExpression({id: 'puntA', label: computeLabel(a.numericValue)});
     		});
 
     a.observe('numericValue', function () {
        	calculator2.setExpressions([
-       	{id: 'vlijn2', 
+       	{id: 'vlijn2',
        	latex: 'x=2*\\pi*' + a.numericValue + '\\{0<y<\\sin(2*\\pi*' + a.numericValue + '),\\sin(2*\\pi*' + a.numericValue + ')<y<0\\}',
       	color: 'red'
       	},
@@ -112,14 +118,14 @@
       	},
      	]);
 		});
-		
+
 //	calculator2.updateSettings({xAxisStep: 3.14});
   </script>
 
 <p style="clear: both;  padding-top: 30px;">De grafiek van \(y=\cos(x)\):</p>
 
 <div id="left2" style="width: 300px; height: 300px; float: left; margin-right: 5px"></div>
-<div id="right2" style="width: 550px; height: 300px; float: left; margin-right: 5px"></div>
+<div id="right2" style="width: 650px; height: 300px; float: left; margin-right: 5px"></div>
 
 <script >
     var elt3 = document.getElementById('left2');
@@ -145,6 +151,11 @@
     	zoomButtons: false,
     	settingsMenu: false,
     	});
+
+    calculator4.updateSettings({
+          xAxisStep: 3.14,
+        });
+
     calculator4.setMathBounds({
       	left: -6.5,
       	right: 13,
@@ -174,7 +185,7 @@
     	{latex: 'g(x)=\\cos(x)', color: '#DDDDDD'},
     	]);
 
-	b.observe('numericValue', function() {    
+	b.observe('numericValue', function() {
     	calculator3.setExpression({id: 'puntB', label: computeLabel(b.numericValue)});
     		});
 
@@ -213,7 +224,7 @@
 <p style="clear: both;  padding-top: 30px;">De grafiek van \(y=\tan(x)\):</p>
 
 <div id="left3" style="width: 300px; height: 300px; float: left; margin-right: 5px"></div>
-<div id="right3" style="width: 550px; height: 300px; float: left; margin-right: 5px"></div>
+<div id="right3" style="width: 650px; height: 300px; float: left; margin-right: 5px"></div>
 
 <script >
     var elt5 = document.getElementById('left3');
@@ -239,6 +250,11 @@
     	zoomButtons: false,
     	settingsMenu: false,
     	});
+      
+    calculator6.updateSettings({
+          xAxisStep: 3.14,
+        });
+
     calculator6.setMathBounds({
       	left: -6.5,
       	right: 13,
@@ -270,8 +286,8 @@
     	{latex: 'h(x)=\\tan(x)', color: '#DDDDDD'},
     	{latex: 'x=[.5,1.5,2.5,3.5,-.5,-1.5]*\\pi', color: '#DDDDDD', style: Desmos.Styles.DASHED},
     	]);
-    	
-	c.observe('numericValue', function() {    
+
+	c.observe('numericValue', function() {
     	calculator5.setExpression({id: 'puntC', label: computeLabel(c.numericValue)});
     		});
 
