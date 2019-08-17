@@ -14,7 +14,7 @@ MathJax.Hub.processSectionDelay = 0;
 </script>
 
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraphcore.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 
 <title>Domein en bereik</title>
@@ -83,10 +83,10 @@ MathJax.Hub.processSectionDelay = 0;
 		function() { return f(xcoord.Value()); }
 		]
 		, { name:'' });
-	var bereikpunt = board.create('point', [0, function() { return f(xcoord.Value()); }], {color:'green', trace: true, size: 1, name:'' });
-	var bereikpijl = board.create('segment', [punt, bereikpunt], {color: 'green', strokeWidth:1, lastArrow: true });
-	var domeinpunt = board.create('point', [function() { return xcoord.Value(); }, 0], {color:'blue', trace: true, size: 1, name:''});
-	var domeinpijl = board.create('segment', [punt, domeinpunt], { strokeWidth:1, color: 'blue', lastArrow: true});
+	var bereikpunt = board.create('point', [0, function() { return f(xcoord.Value()); }], {color:"#009a0a", trace: true, size: 1, name:'' });
+	var bereikpijl = board.create('segment', [punt, bereikpunt], {color: "#009a0a", strokeWidth:1, lastArrow: true });
+	var domeinpunt = board.create('point', [function() { return xcoord.Value(); }, 0], {color:"#006ae0", trace: true, size: 1, name:''});
+	var domeinpijl = board.create('segment', [punt, domeinpunt], { strokeWidth:1, color: "#006ae0", lastArrow: true});
 
 	board.update();
 	board0.addChild(board);
@@ -157,10 +157,10 @@ MathJax.Hub.processSectionDelay = 0;
 		function() { return g(xcoord1.Value()); }
 		]
 		, { name:'' });
-	var bereikpunt2 = board2.create('point', [0, function() { return g(xcoord1.Value()); }], {color:'green', trace: true, size: 1, name:'' });
-	var bereikpijl2 = board2.create('segment', [punt2, bereikpunt2], {color: 'green', strokeWidth:1, lastArrow: true });
-	var domeinpunt2 = board2.create('point', [function() { return xcoord1.Value(); }, 0], {color:'blue', trace: true, size: 1, name:''});
-	var domeinpijl2 = board2.create('segment', [punt2, domeinpunt2], { strokeWidth:1, color: 'blue', lastArrow: true});
+	var bereikpunt2 = board2.create('point', [0, function() { return g(xcoord1.Value()); }], {color:"#009a0a", trace: true, size: 1, name:'' });
+	var bereikpijl2 = board2.create('segment', [punt2, bereikpunt2], {color: "#009a0a", strokeWidth:1, lastArrow: true });
+	var domeinpunt2 = board2.create('point', [function() { return xcoord1.Value(); }, 0], {color:"#006ae0", trace: true, size: 1, name:''});
+	var domeinpijl2 = board2.create('segment', [punt2, domeinpunt2], { strokeWidth:1, color: "#006ae0", lastArrow: true});
 
 	board2.update();
 	board1.addChild(board2);
