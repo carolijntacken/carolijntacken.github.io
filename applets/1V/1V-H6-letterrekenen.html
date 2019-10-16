@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
+<!-- <script src="https://code.jquery.com/jquery-latest.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+	</script>
+	<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+	<!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script> -->
+	
 <title>Herleiden</title>
 <style>
 body 
@@ -82,7 +89,7 @@ function smartList(event) {
 <body>
 <h1>Rekenen met letters</h1>
 
-<p>Bereken eerst zelf het antwoord en kijk het na.<br />
+<p>Bereken eerst zelf het antwoord en kijk het na door op het vraagtekentje te klikken.<br />
 Oefen elke vorm net zo lang tot je er minstens 5 foutloos achter elkaar kunt maken!</p>
 
 <div style="float: left;" class="scope" id="opg1">

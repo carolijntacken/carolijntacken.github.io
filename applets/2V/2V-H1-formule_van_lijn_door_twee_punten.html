@@ -70,9 +70,8 @@ MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
 });
 </script>
-
-
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+<!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script> -->
 
 <script type="text/javascript">
 var GVSpecificNumInSeq = 157;
@@ -335,7 +334,7 @@ xdiff = Math.abs(xpt2-xpt1);
 slopeKeuze = [0,1,-1,2,-2,3,-3,4,-4,5,-5,6,-6,7,-7,8,-8,9,-9,10,-10,15,-15,20,-20]
 ydiffKeuze = rand(0,24);
 ypt2 = ypt1 + xdiff * slopeKeuze[ydiffKeuze]; //tot hier
-ques = "Geef de formule van de lijn door de punten $(" + xpt1 + "," + ypt1 + ")$ en $\\,(" + xpt2 + "," + ypt2 + ")\\,$.";
+ques = "Geef de formule van de lijn door de punten \\((" + xpt1 + "," + ypt1 + ")\\) en \\((" + xpt2 + "," + ypt2 + ")\\).";
 slm = simpform(ypt2 - ypt1,xpt2 - xpt1);
 slnum = (ypt2 - ypt1) / (xpt2 - xpt1);
 slmd = slm; // slmd, the displayed version, may get changed below!
@@ -371,20 +370,20 @@ yintd = " - " + numer*-1; start = numer;}
 if (piecesy[0]==1 && numer==0) {
 yintd = ""; start = 0} // if b=0, don't append anything!
 if (setflag==999) {
-answer1 = preview + "<p>eerst hellingsgetal berekenen: <br/> $a=\\dfrac{" + ypt2 + "-" + ypt1 + "}{" + xpt2 	+ "-" + xpt1 + "}=0$</p>";
+answer1 = preview + "<p>eerst hellingsgetal berekenen: <br/> \\(a=\\dfrac{" + ypt2 + "-" + ypt1 + "}{" + xpt2 	+ "-" + xpt1 + "}=0\\)</p>";
 answer2 = "<p>dus de lijn loopt horizontaal</p>"
-answer3 = "<p>de formule is dan $" + "y = " + ypt2 + "$</p>"; }
+answer3 = "<p>de formule is dan \\(" + "y = " + ypt2 + "\\)</p>"; }
 else {
 ax = simpformTeX((ypt2 - ypt1)*xpt1,xpt2 - xpt1);
 startgetal = simpformTeX(numer,denom);
-answer1 = preview + "<p>eerst hellingsgetal berekenen: <br/> $a=\\dfrac{" + ypt2 + "-" + ypt1 + "}{" + xpt2 + "-" + xpt1 + "}=" + helling + "$</p>";
-answer2 = "<p>dan weet je dat $" + "y = " + slmd + "x+b $</p>";
-answer3 = "<p>de lijn gaat door $(" + xpt1 + ",\\," + ypt1 + ")$<br/>"
-+ "punt invullen: $\\begin{array}[t]{l}" + ypt1  + "=" + helling + "\\cdot " + xpt1 + "+b\\\\ "
+answer1 = preview + "<p>eerst hellingsgetal berekenen: <br/> \\(a=\\dfrac{" + ypt2 + "-" + ypt1 + "}{" + xpt2 + "-" + xpt1 + "}=" + helling + "\\)</p>";
+answer2 = "<p>dan weet je dat \\(" + "y = " + slmd + "x+b \\)</p>";
+answer3 = "<p>de lijn gaat door \\((" + xpt1 + ",\\," + ypt1 + ")\\)<br/>"
++ "punt invullen: \\(\\begin{array}[t]{l}" + ypt1  + "=" + helling + "\\cdot " + xpt1 + "+b\\\\ "
 + ypt1  + "=" + ax + "+b\\\\"
 + "b = " + start + "\\\\"
-+ "\\end{array}$</p>"
-+ "<p>$" + "y = " + slmd + "x" + yintd + "$</p>"; }
++ "\\end{array}\\)</p>"
++ "<p>\\(" + "y = " + slmd + "x" + yintd + "\\)</p>"; }
 probTypeGV = n;
 document.getElementById('stap1').innerHTML = ""; // clear answer field
 document.getElementById('stap2').innerHTML = ""; // clear answer field
