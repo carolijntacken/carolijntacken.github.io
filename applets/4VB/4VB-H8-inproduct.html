@@ -35,7 +35,7 @@
 3. En als het inproduct kleiner is dan 0?</p>
 
 <p><div class="cmid">Hieronder zie je de vectoren <br>
-	\( \vec{a} = \left(\begin{array}{c}
+	<span style="font-size: 20px">\( \vec{a} = \left(\begin{array}{c}
 	a_1\\
 	a_2
 	\end{array}\right)
@@ -56,11 +56,12 @@
 		<span id='valueB2' style='color: #006ae0'></span><br>
 	</div>
 	\(\bigg)
-	\)
+	\)</span>
 </div>
 </p>
 
-<p>Het inproduct van vector \(\vec{a}\) en \(\vec{b}\) is \(\vec{a}\cdot\vec{b}=a_1\cdot b_1+a_2\cdot b_2={}\)
+<p>Het inproduct van vector \(\vec{a}\) en \(\vec{b}\) is<br> 
+	<span style="font-size: 20px">\(\vec{a}\cdot\vec{b}=a_1\cdot b_1+a_2\cdot b_2={}\)
 	<span id='valueA1a' style='color: red'></span>
 	\({}\cdot{}\)
 	<span id='valueB1a' style='color: #006ae0'></span>
@@ -69,9 +70,22 @@
 	\({}\cdot{}\)
 	<span id='valueB2a' style='color: #006ae0'></span>
 	\({}={}\)
-	<span id='uitkomst'></span>
+	<span id='uitkomst'></span></span>
 
 <div id="jxgbox1" class="jxgbox" style="width:650px; height:450px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
+
+<p style="clear: left; padding-top: 2em;">Een andere vorm voor het inproduct is<br>
+	<span style="font-size: 20px">\(\vec{a}\cdot\vec{b}=|\vec{a}|\cdot|\vec{b}|\cdot\cos(\alpha)={}\)
+		<span id='lenA' style='color: red'></span>
+		\({}\cdot{}\)
+		<span id='lenB' style='color: #006ae0'></span>
+		\({}\cdot\cos(\)
+		<span id='hoek'></span>
+		\()={}\)
+		<span id='uitkomst2'></span></span>
+	</span>
+</p>
+
 <script type='text/javascript'>
 JXG.Options = JXG.merge(JXG.Options, {
     axis: {
@@ -97,11 +111,23 @@ var B = board.create('point', [-4,2], {size: 2, strokeColor: '#006ae0', fillColo
 B.setProperty({
     snapToGrid: true, snapSizeX: 0.5, snapSizeY: 0.5
 });
+var O =board.create('point',[0,0],{fixed:true, size:0, withLabel: false});
 var vecA = board.create('arrow', [[0,0], A], {strokeColor: '#ff0000',fixed:true} );
 var vecB = board.create('arrow', [[0,0], B], {strokeColor: '#006ae0',fixed:true} );
 
+var hoekvectoren = board.create('nonreflexangle',[A,O,B],{
+	color: '#ff8f00',
+	label:{offset:[-20,-7], color: 'black'} 
+	});
+hoekvectoren.label.setText(function () {
+    return (hoekvectoren.Value() * 180 / Math.PI).toFixed(1) + '&deg;';
+})
+
 board.create('text',[-1.5,8.9, function() {
 	var inprod = A.X()*B.X()+A.Y()*B.Y();
+	var lengteA = Math.sqrt(A.X()*A.X()+A.Y()*A.Y()).toFixed(2);
+	var lengteB = Math.sqrt(B.X()*B.X()+B.Y()*B.Y()).toFixed(2);
+	var hoek = (hoekvectoren.Value() * 180 / Math.PI).toFixed(1);
 	$('#valueA1').html(A.X());
 	$('#valueB1').html(B.X());
 	$('#valueA2').html(A.Y());
@@ -111,6 +137,10 @@ board.create('text',[-1.5,8.9, function() {
 	$('#valueA2a').html(A.Y());
 	$('#valueB2a').html(B.Y());
 	$('#uitkomst').html(inprod);
+	$('#uitkomst2').html(inprod);
+	$('#lenA').html(lengteA);
+	$('#lenB').html(lengteB);
+	$('#hoek').html(hoek);
 	return '';
 	}
 	]);
