@@ -9,7 +9,7 @@
 </script>
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.6/jsxgraphcore.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsxgraph/0.99.7/jsxgraphcore.js"></script>
 
 <title>Bijzondere lijnen in driehoeken</title>
 
@@ -83,7 +83,6 @@ function bissectrices(){
 		bissA = board.create('bisector',[B,A,C], {strokeColor: '#006ae0', highlight:false} );
 		bissB = board.create('bisector',[A,B,C], {strokeColor: '#006ae0', highlight:false} );
 		bissC = board.create('bisector',[B,C,A], {strokeColor: '#006ae0', highlight:false} );
-		document.getElementById('tekst').innerHTML = '<p>Een bissectrice van een hoek deelt die hoek middendoor.</p><p>De drie bissectrices in een driehoek gaan door één punt, dat punt is het middelpunt van de ingeschreven cirkel (de cirkel die in de driehoek ligt en raakt aan alle drie de zijden).</p><p>Voor elk punt op de bissectrice geldt dat het gelijke afstanden heeft tot de beide benen van de hoek. En omgekeerd: als een punt gelijke afstanden heeft tot de benen van een hoek dan ligt dat punt op de bissectrice van die hoek.'
 	} else {
 		board.removeObject(bissA);
 		board.removeObject(bissB);
@@ -115,7 +114,6 @@ function hoogtelijnen(){
 		hoogA = board.create('perpendicular',[A,lijnBC], {strokeColor: 'red', highlight:false} );
 		hoogB = board.create('perpendicular',[B,lijnAC], {strokeColor: 'red', highlight:false} );
 		hoogC = board.create('perpendicular',[C,lijnAB], {strokeColor: 'red', highlight:false} );
-		document.getElementById('tekst').innerHTML = '<p>Een hoogtelijn gaat door een hoekpunt van de driehoek en staat loodrecht op de zijde ertegenover.</p><p>De drie hoogtelijnen in een driehoek gaan door één punt, het hoogtepunt.</p>'
 	} else {
 		board.removeObject(hoogA);
 		board.removeObject(hoogB);
@@ -141,7 +139,6 @@ function zwaartelijnen(){
 		// h = board.create('hatch',[segmentAC,2], {anchor: 0.75});
 		// h = board.create('hatch',[segmentBC,3], {anchor: 0.25});
 		// h = board.create('hatch',[segmentBC,3], {anchor: 0.75}); 
-		document.getElementById('tekst').innerHTML = 'Een zwaartelijn gaat door een hoekpunt van de driehoek en door het midden van de zijde ertegenover.</p><p>De drie zwaartelijnen in een driehoek gaan door één punt, het zwaartepunt.</p><p>De zwaartelijnen verdelen elkaar in stukken die zich verhouden als 2 : 1.</p>'
 	} else {
 		board.removeObject(zwaarA);
 		board.removeObject(zwaarB);
@@ -164,7 +161,6 @@ function middelloodlijnen(){
 		mllAB = board.create('perpendicular',[middenAB2,lijnAB], {strokeColor: '#009a0a', highlight:false} );
 		mllBC = board.create('perpendicular',[middenBC2,lijnBC], {strokeColor: '#009a0a', highlight:false} );
 		mllAC = board.create('perpendicular',[middenAC2,lijnAC], {strokeColor: '#009a0a', highlight:false} );
-		document.getElementById('tekst').innerHTML = '<p>Een middelloodlijn gaat door het midden van een zijde en staat er loodrecht op. </p><p>De drie middelloodlijnen van een driehoek gaan door één punt en dat punt is het middelpunt van de omgeschreven cirkel.</p><p>Voor elk punt op de middelloodlijn van AB geldt dat de afstand tot A en tot B hetzelfde is. En omgekeerd: elk punt met gelijke afstanden tot A en tot B ligt op de middelloodlijn van AB.';
 	} else {
 		board.removeObject(mllAB);
 		board.removeObject(mllBC);
@@ -197,9 +193,22 @@ function omcirkel(){
 
 
 <div style='height:  10em;'>
-	<div id='tekst'>
-
-	</div>
+	<p>Een <span style="color: #006ae0">bissectrice</span> van een hoek deelt die hoek middendoor.</br>
+		De drie bissectrices in een driehoek gaan door één punt, dat punt is het middelpunt van de ingeschreven cirkel (de cirkel die in de driehoek ligt en raakt aan alle drie de zijden).</br>
+		Voor elk punt op de bissectrice geldt dat het gelijke afstanden heeft tot de beide benen van de hoek. En omgekeerd: als een punt gelijke afstanden heeft tot de benen van een hoek dan ligt dat punt op de bissectrice van die hoek.
+	</p>
+	<p>Een <span style="color: red">hoogtelijn</span> gaat door een hoekpunt van de driehoek en staat loodrecht op de zijde ertegenover.</br>
+		De drie hoogtelijnen in een driehoek gaan door één punt, het hoogtepunt.
+	</p>
+	<p>Een <span style="color: #ff8f00">zwaartelijn</span> gaat door een hoekpunt van de driehoek en door het midden van de zijde ertegenover.</br>
+		De drie zwaartelijnen in een driehoek gaan door één punt, het zwaartepunt.</br>
+		De zwaartelijnen verdelen elkaar in stukken die zich verhouden als 2 : 1.
+	</p>
+	<p>Een <span style="color: #009a0a">middelloodlijn</span> gaat door het midden van een zijde en staat er loodrecht op. </br>
+		De drie middelloodlijnen van een driehoek gaan door één punt en dat punt is het middelpunt van de omgeschreven cirkel.</br>
+		Voor elk punt op de middelloodlijn van AB geldt dat de afstand tot A en tot B hetzelfde is. En omgekeerd: elk punt met gelijke afstanden tot A en tot B ligt op de middelloodlijn van AB.
+	</p>
+	
 </div>
 
 <footer>
