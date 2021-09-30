@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script type="text/javascript" src="../jsxgraphcore.js"></script>
+
+<script>
+	document.createElement('footer')
+</script>
+
+<title>Symmetrie in grafieken</title>
+
+<body>
+
+<h2>Lijnsymmetrie</h2>
+<p>De grafiek van een functie \(f\) in het plaatje hieronder is symmetrisch in de \(y\)-as.<br />
+
+Op de grafiek van \(f\) liggen twee punten, een met \(x\)-co&ouml;rdinaat \(a\) en de ander met \(x\)-co&ouml;rdinaat \(-a\). Wat weet je van de \(y\)-co&ouml;rdinaten van deze twee punten?<br />
+Je kunt de punten verslepen met behulp van punt A.
+</p>
+
+<div id="box" class="jxgbox" style="float: left; width:600px; height:600px; margin-bottom:1em;"></div>
+
+<p style="clear: left; padding-top: 2em;">De grafiek van de functie \(f\) is symmetrisch in de \(y\)-as als voor elke \(a\) geldt \(f(a) = f(-a)\).</p>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		elements: {
+			highlight:false
+		},
+	});
+	board = JXG.JSXGraph.initBoard('box', {
+		showCopyright: false,
+		showNavigation: false,
+		axis:true,
+		grid: true,
+		boundingbox: [-5, 5, 5, -5]
+		});
+	var xas = board.create('line', [[0,0], [1,0]], { visible:false });
+	var projectiePopx = board.create('glider',[1.5,0,xas], {color:'#888', size:1} );
+	var f = function(x){ return 0.25*Math.pow(x,4)-2.5*Math.pow(x,2)+2; }
+	var plot = board.create('functiongraph',[f], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
+	var P = board.create('point', [
+		function() { return projectiePopx.X(); },
+		function() { return f(projectiePopx.X()); }
+		]
+		, { name:''});
+	var Q = board.create('point', [
+		function() { return -1*projectiePopx.X(); },
+		function() { return f(-1*projectiePopx.X()); }
+		]
+		, { name:'', color:'#009a0a' });
+	var projectieQopx = board.create('point', [
+		function() { return -1*projectiePopx.X(); },
+		0
+		]
+		, { name:'', color:'#888', size:1 });
+	var R = board.create('point', [
+		0,
+		function() { return f(projectiePopx.X()); }
+		]
+		, {name:'', color:'#888', size:1 });
+	board.create('segment',[projectiePopx,P], { strokeWidth:2, color: 'red', dash:2 });
+	board.create('segment',[projectieQopx,Q], { strokeWidth:2, color: 'red', dash:2 });
+	board.create('segment',[P,R], { strokeWidth:2, color: 'red', dash:2 });
+	board.create('segment',[Q,R], { strokeWidth:2, color: 'red', dash:2 });
+	board.create('text',[
+		function() { return 0.5*projectiePopx.X(); },
+		function() { return f(projectiePopx.X()); },
+		'II'
+		], { color:'red', fontSize:18 } );
+	board.create('text',[
+		function() { return -0.5*projectiePopx.X(); },
+		function() { return f(projectiePopx.X()); },
+		'II'
+		], { color:'red', fontSize:18 } );
+	board.update();
+</script>
+
+
+<h2>Puntsymmetrie</h2>
+
+<p>De grafiek van een functie \(f\) in het plaatje hieronder is symmetrisch in het punt \((0, 0)\).<br />
+
+Op de grafiek van \(f\) liggen twee punten, een met \(x\)-co&ouml;rdinaat \(a\) en de ander met \(x\)-co&ouml;rdinaat \(-a\). Wat weet je van de \(y\)-co&ouml;rdinaten van deze twee punten?<br />
+Je kunt de punten verslepen met behulp van punt A.
+</p>
+
+<div id="box1" class="jxgbox" style="float: left; width:600px; height:600px; margin-bottom:1em;"></div>
+
+<p style="clear: left; padding-top: 2em;">De grafiek van de functie \(f\) is symmetrisch in het punt \((0, 0)\) als voor elke \(a\) geldt \(f(-a) = -f(a)\).</p>
+
+<script type="text/javascript">
+	JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		elements: {
+			highlight:false
+		},
+	});
+	board1 = JXG.JSXGraph.initBoard('box1', {
+		showCopyright: false,
+		showNavigation: false,
+		axis:true,
+		grid: true,
+		boundingbox: [-5, 5, 5, -5]
+		});
+	var xas1 = board1.create('line', [[0,0], [1,0]], { visible:false });
+	var projectieAopx = board1.create('glider',[2,0,xas1], { color:'gray', size:1});
+	var g = function(x){ return 0.25*Math.pow(x,3)-2.5*x; }
+	var puntab = board1.create('point',[0,0], { color:'#006ae0', name: '', label:{ color:'#006ae0', fontSize:20, offset:[5,20] } });
+	var plot1 = board1.create('functiongraph',[g], {strokeWidth:2,strokeOpacity:0.8,strokeColor:'black'});
+	var A = board1.create('point', [
+		function() { return projectieAopx.X(); },
+		function() { return g(projectieAopx.X()); }
+		]
+		, { name:'' });
+	var B = board1.create('point', [
+		function() { return -A.X(); },
+		function() { return g(-A.X()); }
+		]
+		, { name:'', color:'#009a0a' });
+	var projectieA = board1.create('point', [
+		function() { return A.X(); },
+		0
+		]
+		, { name:'', color:'#888', size:1 });
+	var projectieB = board1.create('point', [
+		function() { return -A.X(); },
+		0
+		]
+		, { name:'', color:'#888', size:1 });
+	board1.create('segment',[puntab,A], { strokeWidth:2, color: 'gray', dash:2 });
+	board1.create('segment',[puntab,B], { strokeWidth:2, color: 'gray', dash:2 });
+	board1.create('segment',[[ function() { return B.X(); },0],B], { strokeWidth:2, color: 'blue', dash:2 });
+	board1.create('segment',[puntab,projectieA], { strokeWidth:2, color: 'red', dash:2 });
+	board1.create('segment',[puntab,projectieB], { strokeWidth:2, color: 'red', dash:2 });
+	board1.create('segment',[projectieA,A], { strokeWidth:2, color: 'red', dash:2 });
+	board1.create('segment',[projectieB,B], { strokeWidth:2, color: 'red', dash:2 });
+	board1.create('text',[
+		function() { return 0.5*A.X()-0.1; },
+		0,
+		'II'
+		], { color:'red', fontSize:18 } );
+	board1.create('text',[
+		function() { return -0.5*A.X()-0.1; },
+		0,
+		'II'
+		], { color:'red', fontSize:18 } );
+	board1.update();
+</script>
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>

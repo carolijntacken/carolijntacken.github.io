@@ -18,15 +18,15 @@
 
 <h2>Vermenigvuldigen van complexe getallen: kwadraten</h2>
 <p>
-In de applet hieronder is het punt (complexe getal) \(z_1\) en zijn kwadraat \(z\) getekend.<br/>
-Versleep het punt \(z_1\) en kijk wat er gebeurt.</p>
+In de applet hieronder is het punt (complexe getal) \(z\) en zijn kwadraat \(z^2\) getekend.<br/>
+Versleep het punt \(z\) en kijk wat er gebeurt met \(z^2\).</p>
 
 Beantwoord de volgende vragen.
 <ol>
-<li>Voor welke getallen \(z_1\) geldt dat het kwadraat, dus het punt \(z\), op de re&euml;le as terecht komt?</li>
-<li>En voor welke getallen \(z_1\) komt het kwadraat op de imaginaire as terecht?</li>
-<li>Welk verband is er tussen het argument van \(z_1\) en dat van \(z\)?</li>
-<li>Welk verband is er tussen de moduli van \(z_1\) en \(z\)?
+<li>Voor welke getallen \(z\) geldt dat het kwadraat, dus het punt \(z^2\), op de re&euml;le as terecht komt?</li>
+<li>En voor welke getallen \(z\) komt het kwadraat op de imaginaire as terecht?</li>
+<li>Welk verband is er tussen het argument van \(z\) en dat van \(z^2\)?</li>
+<li>Welk verband is er tussen de moduli van \(z\) en \(z^2\)?
 </ol>
 
 
@@ -81,44 +81,42 @@ line7 = board.create('segment',[
 
 var p1 = board.create('point', [0,0], {visible:false});
 var p2 = board.create('point', [10,0], {visible:false});
-var z1 = board.create('point', [2.5,-.8], {strokeColor: '#009a0a', fillColor: '#009a0a', labelColor: '#009a0a', name: 'z<sub>1</sub>'});
+var z1 = board.create('point', [2.5,-.8], {strokeColor: '#009a0a', fillColor: '#009a0a', labelColor: '#009a0a', name: 'z'});
 	z1.label.setProperty({color:'#009a0a'});
 board.create('segment', [[0,0],z1], {strokeColor: '#009a0a'});
 z1.on('drag', function () {
 	var signY1 = ' + ';
 	if ( this.Y() < 0)
 		signY1 =' &ndash; ';
-	document.getElementById('coordsz1').innerHTML = 'z<sub>1</sub> = ' + this.X().toFixed(2) + signY1 + Math.abs(this.Y().toFixed(2)) + 'i';
-	document.getElementById('modulusz1').innerHTML = '|z<sub>1</sub>| = ' + z1.Dist(p1).toFixed(2);
-	document.getElementById('argumentz1').innerHTML = 'arg(z<sub>1</sub>) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z1).toFixed(1) + '&deg;';
+	document.getElementById('coordsz1').innerHTML = 'z = ' + this.X().toFixed(2) + signY1 + Math.abs(this.Y().toFixed(2)) + 'i';
+	document.getElementById('modulusz1').innerHTML = '|z| = ' + z1.Dist(p1).toFixed(2);
+	document.getElementById('argumentz1').innerHTML = 'arg(z) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z1).toFixed(1) + '&deg;';
 	var signY = ' + ';
 	if ( z.Y() < 0)
 		signY=' &ndash; ';
-	document.getElementById('coordsz').innerHTML = 'z = ' + z.X().toFixed(2) + signY + Math.abs(z.Y().toFixed(2)) + 'i';
-	document.getElementById('modulusz').innerHTML = '|z| = ' + z.Dist(p1).toFixed(2);
-	document.getElementById('argumentz').innerHTML = 'arg(z) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z).toFixed(1) + '&deg;';
+	document.getElementById('coordsz').innerHTML = 'z<sup>2</sup> = ' + z.X().toFixed(2) + signY + Math.abs(z.Y().toFixed(2)) + 'i';
+	document.getElementById('modulusz').innerHTML = '|z<sup>2</sup>| = ' + z.Dist(p1).toFixed(2);
+	document.getElementById('argumentz').innerHTML = 'arg(z<sup>2</sup>) = ' + JXG.Math.Geometry.trueAngle(p2,p1,z).toFixed(1) + '&deg;';
 	});
 
 var z = board.create('point', [
 	function() { return z1.X()*z1.X()-z1.Y()*z1.Y(); },
 	function() { return z1.Y()*z1.X()+z1.X()*z1.Y(); }
-	], {strokeColor: 'red', name: 'z'});
+	], {strokeColor: 'red', name: 'z<sup>2</sup>'});
 	z.label.setProperty({color:'red'});
 board.create('segment', [[0,0],z], {strokeColor: 'red'});
 
-tekst = board.create('text',[-7,6.8,'z = (z_1)<sup>2</sup>']);
-tekst.setProperty({fontSize:24, color: 'red'});
 </script>
 
 <p>
-<span id="coordsz1", style="color: #009a0a">z<sub>1</sub> = 2.5 &ndash; 0.8i</span><br />
-<span id="modulusz1", style="color: #009a0a">|z<sub>1</sub>| = 2.62</span><br />
-<span id="argumentz1", style="color: #009a0a">arg(z<sub>1</sub>) = 342.26&deg;</span>
+<span id="coordsz1", style="color: #009a0a">z = 2.5 &ndash; 0.8i</span><br />
+<span id="modulusz1", style="color: #009a0a">|z| = 2.62</span><br />
+<span id="argumentz1", style="color: #009a0a">arg(z) = 342.26&deg;</span>
 </p>
 <p>
-<span id="coordsz", style="color: red">z = 5.83 + 5.30i</span><br />
-<span id="modulusz", style="color: red">|z| = 7.87</span><br />
-<span id="argumentz", style="color: red">arg(z) = 42.26&deg;</span>
+<span id="coordsz", style="color: red">z<sup>2</sup> = 5.83 + 5.30i</span><br />
+<span id="modulusz", style="color: red">|z<sup>2</sup>| = 7.87</span><br />
+<span id="argumentz", style="color: red">arg(z<sup>2</sup>) = 42.26&deg;</span>
 </p>
 
 
