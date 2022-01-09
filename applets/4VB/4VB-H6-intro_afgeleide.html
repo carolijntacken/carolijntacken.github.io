@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script>document.createElement('footer')</script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+
+
+<title>Zoom tangent</title>
+
+<body>
+<h2>Functie met raaklijn</h2>
+
+<div>
+	<p>Beweeg punt P en de bijbehorende raaklijn over de grafiek van \(f\).</p>
+</div>
+
+<p>De grafiek van \(f\):</p>
+<div id="calculator" style="width: 500px; height: 500px; float: left; margin-right: 20px;"></div>
+<div id="calculator2" style="float: left; width: 500px; height: 500px;"></div>
+
+
+<script >
+    var elt = document.getElementById('calculator');
+    var elt2 = document.getElementById('calculator2');
+    var valueElt = document.getElementById('value');
+
+	var calculator = Desmos.GraphingCalculator(elt, {
+        // expressions: false,
+		// lockViewport: true,
+		// zoomButtons: false,
+		// settingsMenu: false,
+		});
+    calculator.setExpression({
+        id: 'functie',
+        latex: 'f(x)=x^2',
+        color: '#006ae0',
+    })
+    calculator.setMathBounds({
+      	left: -10,
+      	right: 10,
+      	bottom: -5,
+      	top: 15
+    	});
+
+    var calculator2 = Desmos.GraphingCalculator(elt2, {
+    	expressions: false,
+    	settingsMenu: false,
+    	});
+    
+    calculator.setExpression({id: 'xcoord', latex: 'a=1'});
+    var a = calculator.HelperExpression({latex: 'a'});
+    
+    calculator.setExpression({
+    	id: 'puntA',
+    	latex: '(a, f(a))',
+    	color: 'red'
+    	});
+    calculator.setExpression({
+    	id: 'raaklijn',
+    	latex: "y=f'(a)(x-a)+f(a)",
+    	color: 'red'
+    	});
+
+    calculator2.setExpression({
+    	id: 'functie2',
+    	latex: 'g(x)=x^2',
+    	color: '#006ae0'
+    	});
+
+    a.observe('numericValue', function () {
+      	$(valueElt).text(a.numericValue);
+      	calculator2.setExpression({
+      		id: 'punt2', //zonder id wordt het punt niet geupdatet maar getracet
+      		latex: '('+a.numericValue+', g('+a.numericValue+'))',
+      		color: 'red'
+      		});
+        calculator2.setExpression({
+      		id: 'raaklijn2', //zonder id wordt het punt niet geupdatet maar getracet
+      		latex: "y=g'("+a.numericValue+")(x-"+a.numericValue+")+g("+a.numericValue+")",
+      		color: 'red'
+      		});
+    	});
+
+    calculator2.setExpression({id: 'zoom', latex: 'z=10'});
+
+    b.observe('numericValue', function () {
+        $(valueElt).text(b.numericValue);
+        calculator2.setMathBounds({
+      	left: a.numericValue-z,
+      	right: a.numericValue+z,
+      	bottom: -z,
+      	top: z,
+    	});
+    });
+
+  </script>
+
+
+<footer style="clear: both; padding-top: 30px;">
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+</body>
+</html>

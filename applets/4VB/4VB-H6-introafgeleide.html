@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" href="../main.css">
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<!-- <script type="text/javascript" src="../jsxgraphcore.js"></script> -->
+<script type="text/javascript" charset="UTF-8"
+ src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+
+<title>Helling</title>
+</head>
+
+
+<body>
+<h2>Helling</h2>
+
+
+<div  id="box1" class="jxgbox" style="float: left; margin-right: 20px; width:500px; height:500px;"></div>
+<div id="box2" class="jxgbox" style="float: left; width:500px; height:500px;"></div>
+
+<script type="text/javascript">
+
+var board1 = JXG.JSXGraph.initBoard('box1', {
+        boundingbox: [-10,10,10,-10],
+        showCopyright: true,
+        axis: true,
+        grid: true,
+		showNavigation: false
+    });
+
+var f = function(x) { return x*x; };
+var g = JXG.Math.Numerics.D(f);
+var fgr = board1.create('functiongraph',
+	[f, -10, 10],
+	{ strokeColor:'#006ae0', strokeWidth:3 }
+	);
+
+var xcoo = board1.create('slider', [[1,8],[7,8],[-10,2,10]], {name: 'x', snapWidth:.1,withTicks:false});
+var zoom = board1.create('slider', [[-8,-8],[-2,-8],[-2,1,1]], {name:'zoom', withTicks:false});
+var P = board1.create('point', [
+	function() {return xcoo.Value();},
+	function() {return f(xcoo.Value());}
+	], {name: 'P', label: {fontSize: 16}});
+
+var P2 = board1.create('point', [function() { return P.X()+1;}, function() {return P.Y()+g(P.X());}], {visible: false, name:''});
+raaklijn = board1.create('line', [P,P2],{strokeColor:'red'});
+
+xcoo.on('drag', function(){ board2.setBoundingBox([ xcoo.Value()-Math.pow(10,zoom.Value()),f(xcoo.Value())+Math.pow(10,zoom.Value()), xcoo.Value()+Math.pow(10,zoom.Value()) ,f(xcoo.Value())-Math.pow(10,zoom.Value())],  false, true ); });
+zoom.on('drag', function(){ board2.setBoundingBox([ xcoo.Value()-Math.pow(10,zoom.Value()),f(xcoo.Value())+Math.pow(10,zoom.Value()), xcoo.Value()+Math.pow(10,zoom.Value()) ,f(xcoo.Value())-Math.pow(10,zoom.Value())],  false, true ); });
+
+
+</script>
+
+<script type="text/javascript">
+var board2 = JXG.JSXGraph.initBoard('box2', {
+        boundingbox: [-10,10,10,-10],
+        showCopyright: false,
+		showNavigation: false,
+        axis: true,
+        grid: true,
+    });
+
+var fgrzoom = board2.create('functiongraph',
+	[f,-10,10],
+	{ strokeColor:'#006ae0', strokeWidth:3 }
+	);
+var Pzoom = board2.create('point',
+	[function() { return P.X();}, function() {return f(P.X());}],
+	{ name:'' }
+	);    
+
+var P3 = board2.create('point', [function() { return P.X()+1;}, function() {return P.Y()+g(P.X());}], {visible: false, name:''});
+raaklijnzoom = board2.create('line', [Pzoom,P3],{strokeColor:'red'});
+board1.addChild(board2);
+</script>
+
+<footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div>
+</footer>
+</body>
+</html>
