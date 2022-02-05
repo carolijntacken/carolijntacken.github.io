@@ -10,7 +10,10 @@
 <!-- <script type="text/javascript" src="../jsxgraphcore.js"></script> -->
 <script type="text/javascript" charset="UTF-8"
  src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+
+<script>
+	document.createElement('footer')
+</script>
 
 <title>Helling</title>
 </head>
@@ -24,13 +27,26 @@
 <div id="box2" class="jxgbox" style="float: left; width:500px; height:500px;"></div>
 
 <script type="text/javascript">
-
+JXG.Options = JXG.merge(JXG.Options, {
+		axis: {
+			ticks: { majorHeight : 10 }
+		},
+		slider: {
+			size: 3,
+		},
+	    text: {
+	    	fontSize: 16
+	    },
+		elements: {
+			highlight:false
+		},
+	});
 var board1 = JXG.JSXGraph.initBoard('box1', {
         boundingbox: [-10,10,10,-10],
-        showCopyright: true,
+        showCopyright: false,
+		showNavigation: false,
         axis: true,
         grid: true,
-		showNavigation: false
     });
 
 var f = function(x) { return x*x; };
