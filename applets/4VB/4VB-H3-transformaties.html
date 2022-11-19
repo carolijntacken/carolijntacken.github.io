@@ -20,7 +20,7 @@
 
 <h2>Transformaties</h2>
 <p>Gegeven is de functie \(f(x)=x^3-2x\).<br>
-	Beweeg de sliders om te kijken wat de invloed van \(a\), \(b\), \(c\), en \(d\) is op de grafiek van <span style="font-size: 20px">\(g(x) = a\cdot f(x-c)+d\)</span>.</p>
+	Beweeg de sliders om te kijken wat de invloed van \(a\), \(c\), en \(d\) is op de grafiek van <span style="font-size: 20px">\(g(x) = a\cdot f(x-c)+d\)</span>.</p>
 
 <p style="font-size: 28px">\(g(x)=\)
 	<span id="valueA" style="color: red"></span>
@@ -60,8 +60,9 @@
 		});
 	var a = board.create('slider',[[-5.5,4.5],[-3,4.5],[-6,1.00,6]], {style:6, snapWidth:0.1, name:'a', strokeColor:'red', baseline: {strokeColor: 'red'},
 	highline: {strokeColor: 'red'},withTicks:false});
-	var b = board.create('slider',[[-5.5,3.9],[-3,3.9],[-6,1,6]],{name:'b', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'},
-	highline: {strokeColor: '#006ae0'},withTicks:false});
+	// var b = board.create('slider',[[-5.5,3.9],[-3,3.9],[-6,1,6]],{name:'b', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'},
+	// highline: {strokeColor: '#006ae0'},withTicks:false});
+	var b = 1;
 	var c = board.create('slider',[[-5.5,3.3],[-3,3.3],[-6,0,6]],{name:'c', snapWidth:0.1, strokeColor:'#009a0a', baseline: {strokeColor: '#009a0a'},
 	highline: {strokeColor: '#009a0a'},withTicks:false});
 	var d = board.create('slider',[[-5.5,2.7],[-3,2.7],[-6,0,6]],{name:'d', snapWidth:0.1, strokeColor:'#ff8f00', baseline: {strokeColor: '#ff8f00'},
