@@ -58,7 +58,7 @@
 		axis:true,
 		boundingbox:[-6,5,6,-5]
 		});
-	var a = board.create('slider',[[-5.5,4.5],[-3,4.5],[-6,1.00,6]], {style:6, snapWidth:0.1, name:'a', strokeColor:'red', baseline: {strokeColor: 'red'},
+	var a = board.create('slider',[[-5.5,3.9],[-3,3.9],[-6,1.00,6]], {style:6, snapWidth:0.1, name:'a', strokeColor:'red', baseline: {strokeColor: 'red'},
 	highline: {strokeColor: 'red'},withTicks:false});
 	// var b = board.create('slider',[[-5.5,3.9],[-3,3.9],[-6,1,6]],{name:'b', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'},
 	// highline: {strokeColor: '#006ae0'},withTicks:false});
@@ -72,7 +72,7 @@
 	var C = board.create('point',[1.4142,0], {color:'#009a0a', size:3, name:''});
 	var D = board.create('point',[2,4], {color:'#ff8f00', size:3, name:''});
 
-	var f = function(x) {return a.Value()*(Math.pow(b.Value()*(x-c.Value()),3)-2*(b.Value()*(x-c.Value())))+d.Value(); }
+	var f = function(x) {return a.Value()*(Math.pow((x-c.Value()),3)-2*((x-c.Value())))+d.Value(); }
 
 	var fA = board.create('point',[
 		function() { return -0.5/b.Value()+c.Value(); },
