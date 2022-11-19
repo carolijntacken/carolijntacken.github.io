@@ -20,7 +20,7 @@
 
 <h2>Transformaties</h2>
 <p>Gegeven is de functie \(f(x)=x^3-2x\).<br>
-	Beweeg de sliders om te kijken wat de invloed van \(a\), \(b\), \(c\), en \(d\) is op de grafiek van <span style="font-size: 20px">\(g(x) = a\cdot f(x-c)+d\)</span>.</p>
+	Beweeg de sliders om te kijken wat de invloed van \(a\), \(c\), en \(d\) is op de grafiek van <span style="font-size: 20px">\(g(x) = a\cdot f(x-c)+d\)</span>.</p>
 
 <p style="font-size: 28px">\(g(x)=\)
 	<span id="valueA" style="color: red"></span>
@@ -29,7 +29,7 @@
 		<span id="valueB" style="color: #006ae0"></span>
 		<span id="haakjeopenen"></span>
 		\(x\)
-		<span id="valueC" style="color: #009a0a"></span>
+		<span id="valueC" style="color: #006ae0"></span>
 		<span id="haakjesluiten"></span>
 		\()\)
 	<span id="valueD" style="color: #ff8f00"></span>
@@ -60,34 +60,34 @@
 		});
 	var a = board.create('slider',[[-5.5,4.5],[-3,4.5],[-6,1.00,6]], {style:6, snapWidth:0.1, name:'a', strokeColor:'red', baseline: {strokeColor: 'red'},
 	highline: {strokeColor: 'red'},withTicks:false});
-	var b = board.create('slider',[[-5.5,3.9],[-3,3.9],[-6,1,6]],{name:'b', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'},
+	// var b = board.create('slider',[[-5.5,3.9],[-3,3.9],[-6,1,6]],{name:'b', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'},
+	// highline: {strokeColor: '#006ae0'},withTicks:false});
+	var c = board.create('slider',[[-5.5,3.9],[-3,3.9],[-6,0,6]],{name:'c', snapWidth:0.1, strokeColor:'#006ae0', baseline: {strokeColor: '#006ae0'},
 	highline: {strokeColor: '#006ae0'},withTicks:false});
-	var c = board.create('slider',[[-5.5,3.3],[-3,3.3],[-6,0,6]],{name:'c', snapWidth:0.1, strokeColor:'#009a0a', baseline: {strokeColor: '#009a0a'},
-	highline: {strokeColor: '#009a0a'},withTicks:false});
-	var d = board.create('slider',[[-5.5,2.7],[-3,2.7],[-6,0,6]],{name:'d', snapWidth:0.1, strokeColor:'#ff8f00', baseline: {strokeColor: '#ff8f00'},
+	var d = board.create('slider',[[-5.5,3.3],[-3,3.3],[-6,0,6]],{name:'d', snapWidth:0.1, strokeColor:'#ff8f00', baseline: {strokeColor: '#ff8f00'},
 	highline: {strokeColor: '#ff8f00'},withTicks:false});
 	var A = board.create('point',[-0.5,0.875], {color:'red', size:3, name:''});
 	var B = board.create('point',[1,-1], {color:'#006ae0', size:3, name:''});
 	var C = board.create('point',[1.4142,0], {color:'#009a0a', size:3, name:''});
 	var D = board.create('point',[2,4], {color:'#ff8f00', size:3, name:''});
 
-	var f = function(x) {return a.Value()*(Math.pow(b.Value()*(x-c.Value()),3)-2*(b.Value()*(x-c.Value())))+d.Value(); }
+	var f = function(x) {return a.Value()*(Math.pow((x-c.Value()),3)-2*((x-c.Value())))+d.Value(); }
 
 	var fA = board.create('point',[
-		function() { return -0.5/b.Value()+c.Value(); },
-		function() { return f(-0.5/b.Value()+c.Value());}
+		function() { return -0.5/1+c.Value(); },
+		function() { return f(-0.5/1+c.Value());}
 		], {color:'red', size:3, name:''});
 	var fB = board.create('point',[
-		function() { return 1/b.Value()+c.Value(); },
-		function() { return f(1/b.Value()+c.Value());}
+		function() { return 1/1+c.Value(); },
+		function() { return f(1/1+c.Value());}
 		], {color:'#006ae0', size:3, name:''});
 	var fC = board.create('point',[
-		function() { return 1.4142/b.Value()+c.Value(); },
-		function() { return f(1.4142/b.Value()+c.Value());}
+		function() { return 1.4142/1+c.Value(); },
+		function() { return f(1.4142/1+c.Value());}
 		], {color:'#009a0a', size:3, name:''});
 	var fD = board.create('point',[
-		function() { return 2/b.Value()+c.Value(); },
-		function() { return f(2/b.Value()+c.Value());}
+		function() { return 2/1+c.Value(); },
+		function() { return f(2/1+c.Value());}
 		], {color:'#ff8f00', size:3, name:''});
 
 	var plot = board.create('functiongraph',[f,-10,10],{ strokeColor: 'black', strokeWidth:3 });
@@ -98,9 +98,9 @@
 		function() {
 			$('#valueA').html( a.Value().toFixed(2)==1 ? '' : a.Value().toFixed(2));
 			$('#keer').html(a.Value().toFixed(2)==1 ? '' : ' &middot; ');
-			$('#valueB').html( b.Value()==1 ? '' : b.Value().toFixed(2) );
-			$('#haakjeopenen').html( c.Value()==0 ? '' : b.Value()==1 ? '' : '\(' );
-			$('#haakjesluiten').html( c.Value()==0 ? '' : b.Value()==1 ? '' : '\)' );
+			// $('#valueB').html( b.Value()==1 ? '' : b.Value().toFixed(2) );
+			// $('#haakjeopenen').html( c.Value()==0 ? '' : b.Value()==1 ? '' : '\(' );
+			// $('#haakjesluiten').html( c.Value()==0 ? '' : b.Value()==1 ? '' : '\)' );
 			$('#valueC').html( c.Value()==0 ? '' : c.Value() > 0 ? ' &ndash; ' +c.Value().toFixed(2) : ' + ' + Math.abs(c.Value().toFixed(2)) );
 			$('#valueD').html( d.Value()==0 ? '' : d.Value() < 0 ? ' &ndash; '+Math.abs(d.Value().toFixed(2)) : ' + '+d.Value().toFixed(2));
 			return ''
