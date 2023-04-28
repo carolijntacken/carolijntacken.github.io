@@ -6,7 +6,8 @@
 
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
-<script type="text/javascript" src="../jsxgraphcore.js"></script>
+<!-- <script type="text/javascript" src="../jsxgraphcore.js"></script> -->
+<script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 
 <script>
@@ -22,6 +23,7 @@
 .cmid .kolom {
 	vertical-align: middle;
 }
+
 </style>
 
 <title>Lijn</title>
@@ -29,11 +31,10 @@
 <body>
 
 <h2>Vectorvoorstelling van een lijn</h2>
-<p>
-	Beweeg de slider &lambda;. Zie je dat je door &lambda; te vari&#235;ren, op elk punt van lijn <i>AB</i> uit kunt komen?<br/>
 
-<p><div class="cmid">Een vectorvoorstelling van <i>AB</i>:  <br>
-	\( \left(\begin{array}{c}
+<span style="font-size: 20px">
+<p ><div class="cmid">Een vectorvoorstelling van de getekende lijn:</p>
+\( \left(\begin{array}{c}
 	x\\
 	y
 	\end{array}\right)
@@ -52,18 +53,21 @@
 	\)
 </div>
 </p>
+</span>
 
 <div id="jxgbox1" class="jxgbox" style="width:650px; height:450px; border:1px solid gray; padding:0; float: left; margin-right:  20px;"></div>
 <script type='text/javascript'>
 JXG.Options = JXG.merge(JXG.Options, {
     text: {
-    	fontSize: 16,
+    	fontSize: 20,
     },
     axis: {
     	ticks: { majorHeight : 10, ticksDistance:.4 },
 
     },
-
+	elements: {
+			highlight:false
+	},
 });
 board = JXG.JSXGraph.initBoard('jxgbox1', {
 		showCopyright: false,
@@ -75,17 +79,47 @@ board = JXG.JSXGraph.initBoard('jxgbox1', {
 		keepaspectratio:true
 		});
 		board.suspendUpdate();
-var A = board.create('point', [-2,2], {size: 0, strokeColor: '#ff0000', fillColor: '#ff0000', name: 'A'} );
-var B = board.create('point', [3,4], {size: 0, strokeColor: '#006ae0', fillColor: '#006ae0', name: 'B'} );
-var A1 = board.create('point', [
-	function() { return B.X()-A.X(); },
-	function() { return B.Y()-A.Y(); }
-], {size: 0, strokeColor: '#ff0000', fillColor: '#ff0000', name: ''} );
-var lijn = board.create('line', [B, A], { strokeColor: '#ff8f00', strokeWidth: 2, dash: 3 } );
-var vecAB = board.create('arrow', [A, B], {strokeWidth: 3, strokeColor: '#ff0000'} );
-var vecA = board.create('arrow', [[0,0], A], {strokeWidth: 3, strokeColor: '#006ae0',fixed:false} );
-//var vecrichting = board.create('arrow', [[0,0], A1], {strokeColor: '#ff0000',fixed:true} );
-var lambda = board.create('slider', [ [-11,9], [-7,9], [-5,1,5] ], {
+var A = board.create('point', [-2,1], {
+	size: 2, 
+	strokeColor: '#006ae0', 
+	fillColor: '#006ae0', 
+	name: '', 
+	snapToGrid: true, 
+	snapSizeX: 0.1, snapSizeY: 0.1
+} );
+var A1 = board.create('point', [5,2], {
+	size: 2, 
+	strokeColor: '#ff0000', 
+	fillColor: '#ff0000', 
+	name: '', 
+	snapToGrid: true, 
+	snapSizeX: 0.1, snapSizeY: 0.1
+} );
+var B = board.create('parallelpoint', [[0,0],A1,A], {
+	size: 0, 
+	strokeColor: '#ff0000', 
+	fillColor: '#ff00', name: ''
+} );
+var lijn = board.create('line', [B, A], { 
+	strokeColor: '#777777', 
+	strokeWidth: 2, 
+	dash: 3, 
+	fixed:true 
+} );
+var vecAB = board.create('arrow', [A, B], {
+	strokeWidth: 2, 
+	strokeColor: '#ff0000',
+	fixed:true
+} );
+var vecA = board.create('arrow', [[0,0], A], {
+	strokeWidth: 2, 
+	strokeColor: '#006ae0',
+	fixed:true
+} );
+var vecrichting = board.create('arrow', [[0,0], A1], {
+	strokeColor: '#ff0000'
+} );
+var lambda = board.create('slider', [ [-11,10], [-7,10], [-5,1,5] ], {
 	name: '&lambda;',
 	strokeColor: '#ff0000',
 	baseline: {strokeColor: '#ff0000'},
@@ -98,7 +132,7 @@ var punt = board.create('point', [
 	function() { return A.X()+ lambda.Value()*A1.X(); },
 	function() { return A.Y()+ lambda.Value()*A1.Y(); }
 	],
-	{ name: '', size: 0.5, strokeColor: '#ff8f00', fillColor: '#ff8f00' }
+	{ name: '', size: 2, strokeColor: '#777777', fillColor: '#777' }
 	);
 		function clearTrace() {
 			punt.clearTrace();
@@ -109,10 +143,10 @@ var punt = board.create('point', [
 var veclijn = board.create('arrow', [A, punt], {strokeColor: '#ff0000'} );
 
 board.create('text',[2.2,-7, function() {
-	$('#sv1').html(A.X().toFixed(2));
-	$('#rv1').html(A1.X().toFixed(2));
-	$('#sv2').html(A.Y().toFixed(2));
-	$('#rv2').html(A1.Y().toFixed(2));
+	$('#sv1').html(A.X().toFixed(1));
+	$('#rv1').html(A1.X().toFixed(1));
+	$('#sv2').html(A.Y().toFixed(1));
+	$('#rv2').html(A1.Y().toFixed(1));
 	return '';
 	}
 	]);
@@ -121,6 +155,6 @@ board.create('text',[2.2,-7, function() {
 </script>
 
 <footer style="clear: both; padding-top: 30px;">
-<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Dominicus College</div></footer>
+<div><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img style="border-width:0" src="../cc-by-sa.png" /></a><br /> Carolijn Tacken, Montessori College Nijmegen</div></footer>
 </body>
 </html>
